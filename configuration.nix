@@ -2,12 +2,13 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ config, pkgs, ... }:
+{ config, pkgs, inputs, settings, ... }:
 
 {
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      inputs.home-manager.nixosModules.default
     ];
 
   # Bootloader.
@@ -86,38 +87,28 @@
     description = "kyle";
     extraGroups = [ "networkmanager" "wheel" ];
     packages = with pkgs; [
-      discord
-      eyedropper
-      jetbrains.clion
-      jetbrains.gateway
-      jetbrains.goland
-      jetbrains.idea-ultimate
-      jetbrains.pycharm-professional
-      jetbrains.rust-rover
-      jetbrains.webstorm
-      jetbrains-toolbox
-      firefox
-      kate
-      kitty
-      libreoffice
-      lunarvim
-      nix-direnv
-      oh-my-git
-      neofetch
-    #  thunderbird
       steam
-      signal-desktop
-      vscode
     ];
   };
 
+  programs.steam = {
+    enable = true;
+    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
+    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
+  }; 
+
   # Allow unfree packages
-  nixpkgs.config.allowUnfree = true;
+  nixpkgs.config.allowUnfree = settings.allowUnfree;
+
+  home-manager = {
+    extraSpecialArgs = {inherit settings inputs;};
+    users = {
+      "kyle" = import ./home.nix;
+    };
+  };
 
   #env variables
-  environment.variables = {
-     EDITOR = "lvim";
-  };
+  environment.variables = {};
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -128,6 +119,7 @@
     zsh
   ];
 
+
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
   # programs.mtr.enable = true;
@@ -136,15 +128,7 @@
   #   enableSSHSupport = true;
   # };
 
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  }; 
 
-  programs.direnv = {
-    enable = true;
-  };
   # List services that you want to enable:
 
   # Enable the OpenSSH daemon.
