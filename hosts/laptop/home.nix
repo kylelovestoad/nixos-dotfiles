@@ -1,4 +1,4 @@
-{ config, pkgs, settings,  ... }:
+{ config, pkgs,  ... }:
 
 {
   # Home Manager needs a bit of information about you and the paths it should
@@ -14,6 +14,7 @@
   # want to update the value, then make sure to first check the Home Manager
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
+
 
   # The home.packages option allows you to install Nix packages into your
   # environment.
@@ -31,14 +32,12 @@
     jetbrains.pycharm-professional
     jetbrains.rust-rover
     jetbrains.webstorm
-    jetbrains-toolbox
     firefox
     kate
     kitty
     libreoffice
     lunarvim
     nix-direnv
-    nil
     neofetch
   #  thunderbird
     steam
@@ -64,8 +63,6 @@
       enable = true;
     };
   };
-
-  nixpkgs.config.allowUnfreePredicate = _: settings.allowUnfree;
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
