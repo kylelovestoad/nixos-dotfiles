@@ -42,14 +42,15 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  services.displayManager.sddm.enable = true;
-
   # Configure X11
   services.xserver = {
     # Enable the X11 windowing system.
     enable = true;
     # Enable the KDE Plasma Desktop Environment.
     desktopManager.plasma5.enable = true;
+
+    # Enable sddm display manager (Login Screen)
+    displayManager.sddm.enable = true;
     xkb = {
       variant = "";
       layout = "us";
@@ -78,6 +79,10 @@
 
   # Enable touchpad support (enabled default in most desktopManager).
   # services.xserver.libinput.enable = true;
+
+  nixpkgs.config = {
+    allowUnfree = true;
+  };
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kyle = {

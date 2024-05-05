@@ -18,11 +18,11 @@
   }@inputs:
   let
     inherit (self) outputs;
-    system = "x86_64-linux";
   in
   {
     nixosConfigurations = {
       nixos = nixpkgs.lib.nixosSystem {
+        system = "x86_64-linux";
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./hosts/laptop/configuration.nix
@@ -30,9 +30,9 @@
       };
     };
 
-     homeConfigurations = {
+    homeConfigurations = {
       "kyle@nixos" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system}; # Home-manager requires 'pkgs' instance
+        system = "x86_64-linux";
         extraSpecialArgs = {inherit inputs outputs;};
         # Main home-manager configuration file
         modules = [
