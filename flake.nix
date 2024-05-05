@@ -21,8 +21,12 @@
   in
   {
     nixosConfigurations = {
-      nixos = nixpkgs.lib.nixosSystem {
-        system = "x86_64-linux";
+      nixos = 
+      let 
+        system = "x86_64-linux"; 
+      in
+      nixpkgs.lib.nixosSystem {
+        inherit system;
         specialArgs = {inherit inputs outputs;};
         modules = [
           ./hosts/laptop/configuration.nix
@@ -31,8 +35,13 @@
     };
 
     homeConfigurations = {
-      "kyle@nixos" = home-manager.lib.homeManagerConfiguration {
-        system = "x86_64-linux";
+      "kyle@nixos" = 
+      let 
+        system = "x86_64-linux"; 
+      in
+      home-manager.lib.homeManagerConfiguration {
+        inherit system;
+        pkgs = nixpkgs.legacyPackages.${system};
         extraSpecialArgs = {inherit inputs outputs;};
         # Main home-manager configuration file
         modules = [
