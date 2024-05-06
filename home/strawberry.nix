@@ -28,19 +28,13 @@
 
     discord
     eyedropper
-    jetbrains.clion
-    jetbrains.gateway
-    jetbrains.goland
-    jetbrains.idea-ultimate
-    jetbrains.pycharm-professional
-    jetbrains.rust-rover
-    jetbrains.webstorm
     firefox
     kate
     kitty
     libreoffice
     lunarvim
     nix-direnv
+    nil
     neofetch
   #  thunderbird
     signal-desktop
@@ -61,9 +55,9 @@
   ];
 
   programs = {
-    direnv = {
-      enable = true;
-    };
+    direnv.enable = true;
+    git.enable = true;
+    home-manager.enable = true;
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
@@ -100,7 +94,4 @@
   home.sessionVariables = {
     EDITOR = "lvim";
   };
-
-  # Let Home Manager install and manage itself.
-  programs.home-manager.enable = true;
 }
