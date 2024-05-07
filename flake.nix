@@ -49,7 +49,7 @@
         };
         # Main home-manager configuration file
         modules = [
-          ./hosts/strawberry/home.nix
+          ./home/strawberry.nix
         ];
       };
     };

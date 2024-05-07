@@ -8,7 +8,7 @@
     [ (modulesPath + "/installer/scan/not-detected.nix")
     ];
 
-  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "thunderbolt" "usb_storage" "sd_mod" "rtsx_pci_sdmmc" ];
+  boot.initrd.availableKernelModules = [ "xhci_pci" "nvme" "thunderbolt" "usb_storage" "usbhid" "sd_mod" "rtsx_pci_sdmmc" ];
   boot.initrd.kernelModules = [ ];
   boot.kernelModules = [ "kvm-intel" ];
   boot.extraModulePackages = [ ];
@@ -17,6 +17,30 @@
     { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
       fsType = "btrfs";
       options = [ "subvol=@" ];
+    };
+
+  fileSystems."/home" =
+    { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
+      fsType = "btrfs";
+      options = [ "subvol=@home" ];
+    };
+
+  fileSystems."/persist" =
+    { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
+      fsType = "btrfs";
+      options = [ "subvol=@persist" ];
+    };
+
+  fileSystems."/var/log" =
+    { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
+      fsType = "btrfs";
+      options = [ "subvol=@log" ];
+    };
+
+  fileSystems."/nix" =
+    { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
+      fsType = "btrfs";
+      options = [ "subvol=@nix" ];
     };
 
   fileSystems."/boot" =
