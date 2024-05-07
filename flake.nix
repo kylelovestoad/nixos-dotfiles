@@ -1,5 +1,5 @@
 {
-  description = "Nixos config flake";
+  description = "kylelovestoad's nixos flake for building his systems";
 
   inputs = {
 
@@ -17,41 +17,32 @@
     #   url = "github:nix-community/home-manager/master";
     #   inputs.nixpkgs.follows = "nixpkgs";
     # };
+
+    # For deleting OS on boot except specified dirs
+    # impermanence = {
+    #   url = "github:nix-community/impermanence";
+    # };
+
   };
 
-  outputs = { 
-    self, 
-    nixpkgs, 
-    home-manager,
-    ... 
-  }@inputs:
+  outputs = {...}@inputs:
   let
-    inherit (self) outputs;
-    system = "x86_64-linux";
+    lib = import ./lib/default.nix {inherit inputs;};
   in
-  {
-    nixosConfigurations = {
-      strawberry = nixpkgs.lib.nixosSystem {
-        specialArgs = {
-          inherit inputs outputs;
-        };
-        modules = [
-          ./hosts/strawberry/configuration.nix
-        ];
+    with lib; {
+      # Define systems here!
+      nixosConfigurations = {
+        strawberry = mkSystem ./hosts/strawberry/configuration.nix;
       };
-    };
 
-    homeConfigurations = {
-      "kyle@strawberry" = home-manager.lib.homeManagerConfiguration {
-        pkgs = nixpkgs.legacyPackages.${system};
-        extraSpecialArgs = {
-          inherit inputs outputs;
-        };
-        # Main home-manager configuration file
-        modules = [
-          ./home/strawberry.nix
-        ];
+      # Define home configs here!
+      homeConfigurations = {
+        "kyle@strawberry" = mkHome ./home/strawberry.nix;
+      };
+
+      modules = {
+        nixos.default = ./modules/nixos;
+        home-manager.default = ./modules/home-manager;
       };
     };
-  };
 }
