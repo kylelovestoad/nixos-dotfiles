@@ -27,7 +27,7 @@
 
   outputs = {...}@inputs:
   let
-    lib = import ./lib/default.nix {inherit inputs;};
+    lib = import ./klib {inherit inputs;};
   in
     with lib; {
       # Define systems here!
