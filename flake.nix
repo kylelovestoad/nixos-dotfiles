@@ -19,9 +19,9 @@
     # };
 
     # For deleting OS on boot except specified dirs
-    # impermanence = {
-    #   url = "github:nix-community/impermanence";
-    # };
+    impermanence = {
+      url = "github:nix-community/impermanence";
+    };
 
   };
 
@@ -37,7 +37,10 @@
 
       # Define home configs here!
       homeConfigurations = {
-        "kyle@strawberry" = mkHome ./home/strawberry.nix;
+        "kyle@strawberry" = mkHome {
+          system = "x86_64-linux"; 
+          config = ./home/strawberry.nix;
+        };
       };
 
       modules = {

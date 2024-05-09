@@ -2,6 +2,8 @@
 
 {
 
+  imports = [];
+
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
   home.username = "kyle";
@@ -26,7 +28,7 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
-    discord
+    vesktop
     eyedropper
     firefox
     kate
@@ -35,7 +37,8 @@
     lunarvim
     nix-direnv
     nil
-    neofetch
+    fastfetch
+    nerdfonts
   #  thunderbird
     signal-desktop
     vscode
