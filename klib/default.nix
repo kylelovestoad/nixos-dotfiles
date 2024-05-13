@@ -1,4 +1,4 @@
-{inputs}: let
+{inputs, ...}: let
   klib = (import ./default.nix) {inherit inputs;};
   outputs = inputs.self.outputs;
 in

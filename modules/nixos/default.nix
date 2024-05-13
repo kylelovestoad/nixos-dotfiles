@@ -1,4 +1,8 @@
 # Contains all nixos modules which can be toggled on and off
-{...}: {
-  imports = [];
+{lib, ...}: {
+  imports = lib.sourceFilesBySuffices ./modules/nixos [ ".nix" ];
+
+    # TODO 
+    # ./impermanence.nix
+
 }

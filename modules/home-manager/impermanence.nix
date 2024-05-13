@@ -1,4 +1,4 @@
-{pkgs, lib, inputs, ...}: {
+{lib, inputs, config, ...}: {
   imports = [  
     inputs.impermanence.nixosModules.home-manager.impermanence
   ];
@@ -7,19 +7,21 @@
     impermanence.enable = lib.mkEnableOption "Enable impermanence";
   };
 
-  home.persistence."/persist/home" = {
-    directories = [
-      ".ssh"
-      "Desktop"
-      "Documents"
-      "Downloads"
-      "git"
-      "Music"
-      "nixos"
-      "Pictures"
-      "Public"
-      "Templates"
-      "Videos"
-    ];
+  config = lib.mkIf config.impermanence.enable {
+    home.persistence."/persist/home" = {
+      directories = [
+        ".ssh"
+        "Desktop"
+        "Documents"
+        "Downloads"
+        "git"
+        "Music"
+        "nixos"
+        "Pictures"
+        "Public"
+        "Templates"
+        "Videos"
+      ];
+    };
   };
 }
