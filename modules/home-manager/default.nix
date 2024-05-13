@@ -1,13 +1,12 @@
 # Contains all home manager modules which can be toggled on and off
-{lib, config, ...}: 
+{klib, lib, config, ...}: 
 
 {
-  imports = lib.sourceFilesBySuffices ./modules/home-manager [ ".nix" ];
-  # [
-  #   ./impermanence.nix
-  #   ./jetbrains.nix
-  # ];
-
+  imports = [
+    ./impermanence.nix
+    ./jetbrains.nix
+  ];
+ 
   # TODO
   # ./vscode.nix
   # ./firefox.nix

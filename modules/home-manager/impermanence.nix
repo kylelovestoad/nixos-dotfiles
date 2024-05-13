@@ -14,13 +14,16 @@
         "Desktop"
         "Documents"
         "Downloads"
-        "git"
         "Music"
-        "nixos"
         "Pictures"
         "Public"
         "Templates"
         "Videos"
+
+        # Holds cloned git repos
+        "git"
+        # Place for editing this git repo
+        "nixos-conf"
       ];
     };
   };

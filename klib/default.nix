@@ -1,5 +1,5 @@
-{inputs, ...}: let
-  klib = (import ./default.nix) {inherit inputs;};
+{lib, inputs, ...}: let
+  klib = (import ./default.nix) {inherit inputs lib;};
   outputs = inputs.self.outputs;
 in
 rec {
@@ -35,4 +35,7 @@ rec {
         outputs.modules.home-manager.default
       ];
     };
+
+  # listfilesWithSuffixRecursive = 
+  # {dir, suffix}: builtins.filter (filename: lib.hasSuffix suffix filename) (lib.filesystem.listFilesRecursive dir);
 }
