@@ -1,9 +1,9 @@
 # Contains all nixos modules which can be toggled on and off
-{klib, ...}: {
+{lib, ...}: {
   imports = [
     ./impermanence.nix
   ];
 
-  # TODO 
+  test.sysimpermanence.enable = lib.mkForce false;
 
 }

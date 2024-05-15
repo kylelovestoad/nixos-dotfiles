@@ -1,5 +1,5 @@
 {lib, inputs, ...}: let
-  klib = (import ./default.nix) {inherit inputs lib;};
+  kylib = (import ./default.nix) {inherit inputs lib;};
   outputs = inputs.self.outputs;
 in
 rec {
@@ -14,7 +14,7 @@ rec {
   mkSystem = config:
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit inputs outputs klib;
+        inherit inputs outputs kylib;
       };
       modules = [
         config
@@ -27,7 +27,7 @@ rec {
     inputs.home-manager.lib.homeManagerConfiguration {
       pkgs = pkgsFor system;
       extraSpecialArgs = {
-        inherit inputs outputs klib;
+        inherit inputs outputs kylib;
       };
       # Main home-manager configuration file
       modules = [
@@ -38,4 +38,17 @@ rec {
 
   # listfilesWithSuffixRecursive = 
   # {dir, suffix}: builtins.filter (filename: lib.hasSuffix suffix filename) (lib.filesystem.listFilesRecursive dir);
+
+  /**
+     # Inputs
+
+    `attrs`
+
+    : Attribute set to extend.
+
+    `path`
+
+    : The value to set at the location described by `attrPath`
+  */
+  extendAttrByPath = attrs: path: attrs // (lib.setAttrByPath path {});
 }

@@ -28,9 +28,9 @@
   outputs = {nixpkgs, ...}@inputs:
   let
     lib = nixpkgs.lib;
-    klib = import ./klib {inherit inputs lib;};
+    kylib = import ./kylib {inherit inputs lib;};
   in
-    with klib; {
+    with kylib; {
       # Define systems here!
       nixosConfigurations = {
         strawberry = mkSystem ./hosts/strawberry/configuration.nix;

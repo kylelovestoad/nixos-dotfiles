@@ -1,5 +1,7 @@
-{lib, inputs, config, ...}: let 
-  cfg = config.sys-impermanence;
+{lib, kylib, inputs, config, ...}: let 
+  # cfg = config.sys-impermanence;
+  modulePath = ["sys-impermanence"];
+  # TODO try appending result of setAttrByPath to config and options (effectively extending a)
 in {
   imports = [  
     inputs.impermanence.nixosModules.impermanence
@@ -8,10 +10,10 @@ in {
   # TODO make persistence function to clear on boot
 
   options = {
-    sys-impermanence.enable = lib.mkEnableOption "Enable impermanence";
+    ${lib.setAttrByPath modulePath {}}.enable = lib.mkEnableOption "Enable impermanence";
   };
   
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf (kylib.extendAttrByPath config modulePath).enable {
     fileSystems."/persist".neededForBoot = true;
     
     environment.persistence = {
@@ -28,6 +30,7 @@ in {
         hideMounts = true;
         directories = [
           "/etc/nixos"
+          "/var/log/"
           "/var/lib/bluetooth"
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
