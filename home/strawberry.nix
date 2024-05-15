@@ -29,6 +29,7 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     vesktop
+    discord
     eyedropper
     firefox
     kate

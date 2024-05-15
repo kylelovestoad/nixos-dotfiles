@@ -1,13 +1,15 @@
-{lib, inputs, config, ...}: {
+{lib, inputs, config, ...}: let
+  cfg = config.home-impermanence;
+in {
   imports = [  
     inputs.impermanence.nixosModules.home-manager.impermanence
   ];
 
   options = {
-    impermanence.enable = lib.mkEnableOption "Enable impermanence";
+    home-impermanence.enable = lib.mkEnableOption "Enable impermanence";
   };
 
-  config = lib.mkIf config.impermanence.enable {
+  config = lib.mkIf cfg.enable {
     home.persistence."/persist/home" = {
       directories = [
         ".ssh"
