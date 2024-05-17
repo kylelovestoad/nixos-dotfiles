@@ -4,6 +4,6 @@
     ./impermanence.nix
   ];
 
-  test.sysimpermanence.enable = lib.mkForce false;
+  sys-impermanence.enable = lib.mkForce false;
 
 }

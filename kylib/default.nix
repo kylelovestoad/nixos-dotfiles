@@ -36,19 +36,49 @@ rec {
       ];
     };
 
-  # listfilesWithSuffixRecursive = 
-  # {dir, suffix}: builtins.filter (filename: lib.hasSuffix suffix filename) (lib.filesystem.listFilesRecursive dir);
+  # Helper function for pathToDotString
+  pathToDotString' = list: index: let 
+    length = builtins.length list;
+  in 
+  # First we start by creating our first element in the path. This one will not have a prepended dot
+  if index == 0 then "${builtins.elemAt list index}" + pathToDotString' list (index + 1)
+  # Then for every element that is not the last, add it with a dot prepended which forms the pattern "first.next.next.next" 
+  else if index + 1 != length then ".${builtins.elemAt list index}" + pathToDotString' list (index + 1)
+  # For the last element, we don't call the function again to prevent any more recursions (This would cause an error)
+  else ".${builtins.elemAt list index}";
 
-  /**
-     # Inputs
+  # Just calls pathToDotString' starting at index 0
+  # Converts a list to a dotpath such that for example ["a" "b" "c"] becomes "a.b.c"
+  pathToDotString = list: pathToDotString' list 0;
 
-    `attrs`
+  # Matches all consecutive chars that aren't a dot, meaning it gets all strings between the dots
+  dotStringToPath = str: lib.splitString "." str;
 
-    : Attribute set to extend.
 
-    `path`
+  createModule = moduleDotPath: config: module: let
+    modulePath = dotStringToPath moduleDotPath;
+    defaultOptions = {
+      # Creates an enable option with the dot string (example.string.here) as part of the description
+      # This allows each enable description to be their own respective config name
+      enable = lib.mkEnableOption "${moduleDotPath}.enable";
+    };
+    
+    # Don't mess with existing options or config
+    combinedOptions = defaultOptions // (module.options or {});
 
-    : The value to set at the location described by `attrPath`
-  */
-  extendAttrByPath = attrs: path: attrs // (lib.setAttrByPath path {});
+    combinedOptionsWithPath = lib.setAttrByPath modulePath (combinedOptions); 
+
+    defaultConfigWithPath = lib.setAttrByPath (modulePath) {};
+
+    # This gets the path to the user defined config
+    
+  cfg = lib.getAttrFromPath modulePath config;
+  in {
+    imports = module.imports or {};
+
+    options = combinedOptionsWithPath;
+
+    # If enable is true, config won't be empty
+    config = lib.mkIf cfg.enable (defaultConfigWithPath // (module.config or {}));
+  };
 }

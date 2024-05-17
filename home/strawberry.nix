@@ -40,6 +40,7 @@
     nil
     fastfetch
     nerdfonts
+    parsec-bin
   #  thunderbird
     signal-desktop
     vscode

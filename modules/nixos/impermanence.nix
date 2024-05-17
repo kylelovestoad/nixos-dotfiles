@@ -1,19 +1,13 @@
 {lib, kylib, inputs, config, ...}: let 
-  # cfg = config.sys-impermanence;
-  modulePath = ["sys-impermanence"];
-  # TODO try appending result of setAttrByPath to config and options (effectively extending a)
-in {
+  moduleDotPath = "sys-impermanence";
+in kylib.createModule moduleDotPath config {
   imports = [  
     inputs.impermanence.nixosModules.impermanence
   ];
 
   # TODO make persistence function to clear on boot
-
-  options = {
-    ${lib.setAttrByPath modulePath {}}.enable = lib.mkEnableOption "Enable impermanence";
-  };
   
-  config = lib.mkIf (kylib.extendAttrByPath config modulePath).enable {
+  config = {
     fileSystems."/persist".neededForBoot = true;
     
     environment.persistence = {
@@ -43,6 +37,4 @@ in {
       };
     };
   };
-
-
 }
