@@ -1,15 +1,12 @@
-{lib, inputs, config, ...}: let
-  cfg = config.home-impermanence;
-in {
+{kylib, inputs, config, ...}: kylib.createModule config {
+
+  category = "home-impermanence";
+
   imports = [  
     inputs.impermanence.nixosModules.home-manager.impermanence
   ];
 
-  options = {
-    home-impermanence.enable = lib.mkEnableOption "Enable impermanence";
-  };
-
-  config = lib.mkIf cfg.enable {
+  config = {
     home.persistence."/persist/home" = {
       directories = [
         ".ssh"

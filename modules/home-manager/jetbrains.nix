@@ -1,13 +1,12 @@
-{pkgs, lib, config, ... }: let
-  cfg = config.home-impermanence;
-in {
+{pkgs, kylib, lib, config, ... }: kylib.createModule config {
+
+  category = "jetbrains";
 
   options = {
-    jetbrains.enable = lib.mkEnableOption "Enable jetbrains apps";
-    jetbrains.impermanence = lib.mkEnableOption "Enable impermanence for projects/configs";
+    impermanence = lib.mkEnableOption "impermanence for projects/configs";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
 
     # Load our jetbrains tools and IDEs
     home.packages = with pkgs; [

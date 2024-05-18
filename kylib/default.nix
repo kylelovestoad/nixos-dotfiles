@@ -55,26 +55,30 @@ rec {
   dotStringToPath = str: lib.splitString "." str;
 
 
-  createModule = moduleDotPath: config: module: let
-    modulePath = dotStringToPath moduleDotPath;
+  createModule = config: module: let
+
+    category = if builtins.hasAttr "category" module then module.category else throw "module category is required";
+
+    categoryPath = dotStringToPath category;
     defaultOptions = {
       # Creates an enable option with the dot string (example.string.here) as part of the description
       # This allows each enable description to be their own respective config name
-      enable = lib.mkEnableOption "${moduleDotPath}.enable";
+      enable = lib.mkEnableOption "${category}.enable";
     };
     
     # Don't mess with existing options or config
     combinedOptions = defaultOptions // (module.options or {});
 
-    combinedOptionsWithPath = lib.setAttrByPath modulePath (combinedOptions); 
+    # Map the options with the attrPath. 
+    # For example, if the 
+    combinedOptionsWithPath = lib.setAttrByPath categoryPath (combinedOptions); 
 
-    defaultConfigWithPath = lib.setAttrByPath (modulePath) {};
+    defaultConfigWithPath = lib.setAttrByPath categoryPath {};
 
     # This gets the path to the user defined config
-    
-  cfg = lib.getAttrFromPath modulePath config;
+    cfg = lib.getAttrFromPath categoryPath config;
   in {
-    imports = module.imports or {};
+    imports = module.imports or [];
 
     options = combinedOptionsWithPath;
 

@@ -1,6 +1,7 @@
-{lib, kylib, inputs, config, ...}: let 
-  moduleDotPath = "sys-impermanence";
-in kylib.createModule moduleDotPath config {
+{lib, kylib, inputs, config, ...}: kylib.createModule config {
+
+  category = "sys-impermanence";
+
   imports = [  
     inputs.impermanence.nixosModules.impermanence
   ];
