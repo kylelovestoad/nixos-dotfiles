@@ -54,6 +54,10 @@ rec {
   # Matches all consecutive chars that aren't a dot, meaning it gets all strings between the dots
   dotStringToPath = str: lib.splitString "." str;
 
+  mkIfWith = predicate: topLevel: dotString: content: let 
+    dotPath = dotStringToPath dotString;
+    cfg = lib.getAttrFromPath dotPath topLevel;
+  in lib.mkIf (predicate cfg) content;
 
   createModule = config: module: let
 
@@ -69,11 +73,10 @@ rec {
     # Don't mess with existing options or config
     combinedOptions = defaultOptions // (module.options or {});
 
-    # Map the options with the attrPath. 
-    # For example, if the 
+    # Map the options with the attrPath.
     combinedOptionsWithPath = lib.setAttrByPath categoryPath (combinedOptions); 
 
-    defaultConfigWithPath = lib.setAttrByPath categoryPath {};
+    configWithPath = lib.setAttrByPath categoryPath {};
 
     # This gets the path to the user defined config
     cfg = lib.getAttrFromPath categoryPath config;
@@ -83,6 +86,6 @@ rec {
     options = combinedOptionsWithPath;
 
     # If enable is true, config won't be empty
-    config = lib.mkIf cfg.enable (defaultConfigWithPath // (module.config or {}));
+    config = lib.mkIf cfg.enable (configWithPath // (module.config or {}));
   };
 }

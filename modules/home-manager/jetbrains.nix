@@ -1,4 +1,4 @@
-{pkgs, kylib, lib, config, ... }: kylib.createModule config {
+{pkgs, kylib, lib, config, ... } @ args: kylib.createModule config rec {
 
   category = "jetbrains";
 
@@ -19,11 +19,8 @@
       jetbrains.rust-rover
       jetbrains.webstorm
     ];
-
     # Let default project folders and config directories persist
-
-
-    home.persistence."/perist/home/kyle" = lib.mkIf config.jetbrains.impermanence {
+    home.persistence."/perist/home/kyle" = kylib.mkIfWith (cfg: cfg.impermanence) args.config category {
       directories = [
         ".local/share/Jetbrains"
         ".config/Jetbrains"

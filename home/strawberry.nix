@@ -44,6 +44,8 @@
   #  thunderbird
     signal-desktop
     vscode
+
+    obs-studio
     prismlauncher
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -100,4 +102,7 @@
   home.sessionVariables = {
     EDITOR = "lvim";
   };
+
+  jetbrains.enable = true;
+  home-impermanence.enable = true;
 }

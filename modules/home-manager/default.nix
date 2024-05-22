@@ -14,6 +14,6 @@
   home-impermanence.enable = lib.mkForce false;
   # Set our default options for each value
   jetbrains.enable = lib.mkForce false;
-  jetbrains.impermanence = lib.mkIf config.impermanence.enable true;
+  jetbrains.impermanence = kylib.mkIfWith (cfg: cfg.enable) config "home-impermanence" true;
   
 }
