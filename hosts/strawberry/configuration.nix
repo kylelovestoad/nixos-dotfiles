@@ -8,6 +8,7 @@
   imports =
     [ # Include the results of the hardware scan.
       ./hardware-configuration.nix
+      ./nvidia.nix
     ];
 
   # Bootloader.
@@ -106,8 +107,9 @@
   # Allow unfree packages
   # nixpkgs.config.allowUnfree = system.config.allowUnfree;
 
-  #env variables
-  environment.variables = {};
+  #env variables (pam)
+  environment.sessionVariables = {};
+  
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
@@ -115,6 +117,7 @@
     wget
     home-manager
     git
+    lshw
   ];
 
 
