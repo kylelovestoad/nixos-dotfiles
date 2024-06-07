@@ -51,7 +51,6 @@
     desktopManager.plasma5.enable = true;
 
     # Enable sddm display manager (Login Screen)
-    displayManager.sddm.enable = true;
     xkb = {
       variant = "";
       layout = "us";
@@ -60,6 +59,7 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
+  services.displayManager.sddm.enable = true;
 
   # Enable sound with pipewire.
   sound.enable = true;
@@ -118,6 +118,8 @@
     home-manager
     git
     lshw
+    pciutils
+    alsa-oss # fixes issues with minecraft TODO make dedicated minecraft/prismlauncher config
   ];
 
 
