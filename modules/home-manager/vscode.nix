@@ -1,9 +1,8 @@
-{kylib, lib, pkgs, config} @ args: kylib.createModule config rec {
+{kylib, lib, pkgs, config}: kylib.createModule config {
   
   category = "vscode";
   
   config = {
-
     programs.vscode = {
       enabled = true;
 
@@ -16,7 +15,7 @@
         jnoortheen.nix-ide
         mkhl.direnv
 
-        # Theming uses catppuccin mocha
+        # Theming uses catppuccin
         catppuccin.catppuccin-vsc
         catppuccin.catppuccin-vsc-icons
 

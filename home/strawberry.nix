@@ -107,4 +107,5 @@
 
   jetbrains.enable = true;
   home-impermanence.enable = true;
+  vscode.enable = true;
 }
