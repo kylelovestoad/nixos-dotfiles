@@ -5,7 +5,7 @@
   imports = [
     ./impermanence.nix
     ./jetbrains.nix
-    ./vscode.nix
+    ./test.nix
   ];
  
   # TODO
@@ -17,5 +17,5 @@
   jetbrains.enable = lib.mkForce false;
   jetbrains.impermanence = kylib.mkIfWith (cfg: cfg.enable) config "home-impermanence" true;
 
-  vscode.enable = lib.mkForce false;
+  # vscode.enable = lib.mkForce false;
 }
