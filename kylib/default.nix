@@ -86,6 +86,6 @@ rec {
     options = combinedOptionsWithPath;
 
     # If enable is true, config won't be empty
-    config = lib.mkIf cfg.enable (configWithPath // (module.config or {}));
+    config = configWithPath // (module.config or {});
   };
 }

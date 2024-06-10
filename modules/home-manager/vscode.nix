@@ -1,6 +1,6 @@
 {kylib, lib, pkgs, config} @ args: kylib.createModule config rec {
   
-  category = "test";
+  category = "vscode";
 
   options = {
     extensions = lib.mkEnableOption "extensions for vscode";
@@ -10,7 +10,7 @@
     programs.vscode = {
       enabled = true;
 
-      extensions = kylib.mkIfWith (cfg: cfg.impermanence) args.config category (with pkgs.vscode-extensions; [
+      extensions = kylib.mkIfWith (cfg: cfg.extensions) args.config category (with pkgs.vscode-extensions; [
         jackmacwindows.vscode-computercraft
         jackmacwindows.craftos-pc
         k--kato.intellij-idea-keybindings
