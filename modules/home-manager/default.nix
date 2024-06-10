@@ -5,7 +5,7 @@
   imports = [
     ./impermanence.nix
     ./jetbrains.nix
-    ./test.nix
+    ./vscode.nix
   ];
  
   # TODO
