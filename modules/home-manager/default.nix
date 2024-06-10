@@ -17,5 +17,6 @@
   jetbrains.enable = lib.mkForce false;
   jetbrains.impermanence = kylib.mkIfWith (cfg: cfg.enable) config "home-impermanence" true;
 
-  # vscode.enable = lib.mkForce false;
+  vscode.enable = lib.mkForce false;
+  # vscode.extensions = lib.mkForce false;
 }

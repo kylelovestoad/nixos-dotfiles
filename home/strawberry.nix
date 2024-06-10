@@ -43,7 +43,6 @@
     parsec-bin
   #  thunderbird
     signal-desktop
-    vscode
 
     obs-studio
     prismlauncher
@@ -107,5 +106,6 @@
 
   jetbrains.enable = true;
   home-impermanence.enable = true;
-  # vscode.enable = true;
+  vscode.enable = true;
+  # vscode.extensions = true;
 }
