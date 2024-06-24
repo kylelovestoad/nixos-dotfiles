@@ -84,6 +84,9 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
+      packageOverrides = with pkgs; pkgs: {
+        olympus = callPackage ../olympus/default.nix { };
+      };
     };
   }; 
 
@@ -92,9 +95,7 @@
     isNormalUser = true;
     description = "kyle";
     extraGroups = [ "networkmanager" "wheel" ];
-    packages = with pkgs; [
-      steam # Steam does not have settings in home-manager
-    ];
+    packages = with pkgs; [];
   };
 
   # Program config
@@ -120,7 +121,11 @@
     lshw
     pciutils
     alsa-oss # fixes issues with minecraft TODO make dedicated minecraft/prismlauncher config
+    lm_sensors
+    olympus
   ];
+
+  
 
 
   # Some programs need SUID wrappers, can be configured further or are

@@ -28,6 +28,7 @@
     # # Adds the 'hello' command to your environment. It prints a friendly
     # # "Hello, world!" when run.
     # pkgs.hello
+    aseprite
     vesktop
     discord
     eyedropper
@@ -36,16 +37,26 @@
     kitty
     libreoffice
     lunarvim
-    nix-direnv
     nil
+    jq
+    nix-direnv
+    nix-prefetch
     fastfetch
     nerdfonts
     parsec-bin
   #  thunderbird
     signal-desktop
+    mpv
+    steam
+    love
 
-    obs-studio
+    wineWowPackages.stable
+    winetricks
+
+    peek
+
     prismlauncher
+    nix-direnv
     kdialog
     mangohud
 
@@ -67,6 +78,14 @@
     direnv.enable = true;
     git.enable = true;
     home-manager.enable = true;
+    obs-studio = {
+      enable = true;
+      plugins = with pkgs.obs-studio-plugins; [
+        wlrobs
+        obs-backgroundremoval
+        obs-pipewire-audio-capture
+      ];
+    };  
   };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage

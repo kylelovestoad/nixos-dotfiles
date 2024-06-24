@@ -24,7 +24,7 @@
         # Holds cloned git repos
         "git"
         # Place for editing this git repo
-        "nixos-conf"
+        "nixos-dotfiles"
       ];
     };
   };

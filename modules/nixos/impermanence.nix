@@ -13,10 +13,7 @@
 
     fileSystems."/persist".neededForBoot = true;
     
-    environment.persistence = let 
-      users = lib.attrValues config.users.users;
-      homes = map (user: user.home) (users);
-    in {
+    environment.persistence = {
       
       "/persist/system" = {
         hideMounts = true;
@@ -29,9 +26,9 @@
           # TODO
           # Add all user home dirs to the persistence!
         ];
-        files = [
-          "/etc/machine-id"
-        ];
+        # files = [
+        #   "/etc/machine-id"
+        # ];
       };
     };
   };
