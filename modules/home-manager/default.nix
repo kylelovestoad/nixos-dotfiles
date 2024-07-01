@@ -8,9 +8,7 @@
     ./vscode.nix
   ];
  
-  # TODO
-  # 
-  # ./firefox.nix
+  # TODO ./firefox.nix
   
   home-impermanence.enable = lib.mkForce false;
   # Set our default options for each value

@@ -85,7 +85,11 @@
     config = {
       allowUnfree = true;
       packageOverrides = with pkgs; pkgs: {
-        olympus = callPackage ../olympus/default.nix { };
+        # olympus = callPackage ../../olympus/olympus.nix { 
+        #   buildLuarocksPackage = luajitPackages.buildLuarocksPackage;
+        #   luaAtLeast = luajitPackages.luaAtLeast;
+        #   luaOlder = luajitPackages.luaOlder;
+        # };
       };
     };
   }; 
@@ -120,9 +124,9 @@
     git
     lshw
     pciutils
-    alsa-oss # fixes issues with minecraft TODO make dedicated minecraft/prismlauncher config
+    alsa-oss # TODO fixes issues with minecraft make dedicated minecraft/prismlauncher config
     lm_sensors
-    olympus
+    # olympus # Custom package
   ];
 
   

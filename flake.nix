@@ -13,6 +13,9 @@
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
+    # For catpuccin theming
+    catppuccin.url = "github:catppuccin/nix";
+
     # home-manager-unstable = {
     #   url = "github:nix-community/home-manager/master";
     #   inputs.nixpkgs.follows = "nixpkgs";

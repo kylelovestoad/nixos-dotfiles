@@ -48,10 +48,10 @@
     signal-desktop
     mpv
     steam
-    love
 
     wineWowPackages.stable
     winetricks
+    btop
 
     peek
 

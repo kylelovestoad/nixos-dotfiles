@@ -9,16 +9,22 @@
   config = {
 
     # Load our jetbrains tools and IDEs
-    home.packages = with pkgs; [
+    home.packages = with pkgs; let 
+      globals = [
+        "nixidea"
+      ];
+    in [
       jetbrains-toolbox
-      jetbrains.clion
       jetbrains.gateway
-      jetbrains.goland
-      jetbrains.idea-ultimate
-      jetbrains.pycharm-professional
-      jetbrains.rust-rover
-      jetbrains.webstorm
+      # Plugins and ides
+      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.clion ([] ++ globals))
+      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.goland ([] ++ globals)) 
+      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ([] ++ globals)) 
+      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.pycharm-professional ([] ++ globals)) 
+      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.rust-rover ([] ++ globals))
+      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.rust-rover ([] ++ globals))
     ];
+      
     # Let default project folders and config directories persist
     home.persistence."/perist/home/kyle" = kylib.mkIfWith (cfg: cfg.impermanence) args.config category {
       directories = [
@@ -33,5 +39,7 @@
         "WebstormProjects"
       ];
     };
+
+    
   };
 }
