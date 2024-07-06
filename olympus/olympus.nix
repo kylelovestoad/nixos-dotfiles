@@ -6,23 +6,27 @@
 , luaAtLeast
 , fetchfossil
 , fetchFromGitHub
+, fetchurl
 , curl
 , love
+, sqlite
 , luajitPackages
 }: buildDotnetModule rec {
 
   pname = "olympus";
-  version = "24.06.12.02";
-  commit = "33861a4d5867150d23e340b9fa05990794c25481";
+  version = "24.06.25.02";
+  commit = "6bbe4de9f4ca5aa1a766e334b45c2c76eaf382a9";
 
   lsqlite3 = buildLuarocksPackage {
     pname = "lsqlite3";
     version = "0.9.6-1";
 
-    buildInputs = [ 
-    ]; 
-
     disabled = (luaOlder "5.1") || (luaAtLeast "5.5");
+
+    knownRockspec = fetchurl {
+      url = "mirror://luarocks/lsqlite3-0.9.6-1.rockspec";
+      sha256 = "1gr9wpzz1jk224gsqvsyp12qb5jd7s5s80sr6dcpsy6b6j4ypb69";
+    };
 
     src = fetchfossil {
       url = "http://lua.sqlite.org/index.cgi/zip/fc2c936875/LuaSQLite3-fc2c936875.zip";
@@ -30,9 +34,21 @@
       sha256 = "sha256-Mq409A3X9/OS7IPI/KlULR6ZihqnYKk/mS/W/2yrGBg=";
     };
 
+    preInstall = ''
+      lib="$out/lib/lsqlite3"
+      ls
+      install -Dm755 sqlite.h "$out/sqlite.h"
+      install -Dm755 sqlite.c "$out/sqlite.c"
+      SQLITE_DIR="$out"
+      echo $SQLITE_DIR
+    '';
+
+    postBuild = ''
+      # echo $out
+    '';
 
     meta = {
-      homepage = "lua.sqlite.org/";
+      homepage = "lua.sqlite.org";
       longDescription = ''
         lsqlite3 is a thin wrapper around the public domain SQLite3 database engine.
         The lsqlite3 module supports the creation and manipulation of SQLite3 databases.
@@ -93,7 +109,7 @@
     owner = "EverestAPI";
     repo = "Olympus";
     rev = commit;
-    sha256 = "sha256-+QCvvUjscBh8IYnLmbmzGvyBHehxMS4vxpwi+KXWs0s=";
+    sha256 = "sha256-ZC15CJEikTdxEaUHftca3NxJPZOyoNklAZtcbfMMsU8=";
     # Required to get OlympUI, moonshine and luajit-request
     fetchSubmodules = true;
   };

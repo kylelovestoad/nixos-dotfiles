@@ -33,6 +33,7 @@
     discord
     eyedropper
     firefox
+    godot_4
     kate
     kitty
     libreoffice
@@ -59,6 +60,7 @@
     nix-direnv
     kdialog
     mangohud
+    github-desktop
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

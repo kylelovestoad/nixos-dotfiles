@@ -11,9 +11,11 @@
       ./nvidia.nix
     ];
 
-  # Bootloader.
+  # Bootloader
   boot.loader.systemd-boot.enable = true;
   boot.loader.efi.canTouchEfiVariables = true;
+
+  
 
   networking.hostName = "strawberry"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -43,17 +45,27 @@
     LC_TIME = "en_US.UTF-8";
   };
 
-  # Configure X11
-  services.xserver = {
-    # Enable the X11 windowing system.
-    enable = true;
-    # Enable the KDE Plasma Desktop Environment.
-    desktopManager.plasma5.enable = true;
+  # Fixes github-desktop
+  security.pam.services.login.enableGnomeKeyring = true;
+  services.gnome.gnome-keyring.enable = true;
 
-    # Enable sddm display manager (Login Screen)
-    xkb = {
-      variant = "";
-      layout = "us";
+
+  # Configure X11
+  services = {
+    # Enable the KDE Plasma Desktop Environment.
+    desktopManager.plasma6.enable = true;
+    displayManager.defaultSession = "plasmax11";
+    
+    xserver = {
+      # Enable the X11 windowing system.
+      enable = true;
+
+    
+      # Enable sddm display manager (Login Screen)
+      xkb = {
+        variant = "";
+        layout = "us";
+      };
     };
   };
 
@@ -85,11 +97,11 @@
     config = {
       allowUnfree = true;
       packageOverrides = with pkgs; pkgs: {
-        # olympus = callPackage ../../olympus/olympus.nix { 
-        #   buildLuarocksPackage = luajitPackages.buildLuarocksPackage;
-        #   luaAtLeast = luajitPackages.luaAtLeast;
-        #   luaOlder = luajitPackages.luaOlder;
-        # };
+        olympus = callPackage ../../olympus/olympus.nix { 
+          buildLuarocksPackage = luajitPackages.buildLuarocksPackage;
+          luaAtLeast = luajitPackages.luaAtLeast;
+          luaOlder = luajitPackages.luaOlder;
+        };
       };
     };
   }; 
@@ -126,10 +138,12 @@
     pciutils
     alsa-oss # TODO fixes issues with minecraft make dedicated minecraft/prismlauncher config
     lm_sensors
+    sqlite
+    luajitPackages.luarocks-nix
+    xdg-utils
+    kdePackages.qttools
     # olympus # Custom package
   ];
-
-  
 
 
   # Some programs need SUID wrappers, can be configured further or are

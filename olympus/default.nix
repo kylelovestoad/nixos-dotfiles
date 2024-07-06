@@ -4,5 +4,9 @@ let
   pkgs = import nixpkgs { config = {}; overlays = []; };
 in
 {
-  olympus = pkgs.callPackage ./olympus.nix { };
+  olympus = with pkgs; pkgs.callPackage ./olympus.nix { 
+    buildLuarocksPackage = luajitPackages.buildLuarocksPackage;
+    luaAtLeast = luajitPackages.luaAtLeast;
+    luaOlder = luajitPackages.luaOlder;
+  };
 }
