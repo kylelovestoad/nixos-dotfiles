@@ -143,6 +143,7 @@
     lm_sensors
     xdg-utils
     # olympus # Custom package
+    mouse_m908 # Custom package
   ];
 
 
