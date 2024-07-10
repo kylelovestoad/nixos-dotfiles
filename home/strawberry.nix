@@ -33,9 +33,9 @@
     discord
     eyedropper
     firefox
-    godot_4
+    godot_4 # TODO Game dev module?
     kate
-    kitty
+    
     libreoffice
     lunarvim
     nil
@@ -55,8 +55,8 @@
     btop
 
     peek
-
-    prismlauncher
+    piper
+    prismlauncher # Make this part of a module
     nix-direnv
     kdialog
     mangohud
@@ -80,6 +80,7 @@
     direnv.enable = true;
     git.enable = true;
     home-manager.enable = true;
+    # TODO fix obs studio
     obs-studio = {
       enable = true;
       plugins = with pkgs.obs-studio-plugins; [

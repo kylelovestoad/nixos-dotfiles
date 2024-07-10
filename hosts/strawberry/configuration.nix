@@ -55,6 +55,8 @@
     # Enable the KDE Plasma Desktop Environment.
     desktopManager.plasma6.enable = true;
     displayManager.defaultSession = "plasmax11";
+
+    ratbagd.enable = true;
     
     xserver = {
       # Enable the X11 windowing system.
@@ -97,11 +99,12 @@
     config = {
       allowUnfree = true;
       packageOverrides = with pkgs; pkgs: {
-        olympus = callPackage ../../olympus/olympus.nix { 
+        olympus = callPackage ../../packages/olympus/olympus.nix { 
           buildLuarocksPackage = luajitPackages.buildLuarocksPackage;
           luaAtLeast = luajitPackages.luaAtLeast;
           luaOlder = luajitPackages.luaOlder;
         };
+        mouse_m908 = ../../packages/mouse_m908/mouse_m908.nix { };
       };
     };
   }; 
@@ -138,10 +141,7 @@
     pciutils
     alsa-oss # TODO fixes issues with minecraft make dedicated minecraft/prismlauncher config
     lm_sensors
-    sqlite
-    luajitPackages.luarocks-nix
     xdg-utils
-    kdePackages.qttools
     # olympus # Custom package
   ];
 
