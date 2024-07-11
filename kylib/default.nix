@@ -54,14 +54,7 @@ rec {
   # Matches all consecutive chars that aren't a dot, meaning it gets all strings between the dots
   dotStringToPath = str: lib.splitString "." str;
 
-  mkIfWith = predicate: topLevel: dotString: content: let 
-    dotPath = dotStringToPath dotString;
-    cfg = lib.getAttrFromPath dotPath topLevel;
-  in lib.mkIf (predicate cfg) content;
-
-  createModule = config: module: let
-
-    category = if builtins.hasAttr "category" module then module.category else throw "module category is required";
+  mkModule = config: category: moduleFunc: let
 
     categoryPath = dotStringToPath category;
     defaultOptions = {
@@ -69,23 +62,22 @@ rec {
       # This allows each enable description to be their own respective config name
       enable = lib.mkEnableOption "${category}.enable";
     };
+
+    test = builtins.trace "b" "b";
     
+
+    # This gets the path to the user defined config
+    cfg = lib.getAttrFromPath categoryPath config;
+
+    module = moduleFunc cfg;
+
     # Don't mess with existing options or config
     combinedOptions = defaultOptions // (module.options or {});
 
     # Map the options with the attrPath.
     combinedOptionsWithPath = lib.setAttrByPath categoryPath (combinedOptions); 
 
-    configWithPath = lib.setAttrByPath categoryPath {};
 
-    # This gets the path to the user defined config
-    cfg = lib.getAttrFromPath categoryPath config;
-  in {
-    imports = module.imports or [];
-
-    options = combinedOptionsWithPath;
-
-    # If enable is true, config won't be empty
-    config = configWithPath // (module.config or {});
-  };
+  in 
+    module // combinedOptionsWithPath;
 }

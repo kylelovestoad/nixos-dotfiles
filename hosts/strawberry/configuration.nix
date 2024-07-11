@@ -104,7 +104,7 @@
           luaAtLeast = luajitPackages.luaAtLeast;
           luaOlder = luajitPackages.luaOlder;
         };
-        mouse_m908 = ../../packages/mouse_m908/mouse_m908.nix { };
+        mouse_m908 = callPackage /home/kyle/git/nixpkgs/pkgs/by-name/mo/mouse_m908/package.nix { };
       };
     };
   }; 
@@ -143,7 +143,11 @@
     lm_sensors
     xdg-utils
     # olympus # Custom package
-    mouse_m908 # Custom package
+    # mouse_m908 # Custom package
+  ];
+
+  services.udev.packages = with pkgs; [ 
+    # mouse_m908
   ];
 
 

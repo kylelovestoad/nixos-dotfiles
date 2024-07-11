@@ -1,6 +1,4 @@
-{pkgs, kylib, lib, config, ... } @ args: kylib.createModule config rec {
-
-  category = "jetbrains";
+{pkgs, kylib, lib, config, ... }: kylib.mkModule config "jetbrains" (cfg: {
 
   options = {
     impermanence = lib.mkEnableOption "impermanence for projects/configs";
@@ -24,9 +22,9 @@
       (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.rust-rover ([] ++ globals))
       (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.rust-rover ([] ++ globals))
     ];
-      
+      #
     # Let default project folders and config directories persist
-    home.persistence."/perist/home/kyle" = kylib.mkIfWith (cfg: cfg.impermanence) args.config category {
+    home.persistence."/perist/home/kyle" = lib.mkIf cfg.impermanence {
       directories = [
         ".local/share/Jetbrains"
         ".config/Jetbrains"
@@ -39,7 +37,5 @@
         "WebstormProjects"
       ];
     };
-
-    
   };
-}
+})

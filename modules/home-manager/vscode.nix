@@ -1,16 +1,14 @@
-{kylib, lib, pkgs, config, ...}: kylib.createModule config {
-  
-  category = "vscode";
+{kylib, lib, pkgs, config, ...}: kylib.mkModule config "vscode" (cfg: {
 
-  # options = {
-  #   extensions = lib.mkEnableOption "extensions for vscode";
-  # };
+  options = {
+    extensions = lib.mkEnableOption "extensions for vscode";
+  };
 
   config = {
 
     home.packages  = with pkgs; [ vscode ];
 
-    programs.vscode = {
+    programs.vscode = lib.mkIf cfg.extensions {
       enable = true;
 
       extensions = with pkgs.vscode-extensions; [
@@ -34,4 +32,4 @@
     };
   };
 
-}
+})

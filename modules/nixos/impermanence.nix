@@ -1,5 +1,6 @@
-{lib, kylib, inputs, config, ...}: kylib.createModule config {
+{lib, kylib, inputs, config, ...}: let 
   category = "sys-impermanence";
+in kylib.mkModule config category (cfg: {
 
   imports = [  
     inputs.impermanence.nixosModules.impermanence
@@ -31,4 +32,4 @@
       };
     };
   };
-}
+})
