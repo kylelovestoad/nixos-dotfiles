@@ -12,18 +12,18 @@
   buildInputs = [ libusb.dev ];
 
   installPhase = ''
-    mkdir -p $out/usr/bin \
-            $out/usr/share/doc \
-            $out/usr/share/man/man1 \
-            $out/usr/share/doc/mouse_m908 \
+    mkdir -p $out/bin \
+            $out/share/doc \
+            $out/share/man/man1 \
+            $out/share/doc/mouse_m908 \
             $out/lib/udev/rules.d
 
-    cp mouse_m908 $out/usr/bin/mouse_m908 && \
+    cp mouse_m908 $out/bin/mouse_m908 && \
     cp mouse_m908.rules $out/lib/udev/rules.d && \
-    cp examples/* $out/usr/share/doc/mouse_m908/ && \
-    cp README.md $out/usr/share/doc/mouse_m908/ && \
-    cp keymap.md $out/usr/share/doc/mouse_m908/ && \
-    cp mouse_m908.1 $out/usr/share/man/man1/
+    cp examples/* $out/share/doc/mouse_m908 && \
+    cp README.md $out/share/doc/mouse_m908 && \
+    cp keymap.md $out/share/doc/mouse_m908 && \
+    cp mouse_m908.1 $out/share/man/man1
   '';
 
   src = fetchFromGitHub {

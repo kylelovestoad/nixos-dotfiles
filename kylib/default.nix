@@ -63,9 +63,6 @@ rec {
       enable = lib.mkEnableOption "${category}.enable";
     };
 
-    test = builtins.trace "b" "b";
-    
-
     # This gets the path to the user defined config
     cfg = lib.getAttrFromPath categoryPath config;
 
@@ -76,8 +73,10 @@ rec {
 
     # Map the options with the attrPath.
     combinedOptionsWithPath = lib.setAttrByPath categoryPath (combinedOptions); 
-
-
-  in 
-    module // combinedOptionsWithPath;
+#
+  in let test = {
+    imports = module.imports or [];
+    options = combinedOptionsWithPath;
+    config = module.config or {};
+  }; in builtins.trace test test;
 }

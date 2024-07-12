@@ -4,7 +4,8 @@
     impermanence = lib.mkEnableOption "impermanence for projects/configs";
   };
 
-  config = {
+  config = lib.mkIf (builtins.trace cfg.enable cfg.enable) 
+  {
 
     # Load our jetbrains tools and IDEs
     home.packages = with pkgs; let 

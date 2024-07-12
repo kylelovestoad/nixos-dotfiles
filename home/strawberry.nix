@@ -1,6 +1,4 @@
-{ config, pkgs,  ... }:
-
-{
+{ config, pkgs, lib, ... }: {
 
   imports = [];
 
@@ -128,6 +126,8 @@
 
   jetbrains.enable = true;
   home-impermanence.enable = true;
+
+  jetbrains.impermanence = lib.mkIf config.home-impermanence.enable;
   vscode.enable = true;
   # vscode.extensions = true;
 }
