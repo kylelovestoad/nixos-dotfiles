@@ -5,10 +5,7 @@
   };
 
   config = {
-
-    home.packages  = with pkgs; [ vscode ];
-
-    programs.vscode = lib.mkIf cfg.extensions {
+    programs.vscode = {
       enable = true;
 
       extensions = with pkgs.vscode-extensions; [

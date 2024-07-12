@@ -8,5 +8,6 @@
  
   # TODO ./firefox.nix
   
-  vscode.extensions = lib.mkDefault true;
+  # vscode.enable = true;
+  # vscode.extensions = true;
 }
