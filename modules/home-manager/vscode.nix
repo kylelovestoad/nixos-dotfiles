@@ -25,6 +25,7 @@
         eamodio.gitlens
         sumneko.lua
         christian-kohler.path-intellisense
+        github.vscode-pull-request-github
       ];
     };
   };

@@ -1,8 +1,7 @@
 {lib, inputs, ...}: let
   kylib = (import ./default.nix) {inherit inputs lib;};
   outputs = inputs.self.outputs;
-in
-rec {
+in rec {
   ######################################
   # LIBRARY FOR BASIC HELPER FUNCTIONS #
   ######################################
@@ -68,15 +67,15 @@ rec {
 
     module = moduleFunc cfg;
 
-    # Don't mess with existing options or config
+    # Don't mess with existing options
     combinedOptions = defaultOptions // (module.options or {});
 
     # Map the options with the attrPath.
-    combinedOptionsWithPath = lib.setAttrByPath categoryPath (combinedOptions); 
-#
-  in let test = {
+    combinedOptionsWithPath = lib.setAttrByPath categoryPath combinedOptions; 
+    
+  in {
     imports = module.imports or [];
     options = combinedOptionsWithPath;
     config = module.config or {};
-  }; in builtins.trace test test;
+  };
 }

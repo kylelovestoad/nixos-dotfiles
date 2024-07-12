@@ -7,7 +7,8 @@
   ];
  
   # TODO ./firefox.nix
+
+  jetbrains.impermanence = lib.mkIf config.home-impermanence.enable true;
   
-  # vscode.enable = true;
-  # vscode.extensions = true;
+  vscode.enable = true;
 }

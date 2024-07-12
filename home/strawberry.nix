@@ -127,7 +127,6 @@
   jetbrains.enable = lib.mkForce true;
   home-impermanence.enable = lib.mkForce  true;
 
-  # jetbrains.impermanence = lib.mkIf config.home-impermanence.enable;
-  # vscode.enable = lib.mkForce true;
-  # vscode.extensions = lib.mkForce true;
+  vscode.enable = lib.mkForce true;
+  vscode.extensions = lib.mkForce true;
 }

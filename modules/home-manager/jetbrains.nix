@@ -4,8 +4,7 @@
     impermanence = lib.mkEnableOption "impermanence for projects/configs";
   };
 
-  config = lib.mkIf (builtins.trace cfg.enable cfg.enable) 
-  {
+  config = lib.mkIf cfg.enable {
 
     # Load our jetbrains tools and IDEs
     home.packages = with pkgs; let 
@@ -25,7 +24,8 @@
     ];
       #
     # Let default project folders and config directories persist
-    home.persistence."/perist/home/kyle" = lib.mkIf cfg.impermanence {
+    home.persistence."/persist/home/kyle" = lib.mkIf cfg.impermanence {
+      allowOther = true;
       directories = [
         ".local/share/Jetbrains"
         ".config/Jetbrains"
