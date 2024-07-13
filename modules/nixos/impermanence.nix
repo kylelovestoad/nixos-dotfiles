@@ -1,6 +1,4 @@
-{lib, kylib, inputs, config, ...}: let 
-  category = "sys-impermanence";
-in kylib.mkModule config category (cfg: {
+{lib, kylib, inputs, config, ...}: kylib.mkModule config "nixos.impermanence" (cfg: {
 
   imports = [  
     inputs.impermanence.nixosModules.impermanence

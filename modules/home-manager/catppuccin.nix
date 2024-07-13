@@ -1,10 +1,10 @@
-{lib, kylib, inputs, config, ...}: kylib.mkModule config "home-catppuccin" (cfg: {
+{lib, kylib, inputs, config, ...}: kylib.mkModule config "home-manager.catppuccin" (cfg: {
 
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
   ];
 
-  config = lib.mkIf cfg.enable {
+  config = lib.mkIf cfg.enable (let test = {
     catppuccin.enable = true;
 
     catppuccin.pointerCursor.enable = true;
@@ -16,5 +16,5 @@
     qt.style.catppuccin.enable = true;
 
     qt.style.catppuccin.apply = true;
-  };
+  }; in builtins.trace test test);
 })
