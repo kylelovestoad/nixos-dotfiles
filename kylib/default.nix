@@ -72,7 +72,7 @@ in rec {
 
     # Map the options with the attrPath.
     combinedOptionsWithPath = lib.setAttrByPath categoryPath combinedOptions; 
-    
+
   in {
     imports = module.imports or [];
     options = combinedOptionsWithPath;
