@@ -99,12 +99,8 @@
     config = {
       allowUnfree = true;
       packageOverrides = with pkgs; pkgs: {
-        olympus = callPackage ../../packages/olympus/olympus.nix { 
-          buildLuarocksPackage = luajitPackages.buildLuarocksPackage;
-          luaAtLeast = luajitPackages.luaAtLeast;
-          luaOlder = luajitPackages.luaOlder;
-        };
-        mouse_m908 = callPackage /home/kyle/git/nixpkgs/pkgs/by-name/mo/mouse_m908/package.nix { };
+        olympus = callPackage ../../packages/olympus/olympus.nix { };
+        mouse_m908 = callPackage ../../packages/mouse_m908/mouse_m908.nix { };
       };
     };
   }; 
@@ -142,12 +138,12 @@
     alsa-oss # TODO fixes issues with minecraft make dedicated minecraft/prismlauncher config
     lm_sensors
     xdg-utils
-    # olympus # Custom package
-    # mouse_m908 # Custom package
+    olympus # Custom package
+    mouse_m908 # Custom package
   ];
 
   services.udev.packages = with pkgs; [ 
-    # mouse_m908
+    mouse_m908
   ];
 
 
