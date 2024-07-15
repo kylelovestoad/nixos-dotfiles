@@ -9,7 +9,9 @@
  
   # TODO ./firefox.nix
 
-  jetbrains.impermanence = lib.mkIf config.home-impermanence.enable true;
+  jetbrains.impermanence = lib.mkIf config.home-manager.impermanence.enable true;
 
   vscode.enable = true;
+
+  vscode.catppuccin = lib.mkIf config.home-manager.catppuccin.enable true;
 }

@@ -4,7 +4,7 @@
     inputs.catppuccin.nixosModules.catppuccin
   ];
 
-  config = lib.mkIf cfg.enable (let test = {
-    ccatppuccin.enable = true;
-  }; in builtins.trace test test);
+  config = lib.mkIf cfg.enable {
+    catppuccin.enable = true;
+  };
 })

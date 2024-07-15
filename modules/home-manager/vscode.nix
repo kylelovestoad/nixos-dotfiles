@@ -2,6 +2,7 @@
 
   options = {
     extensions = lib.mkEnableOption "extensions for vscode";
+    catppuccin = lib.mkEnableOption "catppuccin theming";
   };
 
   config = {
