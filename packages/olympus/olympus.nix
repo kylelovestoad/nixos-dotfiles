@@ -1,116 +1,149 @@
-{ lib
-, libarchive
-, buildDotnetModule
-, buildLuarocksPackage
-, luaOlder
-, luaAtLeast
-, fetchzip
-, fetchFromGitHub
-, fetchurl
-, buildFHSEnv
-, curl
-, love
-, sqlite
-, luajitPackages
-}: let 
+{
+  fetchFromGitHub,
+  fetchzip,
+  buildDotnetModule,
+  lib,
+  mono4,
+  love,
+  lua51Packages,
+  msbuild,
+  sqlite,
+  curl,
+  libarchive,
+  buildFHSEnv,
+  xdg-utils,
+}:
+# WONTFIX: On NixOS, cannot launch Steam installations of Everest / Celeste from Olympus.
+# The way it launches Celeste is by directly executing steamapps/common/Celeste/Celeste,
+# and it does not work on NixOS (even with steam-run).
+# This should be considered a bug of Steam on NixOS (and is probably very hard to fix).
 
-  lsqlite3 = luajitPackages.buildLuarocksPackage {
+# FIXME: olympus checks if xdg-mime x-scheme-handler/everest for a popup. If it's not set it complains about it.
+# I'm pretty sure thats by user so end user needs to do it
+
+let
+  # NOTE: on installation olympus uses MiniInstallerLinux which is dynamically linked, this makes it run fine
+  fhs-env = buildFHSEnv {
+    name = "olympus-fhs";
+    targetPkgs = pkgs: (with pkgs; [
+      icu
+      stdenv.cc.cc
+      libgcc.lib
+      openssl
+    ]);
+    runScript = "bash";
+  };
+
+
+  lsqlite3 = lua51Packages.buildLuarocksPackage {
     pname = "lsqlite3";
     version = "0.9.6-1";
-
-    disabled = (luaOlder "5.1") || (luaAtLeast "5.5");
-
-    buildInputs = [ sqlite.dev ];
-
     src = fetchzip {
       url = "http://lua.sqlite.org/index.cgi/zip/lsqlite3_v096.zip";
-      sha256 = "sha256-Mq409A3X9/OS7IPI/KlULR6ZihqnYKk/mS/W/2yrGBg=";
+      hash = "sha256-Mq409A3X9/OS7IPI/KlULR6ZihqnYKk/mS/W/2yrGBg=";
     };
-
-    meta = {
-      homepage = "lua.sqlite.org";
-      maintainers = with lib.maintainers; [ kylelovestoad ];
-      license.fullName = "MIT/X11";
-    };
+    buildInputs = [sqlite.dev];
   };
 
-in buildDotnetModule rec {
-
+  dotnet-out = "sharp/bin/Release/net452";
   pname = "olympus";
-  version = "24.06.25.02";
-  commit = "6bbe4de9f4ca5aa1a766e334b45c2c76eaf382a9";
+  phome = "$out/lib/${pname}";
+  nfd = lua51Packages.nfd;
+  lua-subprocess = lua51Packages.lua-subprocess;
+in
+  buildDotnetModule rec {
+    inherit pname;
 
-  # NOTE: on installation olympus uses MiniInstallerLinux which is dynamically linked, this makes it run fine
-  # fhs-env = buildFHSEnv {
-  #   name = "olympus-fhs";
-  #   targetPkgs = pkgs: (with pkgs; [
-  #     icu
-  #     stdenv.cc.cc
-  #     libgcc.lib
-  #     openssl
-  #   ]);
-  #   runScript = "bash";
-  # };
+    # FIXME: I made up this version number.
+    version = "24.04.23.02";
 
-  nativeBuildInputs = [
-    libarchive
-  ];
+    src = fetchFromGitHub {
+      owner = "EverestAPI";
+      repo = "Olympus";
+      rev = "6b4ceee45b51b913cf1d50bfb3ae645b21bba4f1";
+      fetchSubmodules = true; # Required. See upstream's README.
+      hash = "sha256-FtvTELf8EZCkoAmMbgwxftxXOzdXy0P69RRMyPlRXUA=";
+    };
 
-  buildInputs = [
-    curl
-    love
-    luajitPackages.nfd
-    luajitPackages.lua-subprocess
-    lsqlite3
-  ];
+    executables = [];
 
-  projectFile = "sharp/Olympus.Sharp.sln";
+    nativeBuildInputs = [
+      msbuild
+      libarchive # To create the .love file (zip format)
+    ];
 
-  executables = [];
+    buildInputs = [
+      love
+      mono4
+      nfd
+      lua-subprocess
+      lsqlite3
+    ];
 
-  nugetDeps = ./deps.nix;
+    runtimeInputs = [
+      xdg-utils
+    ];
 
-  preBuild = ''
-    echo "${version}" > src/version.txt
-  '';
+    nugetDeps = ./deps.nix;
 
-  installPhase = ''
-    lib="$out/lib/olympus"
-    bin="$out/bin"
-    mkdir -p $lib
-    mkdir -p $bin
+    projectFile = "sharp/Olympus.Sharp.sln";
 
-    ln -s $lib/olympus "$bin/olympus"
+    postConfigure = ''
+      echo '${version}-nixos' > src/version.txt
+    '';
 
-    find src -type f -exec install -Dm755 "{}" "$lib/{}" \;
-    install -Dm755 sharp/bin/Release/net452/* -t "$lib/sharp"
+    # Copied from `olympus` in AUR.
+    buildPhase = ''
+      runHook preBuild
+      FrameworkPathOverride=${mono4.out}/lib/mono/4.5 msbuild ${projectFile} /p:Configuration=Release
+      runHook postBuild
+    '';
 
-    install -Dm755 olympus.sh "$lib/olympus"
-    install -Dm755 find-love.sh "$lib/find-love"
+    # Hack Olympus.Sharp.bin.{x86,x86_64} to use system mono.
+    # This was proposed by @0x0ade on discord.gg/celeste:
+    # https://discord.com/channels/403698615446536203/514006912115802113/827507533962149900
+    postBuild = ''
+      makeWrapper ${mono4.out}/bin/mono ${dotnet-out}/Olympus.Sharp.bin.x86 \
+        --add-flags ${phome}/sharp/Olympus.Sharp.exe
+      cp ${dotnet-out}/Olympus.Sharp.bin.x86 ${dotnet-out}/Olympus.Sharp.bin.x86_64
+    '';
 
-    bsdtar --format zip --strip-components 1 -cf "$lib/olympus.love" src
+    # The script find-love is hacked to use love from nixpkgs.
+    # It is used to launch Loenn from Olympus.
+    installPhase = let
+      subprocess-cpath = "${lua-subprocess.out}/lib/lua/5.1/?.so";
+      nfd-cpath = "${nfd.out}/lib/lua/5.1/?.so";
+      lsqlite3-cpath = "${lsqlite3.out}/lib/lua/5.1/?.so";
+    in ''
+      runHook preInstall
+      mkdir -p $out/bin
+      makeWrapper ${love.out}/bin/love ${phome}/find-love \
+        --add-flags "--fused"
+      makeWrapper ${phome}/find-love $out/bin/olympus \
+        --prefix LUA_CPATH : "${nfd-cpath};${subprocess-cpath};${lsqlite3-cpath}" \
+        --prefix LD_LIBRARY_PATH : ${lib.makeLibraryPath [curl]} \
+        --add-flags "${phome}/olympus.love"
+      mkdir -p ${phome}
+      bsdtar --format zip --strip-components 1 -cf ${phome}/olympus.love src
+      install -Dm755 ${dotnet-out}/* -t ${phome}/sharp
+      runHook postInstall
+    '';
 
-    # install -Dm644 lib-linux/olympus.desktop "$out/usr/share/applications/olympus.desktop"
-    # install -Dm644 src/data/icon.png "$out/usr/share/icons/hicolor/128x128/apps/olympus.png"
+    # we need to force olympus to use the fhs-env
+    postInstall = ''
+      sed -i 's|^exec|& ${fhs-env}/bin/olympus-fhs|' $out/bin/olympus
+      install -Dm644 lib-linux/olympus.desktop $out/share/applications/olympus.desktop
+      install -Dm644 src/data/icon.png $out/share/icons/hicolor/128x128/apps/olympus.png
+      install -Dm644 LICENSE $out/share/licenses/${pname}/LICENSE
+    '';
 
-    # install -Dm644 LICENSE "$out/usr/share/licenses/${pname}/LICENSE"
-  '';
-
-  src = fetchFromGitHub {
-    owner = "EverestAPI";
-    repo = "Olympus";
-    rev = commit;
-    sha256 = "sha256-ZC15CJEikTdxEaUHftca3NxJPZOyoNklAZtcbfMMsU8=";
-    # Required to get OlympUI, moonshine and luajit-request
-    fetchSubmodules = true;
-  };
-
-  meta = with lib; {
-    homepage = "https://github.com/EverestAPI/Olympus";
-    description = "New Everest installer / manager, powered by LÖVE / love2d.";
-    mainProgram = "olympus";
-    license = with licenses; [ mit ];
-    platforms = [ "x86_64-linux" ];
-    maintainers = with maintainers; [ kylelovestoad ];
-  };
-}
+    meta = with lib; {
+      description = "Cross-platform GUI Everest installer and Celeste mod manager";
+      homepage = "https://github.com/EverestAPI/Olympus";
+      changelog = "https://github.com/EverestAPI/Olympus/blob/main/changelog.txt";
+      license = licenses.mit;
+      maintainers = with maintainers; [ulysseszhan petingoso];
+      mainProgram = "olympus";
+      platforms = platforms.unix;
+    };
+  }
