@@ -50,6 +50,8 @@
         enable = true;
         # Applies the QT theme automatically with Kvantum
         apply = true;
+        flavor = cfg.flavor;
+        accent = cfg.accent;
       };
     };
 
