@@ -125,10 +125,10 @@
   };
 
   jetbrains.enable = lib.mkForce true;
-  home-manager.impermanence.enable = lib.mkForce true;
+  impermanence.homeManager.enable = lib.mkForce true;
 
   vscode.enable = lib.mkForce true;
   vscode.extensions = lib.mkForce true;
 
-  home-manager.catppuccin.enable = lib.mkForce true;
+  catppuccin.homeManager.enable = lib.mkForce true;
 }

@@ -1,4 +1,4 @@
-{lib, kylib, inputs, config, ...}: kylib.mkModule config "nixos.impermanence" (cfg: {
+{lib, kylib, inputs, config, ...}: kylib.mkModule config "impermanence.system" (cfg: {
 
   imports = [  
     inputs.impermanence.nixosModules.impermanence

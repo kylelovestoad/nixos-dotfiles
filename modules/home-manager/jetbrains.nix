@@ -30,7 +30,7 @@
         ".local/share/Jetbrains"
         ".config/Jetbrains"
         ".cache/Jetbrains"
-        "ClionProjects"
+        "CLionProjects"
         "GolandProjects"
         "IdeaProjects"
         "PycharmProjects"

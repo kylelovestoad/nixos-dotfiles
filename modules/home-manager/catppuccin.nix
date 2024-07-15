@@ -1,4 +1,4 @@
-{lib, kylib, inputs, config, pkgs, ...}: kylib.mkModule config "home-manager.catppuccin" (cfg: {
+{lib, kylib, inputs, config, pkgs, ...}: kylib.mkModule config "catppuccin.homeManager" (cfg: {
 
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin

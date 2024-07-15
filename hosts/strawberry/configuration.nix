@@ -177,6 +177,6 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
-  nixos.impermanence.enable = true;
-  nixos.catppuccin.enable = true;
+  impermanence.system.enable = true;
+  catppuccin.system.enable = true;
 }
