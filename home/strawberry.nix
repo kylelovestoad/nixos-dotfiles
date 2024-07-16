@@ -130,5 +130,6 @@
   vscode.enable = lib.mkForce true;
   vscode.extensions = lib.mkForce true;
 
-  catppuccin.homeManager.enable = lib.mkForce true;
+  # catppuccin.homeManager.enable = lib.mkForce true;
+  stylix.homeManager.enable = lib.mkForce true;
 }

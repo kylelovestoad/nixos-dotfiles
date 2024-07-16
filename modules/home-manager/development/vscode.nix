@@ -7,28 +7,10 @@
 
   config = {
 
-    nixpkgs.overlays = if cfg.catppuccin then [inputs.catppuccin-vsc.overlays.default] else [];
-
     programs.vscode = {
       enable = true;
 
-      extensions = with pkgs.vscode-extensions; let 
-        catppuccin-extensions = if cfg.catppuccin then [
-          (catppuccin.catppuccin-vsc.override {
-            # Get the accent specified in the catppuccin module
-            accent = config.catppuccin.homeManager.accent;
-            boldKeywords = true;
-            italicComments = true;
-            italicKeywords = true;
-            extraBordersEnabled = true;
-            workbenchMode = "default";
-            bracketMode = "rainbow";
-            colorOverrides = {};
-            customUIColors = {};
-          })
-          catppuccin.catppuccin-vsc-icons
-        ] else [];
-      in [
+      extensions = with pkgs.vscode-extensions; [
         # Computercraft
         jackmacwindows.vscode-computercraft
         jackmacwindows.craftos-pc
@@ -51,7 +33,7 @@
         # Git & Github
         eamodio.gitlens
         github.vscode-pull-request-github
-      ] ++ catppuccin-extensions;
+      ];
     };
   };
 })

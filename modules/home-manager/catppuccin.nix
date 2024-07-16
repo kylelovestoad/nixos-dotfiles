@@ -2,7 +2,6 @@
 
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
-    inputs.stylix.homeManagerModules.stylix
   ];
 
   options = {
@@ -12,55 +11,68 @@
 
   config = lib.mkIf cfg.enable {
     
-    stylix.enable = true;
-    stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";
-    stylix.cursor.package = pkgs.catppuccin-cursors.mochaMauve;
-    stylix.autoEnable = true;
-    stylix.image = ../../assets/firewatch.jpg;
-    
-    # We just install the catppuccin kde package since it isn't supported by catppuccin nix module
-    # home.packages = [ 
-    #   (pkgs.catppuccin-kde.override {
-    #     flavour = [ cfg.flavor ];
-    #     accents = [ cfg.accent ];
-    #   })
-    # ];
 
-    # catppuccin.enable = true;
+    nixpkgs.overlays = if config.vscode.enable then [inputs.catppuccin-vsc.overlays.default] else [];
 
-    # catppuccin.pointerCursor = {
-    #   enable = true;
-    #   flavor = cfg.flavor;
-    #   accent = cfg.accent; 
-    # };
+    home.packages = let 
+      vscode-extensions = with pkgs.vscode-extensions; if config.vscode.enable then [
+        (catppuccin.catppuccin-vsc.override {
+          # Get the accent specified in the catppuccin module
+          accent = config.catppuccin.homeManager.accent;
+          boldKeywords = true;
+          italicComments = true;
+          italicKeywords = true;
+          extraBordersEnabled = true;
+          workbenchMode = "default";
+          bracketMode = "rainbow";
+          colorOverrides = {};
+          customUIColors = {};
+        })
+        catppuccin.catppuccin-vsc-icons 
+      ] else [];
+    in [ 
+      # We just install the catppuccin kde package since it isn't supported by catppuccin nix module
+      (pkgs.catppuccin-kde.override {
+        flavour = [ cfg.flavor ];
+        accents = [ cfg.accent ];
+      }) 
+    ] ++ vscode-extensions;
 
-    # gtk.catppuccin = {
-    #   enable = true;
-    #   flavor = cfg.flavor;
-    #   accent = cfg.accent;
+    catppuccin.enable = true;
 
-    #   icon = {
-    #     enable = true;
-    #     flavor = cfg.flavor;
-    #     accent = cfg.accent;
-    #   };
-    # };
+    catppuccin.pointerCursor = {
+      enable = true;
+      flavor = cfg.flavor;
+      accent = cfg.accent; 
+    };
 
-    # qt = {
-    #   # Qt has to be enabled for qt styles to be set
-    #   enable = true;
-    #   platformTheme.name = "kvantum";
-    #   # Need to set style as kvantum since that is how the theme is applied
-    #   style.name = "kvantum";
+    gtk.catppuccin = {
+      enable = true;
+      flavor = cfg.flavor;
+      accent = cfg.accent;
 
-    #   style.catppuccin = {
-    #     enable = true;
-    #     # Applies the QT theme automatically with Kvantum
-    #     apply = true;
-    #     flavor = cfg.flavor;
-    #     accent = cfg.accent;
-    #   };
-    # };
+      icon = {
+        enable = true;
+        flavor = cfg.flavor;
+        accent = cfg.accent;
+      };
+    };
+
+    qt = {
+      # Qt has to be enabled for qt styles to be set
+      enable = true;
+      platformTheme.name = "kvantum";
+      # Need to set style as kvantum since that is how the theme is applied
+      style.name = "kvantum";
+
+      style.catppuccin = {
+        enable = true;
+        # Applies the QT theme automatically with Kvantum
+        apply = true;
+        flavor = cfg.flavor;
+        accent = cfg.accent;
+      };
+    };
 
   };
 })
