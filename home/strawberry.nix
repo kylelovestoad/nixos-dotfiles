@@ -50,7 +50,6 @@
 
     wineWowPackages.stable
     winetricks
-    btop
 
     peek
     piper

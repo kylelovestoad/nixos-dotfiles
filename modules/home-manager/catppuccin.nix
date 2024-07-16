@@ -10,7 +10,6 @@
   };
 
   config = lib.mkIf cfg.enable {
-    
 
     nixpkgs.overlays = lib.mkIf config.vscode.enable [inputs.catppuccin-vsc.overlays.default];
 
@@ -30,7 +29,9 @@
         catppuccin.catppuccin-vsc-icons 
     ];
 
-    
+    programs.kitty.catppuccin.enable = lib.mkIf config.kitty.enable true;
+
+    programs.btop.catppuccin.enable = lib.mkIf config.btop.enable true; 
 
     home.packages = [ 
       # We just install the catppuccin kde package since it isn't supported by catppuccin nix module
