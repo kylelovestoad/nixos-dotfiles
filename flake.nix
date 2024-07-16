@@ -18,6 +18,9 @@
 
     catppuccin-vsc.url = "https://flakehub.com/f/catppuccin/vscode/*.tar.gz"; 
 
+    # For theming
+    stylix.url = "github:danth/stylix";
+
     # home-manager-unstable = {
     #   url = "github:nix-community/home-manager/master";
     #   inputs.nixpkgs.follows = "nixpkgs";
