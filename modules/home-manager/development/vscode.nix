@@ -2,10 +2,9 @@
 
   options = {
     extensions = lib.mkEnableOption "extensions for vscode";
-    catppuccin = lib.mkEnableOption "catppuccin theming";
   };
 
-  config = {
+  config = lib.mkIf cfg.enable {
 
     programs.vscode = {
       enable = true;

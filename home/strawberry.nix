@@ -120,6 +120,7 @@
   #
   #  /etc/profiles/per-user/kyle/etc/profile.d/hm-session-vars.sh
   #
+
   home.sessionVariables = {
     EDITOR = "lvim";
   };
@@ -130,6 +131,6 @@
   vscode.enable = lib.mkForce true;
   vscode.extensions = lib.mkForce true;
 
-  # catppuccin.homeManager.enable = lib.mkForce true;
-  stylix.homeManager.enable = lib.mkForce true;
+  catppuccin.homeManager.enable = lib.mkForce true;
+  # stylix.homeManager.enable = lib.mkForce true;
 }

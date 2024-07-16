@@ -12,10 +12,9 @@
   config = lib.mkIf cfg.enable {
     
 
-    nixpkgs.overlays = if config.vscode.enable then [inputs.catppuccin-vsc.overlays.default] else [];
+    nixpkgs.overlays = lib.mkIf config.vscode.enable [inputs.catppuccin-vsc.overlays.default];
 
-    home.packages = let 
-      vscode-extensions = with pkgs.vscode-extensions; if config.vscode.enable then [
+    programs.vscode.extensions = with pkgs.vscode-extensions; lib.mkIf config.vscode.enable [
         (catppuccin.catppuccin-vsc.override {
           # Get the accent specified in the catppuccin module
           accent = config.catppuccin.homeManager.accent;
@@ -29,14 +28,17 @@
           customUIColors = {};
         })
         catppuccin.catppuccin-vsc-icons 
-      ] else [];
-    in [ 
+    ];
+
+    
+
+    home.packages = [ 
       # We just install the catppuccin kde package since it isn't supported by catppuccin nix module
       (pkgs.catppuccin-kde.override {
         flavour = [ cfg.flavor ];
         accents = [ cfg.accent ];
       }) 
-    ] ++ vscode-extensions;
+    ];
 
     catppuccin.enable = true;
 

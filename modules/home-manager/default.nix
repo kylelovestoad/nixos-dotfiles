@@ -4,7 +4,7 @@
     ./development
     ./catppuccin.nix
     ./impermanence.nix
-    ./stylix.nix
+    # ./stylix.nix
   ];
  
   # TODO ./firefox.nix
