@@ -29,7 +29,7 @@
         catppuccin.catppuccin-vsc-icons 
     ];
 
-    programs.kitty.catppuccin.enable = lib.mkIf config.kitty.enable true;
+    # programs.kitty.catppuccin.enable = lib.mkIf config.kitty.enable true;
 
     programs.btop.catppuccin.enable = lib.mkIf config.btop.enable true; 
 

@@ -4,6 +4,8 @@
     ./development
     ./catppuccin.nix
     ./impermanence.nix
+    ./btop.nix
+    ./kitty.nix
     # ./stylix.nix
   ];
  
