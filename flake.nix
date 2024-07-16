@@ -18,7 +18,7 @@
 
     catppuccin-vsc.url = "https://flakehub.com/f/catppuccin/vscode/*.tar.gz"; 
 
-    # For theming
+    # UNUSED For now, this might have a use later
     stylix.url = "github:danth/stylix";
 
     # home-manager-unstable = {

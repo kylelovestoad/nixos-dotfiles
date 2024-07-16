@@ -13,7 +13,8 @@
 
     nixpkgs.overlays = lib.mkIf config.vscode.enable [inputs.catppuccin-vsc.overlays.default];
 
-    programs.vscode.extensions = with pkgs.vscode-extensions; lib.mkIf config.vscode.enable [
+    programs.vscode = {
+      extensions = with pkgs.vscode-extensions; lib.mkIf config.vscode.enable [
         (catppuccin.catppuccin-vsc.override {
           # Get the accent specified in the catppuccin module
           accent = config.catppuccin.homeManager.accent;
@@ -26,12 +27,31 @@
           colorOverrides = {};
           customUIColors = {};
         })
-        catppuccin.catppuccin-vsc-icons 
-    ];
+        catppuccin.catppuccin-vsc-icons
+      ];
 
-    # programs.kitty.catppuccin.enable = lib.mkIf config.kitty.enable true;
+      # We add these settings for better compatability with catppuccin
+      userSettings = let 
+        # HACK If this name were to ever change formatting there would most certainly be a problem
+        flavorName = if cfg.flavor == "frappe" then "frappé" else cfg.flavor;
+      in {
+        # Flavor needs to be capitalized since that is how the names work 
+        "workbench.colorTheme" = "Catppuccin ${kylib.capitalize flavorName}";
+        # Catppuccin uses a custom (and much nicer) title bar
+        "window.titleBarStyle" = "custom";
+      };
+    };
 
-    programs.btop.catppuccin.enable = lib.mkIf config.btop.enable true; 
+    programs.kitty.catppuccin = {
+      enable = lib.mkIf config.kitty.enable true;
+      inherit (cfg) flavor;
+    };
+
+  
+    programs.btop.catppuccin = {
+      enable = lib.mkIf config.btop.enable true; 
+      inherit (cfg) flavor;
+    };
 
     home.packages = [ 
       # We just install the catppuccin kde package since it isn't supported by catppuccin nix module
@@ -45,19 +65,16 @@
 
     catppuccin.pointerCursor = {
       enable = true;
-      flavor = cfg.flavor;
-      accent = cfg.accent; 
+      inherit (cfg) flavor accent;
     };
 
     gtk.catppuccin = {
       enable = true;
-      flavor = cfg.flavor;
-      accent = cfg.accent;
+      inherit (cfg) flavor accent;
 
       icon = {
         enable = true;
-        flavor = cfg.flavor;
-        accent = cfg.accent;
+        inherit (cfg) flavor accent;
       };
     };
 
@@ -72,8 +89,7 @@
         enable = true;
         # Applies the QT theme automatically with Kvantum
         apply = true;
-        flavor = cfg.flavor;
-        accent = cfg.accent;
+        inherit (cfg) flavor accent;
       };
     };
 

@@ -22,7 +22,6 @@
           "/var/lib/nixos"
           "/var/lib/systemd/coredump"
           "/etc/NetworkManager/system-connections"
-          # TODO Add all user home dirs to the persistence!
         ];
         # files = [
         #   "/etc/machine-id"

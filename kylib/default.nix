@@ -35,6 +35,14 @@ in rec {
       ];
     };
 
+  # Capitalizes the first character of the string given
+  capitalize = str: lib.concatStrings [
+    # Take the first char of the string, capitalizing it
+    (lib.toUpper (builtins.substring 0 1 str)) 
+    # Second part is from char 1 to the end of the string
+    (builtins.substring 1 (builtins.stringLength str) str) 
+  ];
+
   # Helper function for pathToDotString
   pathToDotString' = list: index: let 
     length = builtins.length list;

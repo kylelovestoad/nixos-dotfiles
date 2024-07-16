@@ -4,6 +4,7 @@
     inputs.stylix.homeManagerModules.stylix
   ];
 
+  # UNUSED For now, this module might have a use later
   config = {
     stylix.enable = true;
     stylix.base16Scheme = "${pkgs.base16-schemes}/share/themes/catppuccin-mocha.yaml";

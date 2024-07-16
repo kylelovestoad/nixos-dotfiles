@@ -33,6 +33,25 @@
         eamodio.gitlens
         github.vscode-pull-request-github
       ];
+
+      userSettings = {
+        "window.zoomLevel" = 1;
+        "nix.enableLanguageServer" = true;
+        "window.titleBarStyle" = "custom";
+        "telemetry.telemetryLevel" = "off";
+        "gitlens.telemetry.enabled" = false;
+        "todo-tree.general.tags" = [
+          "BUG"
+          "HACK"
+          "FIXME"
+          "TODO"
+          "XXX"
+          "[ ]"
+          "[x]"
+          # My added todo tags
+          "UNUSED"
+        ];
+      };
     };
   };
 })
