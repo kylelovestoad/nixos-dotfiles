@@ -20,7 +20,7 @@
       (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ([] ++ globals)) 
       (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.pycharm-professional ([] ++ globals)) 
       (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.rust-rover ([] ++ globals))
-      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.rust-rover ([] ++ globals))
+      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.webstorm ([] ++ globals))
     ];
       #
     # Let default project folders and config directories persist

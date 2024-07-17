@@ -27,8 +27,6 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     aseprite
-    vesktop
-    discord
     eyedropper
     firefox
     godot_4 # TODO Game dev module?
@@ -134,5 +132,6 @@
 
   btop.enable = lib.mkForce true;
   kitty.enable = lib.mkForce true;
+  discord.enable = lib.mkForce true;
   # stylix.homeManager.enable = lib.mkForce true;
 }

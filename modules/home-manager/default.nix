@@ -2,9 +2,11 @@
 {...}: {
   imports = [
     ./development
-    ./catppuccin.nix
-    ./impermanence.nix
+
     ./btop.nix
+    ./catppuccin.nix
+    ./discord.nix
+    ./impermanence.nix
     ./kitty.nix
     # ./stylix.nix
   ];

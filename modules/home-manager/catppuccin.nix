@@ -42,16 +42,23 @@
       };
     };
 
+    # kitty
     programs.kitty.catppuccin = {
       enable = lib.mkIf config.kitty.enable true;
       inherit (cfg) flavor;
     };
 
-  
+    # btop
     programs.btop.catppuccin = {
       enable = lib.mkIf config.btop.enable true; 
       inherit (cfg) flavor;
     };
+
+    # Discord
+    home.file.".config/vesktop/settings/quickCss.css".text = lib.mkIf config.discord.enable ''
+      /* ${cfg.flavor} (${cfg.accent} accent)*/
+      @import url("https://catppuccin.github.io/discord/dist/catppuccin-${cfg.flavor}.${cfg.accent}.css");
+    '';
 
     home.packages = [ 
       # We just install the catppuccin kde package since it isn't supported by catppuccin nix module
