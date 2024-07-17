@@ -28,7 +28,6 @@
     # pkgs.hello
     aseprite
     eyedropper
-    firefox
     godot_4 # TODO Game dev module?
     kate
     
@@ -133,5 +132,7 @@
   btop.enable = lib.mkForce true;
   kitty.enable = lib.mkForce true;
   discord.enable = lib.mkForce true;
+
+  mpv.enable = lib.mkForce true;
   # stylix.homeManager.enable = lib.mkForce true;
 }

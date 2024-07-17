@@ -8,6 +8,7 @@
     ./discord.nix
     ./impermanence.nix
     ./kitty.nix
+    ./mpv.nix
     # ./stylix.nix
   ];
  

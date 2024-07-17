@@ -2,9 +2,10 @@
 
   config = lib.mkIf cfg.enable {
     home.packages = with pkgs; [
-      (discord.override {
-        withVencord = true;
-      })
+      vesktop
+
+      # Fallback discord
+      discord
     ];
   };
 })

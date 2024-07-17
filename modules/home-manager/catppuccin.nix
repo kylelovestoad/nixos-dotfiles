@@ -44,20 +44,27 @@
 
     # kitty
     programs.kitty.catppuccin = {
-      enable = lib.mkIf config.kitty.enable true;
+      enable = config.kitty.enable;
       inherit (cfg) flavor;
     };
 
     # btop
     programs.btop.catppuccin = {
-      enable = lib.mkIf config.btop.enable true; 
+      enable = config.btop.enable;
       inherit (cfg) flavor;
     };
 
-    # Discord
+    # mpv
+    programs.mpv.catppuccin = {
+      enable = config.mpv.enable; 
+      inherit (cfg) flavor accent;
+    };
+
+    # vesktop
+    # update quickCss.css because it applies immediately
     home.file.".config/vesktop/settings/quickCss.css".text = lib.mkIf config.discord.enable ''
       /* ${cfg.flavor} (${cfg.accent} accent)*/
-      @import url("https://catppuccin.github.io/discord/dist/catppuccin-${cfg.flavor}.${cfg.accent}.css");
+      @import url("https://catppuccin.github.io/discord/dist/catppuccin-${cfg.flavor}-${cfg.accent}.theme.css");
     '';
 
     home.packages = [ 
@@ -75,6 +82,8 @@
       inherit (cfg) flavor accent;
     };
 
+    # Deprecated, but still usable for now ;-;
+    # One possible replacement could be stylix, it works for gtk
     gtk.catppuccin = {
       enable = true;
       inherit (cfg) flavor accent;
