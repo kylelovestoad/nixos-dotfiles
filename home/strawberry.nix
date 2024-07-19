@@ -134,5 +134,6 @@
   discord.enable = lib.mkForce true;
 
   mpv.enable = lib.mkForce true;
+  firefox.enable = lib.mkForce true;
   # stylix.homeManager.enable = lib.mkForce true;
 }

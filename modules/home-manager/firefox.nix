@@ -1,10 +1,86 @@
-{kylib, config, lib, pkgs, ...}: kylib.mkModule config "firefox" (cfg: { 
+{kylib, config, lib, pkgs, inputs, ...}: kylib.mkModule config "firefox" (cfg: { 
   config = lib.mkIf cfg.enable {
     programs.firefox = {
       enable = true;
-      package = "firefox-devedition-bin";
+      package = pkgs.firefox;
+
+      /* ---- POLICIES ---- */
+      # Check about:policies#documentation for options.
+      policies = {
+        DisableTelemetry = true;
+        DisableFirefoxStudies = true;
+        EnableTrackingProtection = {
+          Value = true;
+          Locked = true;
+          Cryptomining = true;
+          Fingerprinting = true;
+        };
+        DisablePocket = true;
+        DisableFirefoxAccounts = true;
+        DisableAccounts = true;
+        DisableFirefoxScreenshots = true;
+        OverrideFirstRunPage = "";
+        OverridePostUpdatePage = "";
+        DontCheckDefaultBrowser = true;
+        DisplayBookmarksToolbar = "never"; # alternatives: "always" or "newtab"
+        DisplayMenuBar = "default-off"; # alternatives: "always", "never" or "default-on"
+        SearchBar = "unified"; # alternative: "separate"
+      };
 
       profiles.${config.home.username} = {
+
+        search.force = true;
+
+        extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+
+          # theming
+          stylus
+          firefox-color
+
+          # userscripts
+          violentmonkey
+          
+          # youtube
+          dearrow
+          sponsorblock
+          youtube-shorts-block
+        ];
+
+        bookmarks = [
+          {
+            name = "Nix Sites";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "homepage";
+                tags = [ "nix" ];
+                url = "https://nixos.org/";
+              }
+              {
+                name = "wiki";
+                tags = [ "wiki" "nix" ];
+                url = "https://wiki.nixos.org/";
+              }
+              {
+                name = "forum";
+                tags = [ "forum" "nix" ];
+                url = "https://discourse.nixos.org/";
+              }
+              {
+                name = "nixpkgs manual";
+                tags = [ "tutorial" "nix" ];
+                url = "https://nixos.org/manual/nixpkgs/stable/";
+              }
+              {
+                name = "nixpkgs github";
+                tags = [ "nix" "repo" ];
+                url = "https://github.com/NixOS/nixpkgs/";
+              }
+            ];
+          }
+        ];
+
+        search.default = "DuckDuckGo";
 
         # Nix search engines are very useful when making nix code for this config/nixpkgs
         search.engines = {

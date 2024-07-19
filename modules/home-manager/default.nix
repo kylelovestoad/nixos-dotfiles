@@ -9,6 +9,7 @@
     ./impermanence.nix
     ./kitty.nix
     ./mpv.nix
+    ./firefox.nix
     # ./stylix.nix
   ];
  
