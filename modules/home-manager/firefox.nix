@@ -2,7 +2,7 @@
   config = lib.mkIf cfg.enable {
     programs.firefox = {
       enable = true;
-      package = pkgs.firefox;
+      package = pkgs.firefox-beta;
 
       /* ---- POLICIES ---- */
       # Check about:policies#documentation for options.
@@ -22,7 +22,7 @@
         OverrideFirstRunPage = "";
         OverridePostUpdatePage = "";
         DontCheckDefaultBrowser = true;
-        DisplayBookmarksToolbar = "never"; # alternatives: "always" or "newtab"
+        DisplayBookmarksToolbar = "newtab"; # alternatives: "always" or "newtab"
         DisplayMenuBar = "default-off"; # alternatives: "always", "never" or "default-on"
         SearchBar = "unified"; # alternative: "separate"
       };
@@ -32,10 +32,14 @@
         search.force = true;
 
         extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+          
+          # adblocking heals the soul
+          ublock-origin
 
           # theming
           stylus
           firefox-color
+          darkreader
 
           # userscripts
           violentmonkey
@@ -52,29 +56,50 @@
             toolbar = true;
             bookmarks = [
               {
-                name = "homepage";
+                name = "nixos";
                 tags = [ "nix" ];
                 url = "https://nixos.org/";
               }
               {
-                name = "wiki";
+                name = "nixos wiki";
                 tags = [ "wiki" "nix" ];
                 url = "https://wiki.nixos.org/";
               }
               {
-                name = "forum";
+                name = "nixos forum";
                 tags = [ "forum" "nix" ];
                 url = "https://discourse.nixos.org/";
               }
               {
                 name = "nixpkgs manual";
-                tags = [ "tutorial" "nix" ];
+                tags = [ "wiki" "nix" ];
                 url = "https://nixos.org/manual/nixpkgs/stable/";
               }
               {
                 name = "nixpkgs github";
-                tags = [ "nix" "repo" ];
+                tags = [ "repo" "nix" ];
                 url = "https://github.com/NixOS/nixpkgs/";
+              }
+            ];
+          }
+          {
+            name = "Catppuccin";
+            toolbar = true;
+            bookmarks = [
+              {
+                name = "catppuccin";
+                tags = [ "theming" "catppuccin" ];
+                url = "https://catppuccin.com/";
+              }
+              {
+                name = "catppuccin github";
+                tags = [ "theming" "catppuccin" "repo" ];
+                url = "https://github.com/catppuccin";
+              }
+              {
+                name = "catppuccin nix";
+                tags = [ "theming" "catppuccin" "repo" "nix" ];
+                url = "https://github.com/catppuccin/nix";
               }
             ];
           }
@@ -83,7 +108,9 @@
         search.default = "DuckDuckGo";
 
         # Nix search engines are very useful when making nix code for this config/nixpkgs
-        search.engines = {
+        search.engines = let 
+          nix-icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+        in {
           "Nix Packages" = {
             urls = [
               {
@@ -104,7 +131,7 @@
                 ];
               }
             ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            icon = nix-icon;
             definedAliases = ["@n"];
           };
 
@@ -128,8 +155,25 @@
                 ];
               }
             ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            icon = nix-icon;
             definedAliases = ["@o"];
+          };
+
+
+          "NixOS Forum" = {
+            urls = [
+              {
+                template = "https://discourse.nixos.org/search";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            definedAliases = ["@f"];
           };
 
           "Home Manager Options" = {
@@ -150,6 +194,22 @@
             ];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             definedAliases = ["@hm"];
+          };
+
+          "Catppuccin Ports" = {
+            urls = [
+              {
+                template = "https://catppuccin.com/ports";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            definedAliases = ["@c"];
           };
 
         };

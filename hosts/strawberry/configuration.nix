@@ -12,8 +12,17 @@
     ];
 
   # Bootloader
-  boot.loader.systemd-boot.enable = true;
-  boot.loader.efi.canTouchEfiVariables = true;
+  boot.loader = {
+    efi = {
+      canTouchEfiVariables = true;
+      efiSysMountPoint = "/boot";
+    };
+    grub = {
+      enable = true;
+      efiSupport = true;
+      device = "nodev";
+    };
+  };
 
   networking.hostName = "strawberry"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -111,13 +120,6 @@
     # packages = with pkgs; [];
   };
 
-  # Program config
-  programs.steam = {
-    enable = true;
-    remotePlay.openFirewall = true; # Open ports in the firewall for Steam Remote Play
-    dedicatedServer.openFirewall = true; # Open ports in the firewall for Source Dedicated Server
-  }; 
-
   # Allow unfree packages
   # nixpkgs.config.allowUnfree = system.config.allowUnfree;
 
@@ -175,6 +177,7 @@
 
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
+  # Modules
   impermanence.system.enable = true;
   catppuccin.system.enable = true;
 }

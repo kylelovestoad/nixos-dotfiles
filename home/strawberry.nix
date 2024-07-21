@@ -33,6 +33,7 @@
     
     libreoffice
     lunarvim
+    ncdu
     nil
     jq
     nix-direnv
@@ -43,7 +44,6 @@
   #  thunderbird
     signal-desktop
     mpv
-    steam
 
     wineWowPackages.stable
     winetricks
