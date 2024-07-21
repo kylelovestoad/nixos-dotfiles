@@ -180,4 +180,5 @@
   # Modules
   impermanence.system.enable = true;
   catppuccin.system.enable = true;
+  gaming.enable = true;
 }
