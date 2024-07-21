@@ -11,16 +11,19 @@
   };
 
   config = lib.mkIf cfg.enable {
-    catppuccin.enable = true;
-
-    services.displayManager.sddm.catppuccin = {
+    catppuccin = {
       enable = true;
       inherit (cfg) flavor accent;
     };
 
+    services.displayManager.sddm.catppuccin = {
+      enable = true;
+      inherit (cfg) flavor;
+    };
+
     boot.loader.grub.catppuccin = {
       enable = true;
-      inherit (cfg) flavor accent;
+      inherit (cfg) flavor;
     };
 
     console.catppuccin = {
