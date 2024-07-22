@@ -55,6 +55,19 @@
     kdialog
     mangohud
     github-desktop
+    # Fixes github desktop?
+    xdg-utils
+
+    logisim-evolution
+
+    aha
+    clinfo
+    glxinfo
+    vulkan-tools
+    wayland-utils
+
+    kdePackages.kmail
+    kdePackages.kmail-account-wizard
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the

@@ -45,7 +45,7 @@
 
     # We have a GeForce RTX 4060 which is not in the legacy GPU list (https://www.nvidia.com/en-us/drivers/unix/legacy-gpu/)
     # Therefore, the stable drivers should work.
-    package = config.boot.kernelPackages.nvidiaPackages.stable;
+    package = config.boot.kernelPackages.nvidiaPackages.beta;
 
     prime = {
     	offload = {

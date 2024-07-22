@@ -21,6 +21,7 @@
       enable = true;
       efiSupport = true;
       device = "nodev";
+      useOSProber = true;
     };
   };
 
@@ -77,6 +78,8 @@
       };
     };
   };
+
+  services.fwupd.enable = true;
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
@@ -141,7 +144,6 @@
     pciutils
     alsa-oss # TODO fixes issues with minecraft make dedicated minecraft/prismlauncher config
     lm_sensors
-    xdg-utils
     olympus # Custom package
     mouse_m908 # Custom package
   ];
