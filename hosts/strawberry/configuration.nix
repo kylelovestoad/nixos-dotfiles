@@ -86,7 +86,6 @@
   services.displayManager.sddm.enable = true;
 
   # Enable sound with pipewire.
-  sound.enable = true;
   hardware.pulseaudio.enable = false;
   
   hardware.bluetooth.enable = true; # enables support for Bluetooth
