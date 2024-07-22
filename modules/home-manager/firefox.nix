@@ -40,6 +40,7 @@
           stylus
           firefox-color
           darkreader
+          nighttab
 
           # userscripts
           violentmonkey
@@ -83,6 +84,11 @@
             ];
           }
           {
+            name = "nix firefox extensions";
+            tags = [ "repo" "nix" "firefox" ];
+            url = "https://gitlab.com/rycee/nur-expressions/-/blob/master/pkgs/firefox-addons/";
+          }
+          {
             name = "Catppuccin";
             toolbar = true;
             bookmarks = [
@@ -100,6 +106,23 @@
                 name = "catppuccin nix";
                 tags = [ "theming" "catppuccin" "repo" "nix" ];
                 url = "https://github.com/catppuccin/nix";
+              }
+            ];
+          }
+          {
+            name = "Email";
+            toolbar = false;
+            bookmarks = [
+              {
+                # Trying to transition away from this
+                name = "gmail";
+                tags = [ "email" ];
+                url = "https://mail.google.com";
+              }
+              {
+                name = "protonmail";
+                tags = [ "email" ];
+                url = "https://mail.proton.me";
               }
             ];
           }
@@ -132,7 +155,7 @@
               }
             ];
             icon = nix-icon;
-            definedAliases = ["@n"];
+            definedAliases = ["@np"];
           };
 
           "Nix Options" = {
@@ -156,7 +179,7 @@
               }
             ];
             icon = nix-icon;
-            definedAliases = ["@o"];
+            definedAliases = ["@no"];
           };
 
 
@@ -173,7 +196,7 @@
               }
             ];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
-            definedAliases = ["@f"];
+            definedAliases = ["@nf"];
           };
 
           "Home Manager Options" = {
@@ -210,6 +233,25 @@
             ];
             icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
             definedAliases = ["@c"];
+          };
+
+          "Github" = {
+            urls = [
+              {
+                template = "https://github.com/search?q=test&type=repositories";
+                params = [
+                  {
+                    name = "q";
+                    value = "{searchTerms}";
+                  }
+                  {
+                    name = "type";
+                    value = "repositories";
+                  }
+                ];
+              }
+            ];
+            definedAliases = ["@gh"];
           };
 
         };
