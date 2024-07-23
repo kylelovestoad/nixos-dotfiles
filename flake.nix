@@ -1,5 +1,5 @@
 {
-  description = "kylelovestoad's nixos flake for building his systems";
+  description = "kylelovestoad's nixos flake for building nix-based systems";
 
   inputs = {
 
