@@ -35,8 +35,9 @@
         # HACK If this name were to ever change formatting there would most certainly be a problem
         flavorName = if cfg.flavor == "frappe" then "frappé" else cfg.flavor;
       in {
-        # Flavor needs to be capitalized since that is how the names work 
+        # Flavor needs to be capitalized since that is how the names work in this instance
         "workbench.colorTheme" = "Catppuccin ${kylib.capitalize flavorName}";
+        "workbench.iconTheme" = "catppuccin-${flavorName}";
         # Catppuccin uses a custom (and much nicer) title bar
         "window.titleBarStyle" = "custom";
       };
