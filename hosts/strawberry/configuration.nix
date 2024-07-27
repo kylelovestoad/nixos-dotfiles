@@ -113,7 +113,6 @@
       allowUnfree = true;
       packageOverrides = with pkgs; pkgs: {
         olympus = callPackage ../../packages/olympus/olympus.nix { };
-        mouse_m908 = callPackage ../../packages/mouse_m908/mouse_m908.nix { };
       };
     };
   }; 
@@ -144,7 +143,6 @@
     alsa-oss # TODO fixes issues with minecraft make dedicated minecraft/prismlauncher config
     lm_sensors
     olympus # Custom package
-    mouse_m908 # Custom package
   ];
 
   services.udev.packages = with pkgs; [ 
