@@ -85,13 +85,17 @@
 
     # Deprecated, but still usable for now ;-;
     # One possible replacement could be stylix, it works for gtk
-    gtk.catppuccin = {
+    gtk = {
       enable = true;
-      inherit (cfg) flavor accent;
 
-      icon = {
+      catppuccin = {
         enable = true;
         inherit (cfg) flavor accent;
+
+        icon = {
+          enable = true;
+          inherit (cfg) flavor accent;
+        };
       };
     };
 
