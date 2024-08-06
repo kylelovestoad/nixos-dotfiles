@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, ... }:
+{ pkgs, lib, ... }:
 
 {
   imports =
@@ -60,8 +60,9 @@
 
   # Configure X11
   services = {
-    # Enable the KDE Plasma Desktop Environment.
-    desktopManager.plasma6.enable = true;
+    # Enable KDE Plasma 6
+    desktopManager.plasma6.enable = true; # 
+
     displayManager.defaultSession = "plasmax11";
 
     ratbagd.enable = true;
@@ -70,6 +71,10 @@
       # Enable the X11 windowing system.
       enable = true;
 
+      desktopManager = { 
+        gnome.enable = true; # GNOME
+        xfce.enable = true; # XFCE
+      };
     
       # Enable sddm display manager (Login Screen)
       xkb = {
@@ -78,6 +83,8 @@
       };
     };
   };
+
+  programs.ssh.askPassword = lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
 
   services.fwupd.enable = true;
 
