@@ -69,6 +69,8 @@
     kdePackages.kmail
     kdePackages.kmail-account-wizard
 
+    krita
+
     mouse_m908
     
     # # It is sometimes useful to fine-tune packages, for example, by applying
