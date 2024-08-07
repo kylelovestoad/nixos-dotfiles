@@ -61,7 +61,7 @@
   # Configure X11
   services = {
     # Enable KDE Plasma 6
-    desktopManager.plasma6.enable = true; # 
+    desktopManager.plasma6.enable = true;
 
     displayManager.defaultSession = "plasmax11";
 
@@ -70,11 +70,6 @@
     xserver = {
       # Enable the X11 windowing system.
       enable = true;
-
-      desktopManager = { 
-        gnome.enable = true; # GNOME
-        xfce.enable = true; # XFCE
-      };
     
       # Enable sddm display manager (Login Screen)
       xkb = {
@@ -84,9 +79,9 @@
     };
   };
 
-  programs.ssh.askPassword = lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
+  # programs.ssh.askPassword = lib.mkForce "${pkgs.x11_ssh_askpass}/libexec/x11-ssh-askpass";
 
-  services.fwupd.enable = true;
+  services.fwupd.enable = true; # For viewing kde firmware security
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
