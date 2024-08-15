@@ -47,6 +47,7 @@
     package = config.boot.kernelPackages.nvidiaPackages.stable;
 
     prime = {
+      # reverseSync.enable = true;
     	offload = {
 				enable = true;
 				enableOffloadCmd = true;

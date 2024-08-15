@@ -30,6 +30,7 @@
     eyedropper
     godot_4 # TODO Game dev module?
     kate
+    kdenlive
     
     libreoffice
     lunarvim
@@ -139,12 +140,12 @@
   };
 
   jetbrains.enable = lib.mkForce true;
-  impermanence.homeManager.enable = lib.mkForce true;
+  impermanence.enable = lib.mkForce true;
 
   vscode.enable = lib.mkForce true;
   vscode.extensions = lib.mkForce true;
 
-  catppuccin.homeManager.enable = lib.mkForce true;
+  catppuccin-theme.enable = lib.mkForce true;
 
   btop.enable = lib.mkForce true;
   kitty.enable = lib.mkForce true;
@@ -152,5 +153,5 @@
 
   mpv.enable = lib.mkForce true;
   firefox.enable = lib.mkForce true;
-  # stylix.homeManager.enable = lib.mkForce true;
+  # stylix-theming.enable = lib.mkForce true;
 }

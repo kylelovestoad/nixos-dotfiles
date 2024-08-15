@@ -1,5 +1,5 @@
-{kylib, config, lib, ...}: kylib.mkModule config "mpv" (cfg: {
-  config = lib.mkIf cfg.enable {
+{kylib, config, lib, ...}: (cfg: {
+  config = {
     programs.mpv = { 
       enable = true;
     };

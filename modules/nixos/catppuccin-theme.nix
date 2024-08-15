@@ -1,4 +1,4 @@
-{lib, kylib, inputs, config, ...}: kylib.mkModule config "catppuccin.system" (cfg: {
+{lib, kylib, inputs, config, ...}: (cfg: {
 
   imports = [
     inputs.catppuccin.nixosModules.catppuccin

@@ -183,7 +183,7 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Modules
-  impermanence.system.enable = true;
-  catppuccin.system.enable = true;
+  impermanence.enable = true;
+  catppuccin-theme.enable = true;
   gaming.enable = true;
 }

@@ -1,4 +1,4 @@
-{kylib, inputs, config, ...}: kylib.mkModule config "impermanence.homeManager" (cfg: {
+{kylib, inputs, config, ...}: (cfg: {
 
   imports = [  
     inputs.impermanence.nixosModules.home-manager.impermanence

@@ -1,5 +1,5 @@
-{kylib, config, lib, ...}: kylib.mkModule config "btop" (cfg: { 
-  config = lib.mkIf cfg.enable {
+{kylib, config, lib, ...}: (cfg: { 
+  config = {
     programs.btop = {
       enable = true;
     };

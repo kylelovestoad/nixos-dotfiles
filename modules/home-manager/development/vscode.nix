@@ -1,10 +1,10 @@
-{kylib, lib, pkgs, config, ...}: kylib.mkModule config "vscode" (cfg: {
+{kylib, lib, pkgs, config, ...}: (cfg: {
 
   options = {
     extensions = lib.mkEnableOption "extensions for vscode";
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
 
     programs.vscode = {
       enable = true;

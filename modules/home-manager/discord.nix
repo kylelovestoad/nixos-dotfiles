@@ -1,6 +1,6 @@
-{pkgs, kylib, lib, config, ... }: kylib.mkModule config "discord" (cfg: {
+{pkgs, kylib, lib, config, ... }: (cfg: {
 
-  config = lib.mkIf cfg.enable {
+  config = {
     home.packages = with pkgs; [
       vesktop
 

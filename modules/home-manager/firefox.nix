@@ -1,5 +1,5 @@
-{kylib, config, lib, pkgs, inputs, ...}: kylib.mkModule config "firefox" (cfg: { 
-  config = lib.mkIf cfg.enable {
+{kylib, config, lib, pkgs, inputs, ...}: (cfg: { 
+  config = {
     programs.firefox = {
       enable = true;
       package = pkgs.firefox-beta;

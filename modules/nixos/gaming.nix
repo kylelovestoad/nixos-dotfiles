@@ -1,4 +1,4 @@
-{lib, kylib, config, pkgs, ...}: kylib.mkModule config "gaming" (cfg: {
+{lib, kylib, config, pkgs, ...}: (cfg: {
   config = lib.mkIf cfg.enable {
 
     programs.steam = {

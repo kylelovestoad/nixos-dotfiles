@@ -61,22 +61,19 @@ in rec {
   # Matches all consecutive chars that aren't a dot, meaning it gets all strings between the dots
   dotStringToPath = str: lib.splitString "." str;
 
-  mkModule = config: category: moduleFunc: let
+  # configPathFromDotString = str: baseConfig: lib.getAttrFromPath (dotStringToPath str) baseConfig;
 
-    categoryPath = dotStringToPath category;
-    defaultOptions = {
-      # Creates an enable option with the dot string (example.string.here) as part of the description
-      # This allows each enable description to be their own respective config name
-      enable = lib.mkEnableOption "${category}.enable";
-    };
+  mkModule = updateArgs@{path, name, defaultOptions, configPredicate}: moduleArgs@{pkgs, ...}: let
+
+    categoryPath = dotStringToPath updateArgs.name;
 
     # This gets the path to the user defined config
-    cfg = lib.getAttrFromPath categoryPath config;
+    cfg = moduleArgs.config.${name};
 
-    module = moduleFunc cfg;
+    module = (builtins.import path) moduleArgs cfg;
 
     # Don't mess with existing options
-    combinedOptions = defaultOptions // (module.options or {});
+    combinedOptions = updateArgs.defaultOptions // (module.options or {});
 
     # Map the options with the attrPath.
     combinedOptionsWithPath = lib.setAttrByPath categoryPath combinedOptions; 
@@ -84,6 +81,34 @@ in rec {
   in {
     imports = module.imports or [];
     options = combinedOptionsWithPath;
-    config = module.config or {};
+    config = updateArgs.configPredicate (module.config or {});
   };
+
+  filesInRecursive' = path: list: lib.mapAttrsToList (fname: type: let
+    newPath = (path + "/${fname}");
+  in
+    (if type == "directory" then (filesInRecursive' newPath list) else newPath)
+  ) 
+  (builtins.readDir path);
+
+  filesInRecursive = path: lib.flatten (filesInRecursive' path []);
+
+  fileNameOf = path: (builtins.head (builtins.split "\\." (baseNameOf path)));
+    
+  applyModules = path: excluded: applyFunc: let 
+    files = filesInRecursive path;
+    filteredFiles = builtins.filter (file: 
+      builtins.any (exclusion: file != exclusion) excluded) 
+      files;
+  in
+    builtins.map 
+    (file: let
+      name = fileNameOf file;
+      applyAttrs = applyFunc name; 
+    in mkModule {
+      inherit (applyAttrs) defaultOptions configPredicate;
+      inherit name;
+      path = file;
+    })
+    filteredFiles;
 }

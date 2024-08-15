@@ -1,5 +1,5 @@
-{kylib, config, lib, ...}: kylib.mkModule config "kitty" (cfg: { 
-  config = lib.mkIf cfg.enable {
+{kylib, config, lib, ...}: (cfg: { 
+  config = {
     programs.kitty = {
       enable = true;
       shellIntegration.enableZshIntegration = true;

@@ -1,4 +1,4 @@
-{lib, kylib, inputs, config, pkgs, ...}: kylib.mkModule config "catppuccin.homeManager" (cfg: {
+{lib, kylib, inputs, config, pkgs, ...}: (cfg: {
 
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
@@ -9,7 +9,7 @@
     accent = lib.mkOption { default = "mauve";};
   };
 
-  config = lib.mkIf cfg.enable {
+  config = {
 
     nixpkgs.overlays = lib.mkIf config.vscode.enable [inputs.catppuccin-vsc.overlays.default];
 
@@ -17,7 +17,7 @@
       extensions = with pkgs.vscode-extensions; lib.mkIf config.vscode.enable [
         (catppuccin.catppuccin-vsc.override {
           # Get the accent specified in the catppuccin module
-          accent = config.catppuccin.homeManager.accent;
+          accent = cfg.accent;
           boldKeywords = true;
           italicComments = true;
           italicKeywords = true;
