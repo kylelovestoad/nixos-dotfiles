@@ -51,7 +51,7 @@
 
     peek
     piper
-    prismlauncher # Make this part of a module
+    prismlauncher # Make this part of a future minecraft module
     nix-direnv
     kdialog
     mangohud
@@ -153,5 +153,7 @@
 
   mpv.enable = lib.mkForce true;
   firefox.enable = lib.mkForce true;
+
+  emacs.enable = lib.mkForce true;
   # stylix-theming.enable = lib.mkForce true;
 }
