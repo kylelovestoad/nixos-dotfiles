@@ -15,6 +15,6 @@
 in {
   imports = [] ++ foundModules;
   
-  jetbrains.impermanence = lib.mkIf config.impermanence.homeManager.enable true;
+  jetbrains.impermanence = lib.mkIf config.impermanence.enable true;
 }
 
