@@ -33,7 +33,7 @@
     kdenlive
     
     libreoffice
-    lunarvim
+
     ncdu
     nil
     jq
@@ -136,7 +136,7 @@
   #
 
   home.sessionVariables = {
-    EDITOR = "lvim";
+    EDITOR = "emacs";
   };
 
   jetbrains.enable = lib.mkForce true;
