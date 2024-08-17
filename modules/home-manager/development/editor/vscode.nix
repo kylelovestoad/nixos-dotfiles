@@ -15,8 +15,10 @@
         jackmacwindows.vscode-computercraft
         jackmacwindows.craftos-pc
 
-        # Lua dev
-        sumneko.lua
+        # Languages
+        sumneko.lua # Lua
+        rust-lang.rust-analyzer # Rust
+        ms-vscode.cpptools # C/C++
 
         # For nix/nixpkgs
         jnoortheen.nix-ide

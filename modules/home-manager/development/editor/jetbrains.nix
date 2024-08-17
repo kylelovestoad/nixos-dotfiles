@@ -24,7 +24,7 @@
     ];
       #
     # Let default project folders and config directories persist
-    home.persistence."/persist/home/kyle" = lib.mkIf cfg.impermanence {
+    home.persistence."/persist/home/${config.home.username}" = lib.mkIf cfg.impermanence {
       allowOther = true;
       directories = [
         ".local/share/Jetbrains"
