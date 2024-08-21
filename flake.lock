@@ -146,6 +146,22 @@
         "url": "https://flakehub.com/f/catppuccin/vscode/%2A.tar.gz"
       }
     },
+    "emacs-overlay": {
+      "locked": {
+        "lastModified": 1644575200,
+        "narHash": "sha256-7BaSTzlAI/xndvPIieZSZOB5Nsgtrb7L5HqdGGdVbwg=",
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "da2f552d133497abd434006e0cae996c0a282394",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "emacs-overlay",
+        "rev": "da2f552d133497abd434006e0cae996c0a282394",
+        "type": "github"
+      }
+    },
     "firefox-addons": {
       "inputs": {
         "flake-utils": "flake-utils",
@@ -338,14 +354,31 @@
         "type": "github"
       }
     },
+    "nur": {
+      "locked": {
+        "lastModified": 1723797977,
+        "narHash": "sha256-Uo8n1FEyRq8GsaeBe8Idpu/59oYOws2zHqQsDCdRsWE=",
+        "owner": "nix-community",
+        "repo": "NUR",
+        "rev": "c90dd25354b9d33c027473f99eeac10db72b1c70",
+        "type": "github"
+      },
+      "original": {
+        "owner": "nix-community",
+        "repo": "NUR",
+        "type": "github"
+      }
+    },
     "root": {
       "inputs": {
         "catppuccin": "catppuccin",
         "catppuccin-vsc": "catppuccin-vsc",
+        "emacs-overlay": "emacs-overlay",
         "firefox-addons": "firefox-addons",
         "home-manager": "home-manager",
         "impermanence": "impermanence",
         "nixpkgs": "nixpkgs_2",
+        "nur": "nur",
         "stylix": "stylix"
       }
     },

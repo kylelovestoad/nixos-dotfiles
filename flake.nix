@@ -21,10 +21,9 @@
     # UNUSED For now, this might have a use later
     stylix.url = "github:danth/stylix";
 
-    # home-manager-unstable = {
-    #   url = "github:nix-community/home-manager/master";
-    #   inputs.nixpkgs.follows = "nixpkgs";
-    # };
+    emacs-overlay.url = "github:nix-community/emacs-overlay/da2f552d133497abd434006e0cae996c0a282394";
+
+    nur.url = "github:nix-community/NUR";
 
     firefox-addons = {
       url = "gitlab:rycee/nur-expressions?dir=pkgs/firefox-addons";
@@ -35,24 +34,30 @@
     impermanence = {
       url = "github:nix-community/impermanence";
     };
-
   };
 
-  outputs = {nixpkgs, ...}@inputs:
+  outputs = {nixpkgs, nur, ...}@inputs:
   let
+    system = "x86_64-linux";
+    # Fetch packages from given system
+    pkgsFor = system: inputs.nixpkgs.legacyPackages.${system};
+    pkgs = pkgsFor system;
+    nurNoPkgs = import nur { 
+      nurpkgs = pkgs; 
+      pkgs = null; 
+    };
     lib = nixpkgs.lib;
-    kylib = import ./kylib {inherit inputs lib;};
-  in
-    with kylib; {
+    kylib = import ./kylib {inherit inputs lib nur pkgs nurNoPkgs;};
+  in {
       # Define systems here!
       nixosConfigurations = {
-        strawberry = mkSystem ./hosts/strawberry/configuration.nix;
+        strawberry = kylib.mkSystem ./hosts/strawberry/configuration.nix;
       };
 
       # Define home configs here!
       homeConfigurations = {
-        "kyle@strawberry" = mkHome {
-          system = "x86_64-linux"; 
+        "kyle@strawberry" = kylib.mkHome {
+          inherit system; 
           config = ./home/strawberry.nix;
         };
       };
@@ -60,6 +65,10 @@
       modules = {
         nixos.default = ./modules/nixos;
         home-manager.default = ./modules/home-manager;
+      };
+
+      devShells.${system}.default = pkgs.mkShell {
+        name = "dev-shell";
       };
     };
 }

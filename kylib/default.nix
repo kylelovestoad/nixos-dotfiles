@@ -1,19 +1,16 @@
-{lib, inputs, ...}: let
-  kylib = (import ./default.nix) {inherit inputs lib;};
+{lib, inputs, nur, pkgs, nurNoPkgs, ...}: let
+  kylib = (import ./default.nix) {inherit inputs lib nur pkgs nurNoPkgs;};
   outputs = inputs.self.outputs;
 in rec {
   ######################################
   # LIBRARY FOR BASIC HELPER FUNCTIONS #
   ######################################
 
-  # Fetch packages from given system
-  pkgsFor = system: inputs.nixpkgs.legacyPackages.${system};
-
   # Create a nix system by providing a configuration.nix to start from
   mkSystem = config:
     inputs.nixpkgs.lib.nixosSystem {
       specialArgs = {
-        inherit inputs outputs kylib;
+        inherit inputs kylib;
       };
       modules = [
         config
@@ -24,9 +21,9 @@ in rec {
   # Create a nix home for home-manager to manage by providing a system type and config file to start from
   mkHome = {system, config}: 
     inputs.home-manager.lib.homeManagerConfiguration {
-      pkgs = pkgsFor system;
+      inherit pkgs;
       extraSpecialArgs = {
-        inherit inputs outputs kylib;
+        inherit inputs kylib nurNoPkgs;
       };
       # Main home-manager configuration file
       modules = [
@@ -63,6 +60,23 @@ in rec {
 
   # configPathFromDotString = str: baseConfig: lib.getAttrFromPath (dotStringToPath str) baseConfig;
 
+  filesInRecursive' = path: list: lib.mapAttrsToList (fname: type: let
+    newPath = (path + "/${fname}");
+  in
+    (if type == "directory" then (filesInRecursive' newPath list) else newPath)
+  ) 
+  (builtins.readDir path);
+
+  filesInRecursive = path: lib.flatten (filesInRecursive' path []);
+
+  fileNameOf = path: (builtins.head (builtins.split "\\." (baseNameOf path)));
+    
+  listToAttrsWithValue = list: value: builtins.listToAttrs (builtins.map (name: { inherit name value; }) list);
+
+  addGroupsToUsers = addedGroups: users: kylib.listToAttrsWithValue users { extraGroups = addedGroups; };
+
+  ### Module functions ###
+
   mkModule = updateArgs@{path, name, defaultOptions, configPredicate}: moduleArgs@{pkgs, ...}: let
 
     categoryPath = dotStringToPath updateArgs.name;
@@ -84,17 +98,6 @@ in rec {
     config = updateArgs.configPredicate (module.config or {});
   };
 
-  filesInRecursive' = path: list: lib.mapAttrsToList (fname: type: let
-    newPath = (path + "/${fname}");
-  in
-    (if type == "directory" then (filesInRecursive' newPath list) else newPath)
-  ) 
-  (builtins.readDir path);
-
-  filesInRecursive = path: lib.flatten (filesInRecursive' path []);
-
-  fileNameOf = path: (builtins.head (builtins.split "\\." (baseNameOf path)));
-    
   applyModules = path: excluded: applyFunc: let 
     files = filesInRecursive path;
     filteredFiles = builtins.filter (file: 
@@ -111,4 +114,5 @@ in rec {
       path = file;
     })
     filteredFiles;
+
 }
