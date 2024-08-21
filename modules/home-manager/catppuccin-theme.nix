@@ -1,4 +1,11 @@
-{lib, kylib, inputs, config, pkgs, ...}: (cfg: {
+{lib, kylib, inputs, config, pkgs, ...}: (cfg: let 
+  catppuccinJson = builtins.fromJSON (builtins.readFile (pkgs.fetchurl {
+    url = "https://raw.githubusercontent.com/catppuccin/palette/af11bc6d132d2e85cc192a9237f86fa9746c92c0/palette.json";
+    sha256 = "sha256-AojVV7p4nm+1tSK9KN02YLwm14fkRr2pDRPUWYYkPeA=";
+  }));
+  
+  loadCatppuccinTheme = name: catppuccinJson.${name};
+in {
 
   imports = [
     inputs.catppuccin.homeManagerModules.catppuccin
@@ -11,10 +18,14 @@
 
   config = {
 
+    lib = {
+      inherit catppuccinJson loadCatppuccinTheme;
+    };
+
     nixpkgs.overlays = lib.mkIf config.vscode.enable [inputs.catppuccin-vsc.overlays.default];
 
-    programs.vscode = {
-      extensions = with pkgs.vscode-extensions; lib.mkIf config.vscode.enable [
+    programs.vscode = lib.mkIf config.vscode.enable {
+      extensions = with pkgs.vscode-extensions; [
         (catppuccin.catppuccin-vsc.override {
           # Get the accent specified in the catppuccin module
           accent = cfg.accent;
@@ -43,24 +54,6 @@
       };
     };
 
-    # kitty
-    programs.kitty.catppuccin = {
-      enable = config.kitty.enable;
-      inherit (cfg) flavor;
-    };
-
-    # btop
-    programs.btop.catppuccin = {
-      enable = config.btop.enable;
-      inherit (cfg) flavor;
-    };
-
-    # mpv
-    programs.mpv.catppuccin = {
-      enable = config.mpv.enable; 
-      inherit (cfg) flavor accent;
-    };
-
     # vesktop
     # update quickCss.css because it applies immediately
     home.file.".config/vesktop/settings/quickCss.css".text = lib.mkIf config.discord.enable ''
@@ -76,11 +69,10 @@
       }) 
     ];
 
-    catppuccin.enable = true;
-
-    catppuccin.pointerCursor = {
+    catppuccin = {
       enable = true;
       inherit (cfg) flavor accent;
+      pointerCursor.enable = true;
     };
 
     # Deprecated, but still usable for now ;-;
@@ -98,21 +90,5 @@
         };
       };
     };
-
-    qt = {
-      # Qt has to be enabled for qt styles to be set
-      enable = true;
-      platformTheme.name = "kvantum";
-      # Need to set style as kvantum since that is how the theme is applied
-      style.name = "kvantum";
-
-      style.catppuccin = {
-        enable = true;
-        # Applies the QT theme automatically with Kvantum
-        apply = true;
-        inherit (cfg) flavor accent;
-      };
-    };
-
   };
 })
