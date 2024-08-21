@@ -2,7 +2,7 @@
   config = {
     programs.firefox = {
       enable = true;
-      package = pkgs.firefox-beta;
+      package = pkgs.firefox;
 
       /* ---- POLICIES ---- */
       # Check about:policies#documentation for options.
