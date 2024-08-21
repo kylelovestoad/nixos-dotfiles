@@ -1,11 +1,12 @@
 # Result dirs are built derivations that shouldn't be committed
 result
 
+# Other dotfiles
+.*
+
 # Don't ignore gitignore
 !.gitignore
 
 # Want .envrc for direnv support
 !.envrc
 
-# Other dotfiles
-.*
