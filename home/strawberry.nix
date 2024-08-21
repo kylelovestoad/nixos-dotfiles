@@ -156,4 +156,6 @@
 
   emacs.enable = lib.mkForce true;
   # stylix-theming.enable = lib.mkForce true;
+
+  cargo.enable = lib.mkForce true;
 }

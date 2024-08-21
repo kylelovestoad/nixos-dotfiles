@@ -22,9 +22,9 @@ let
   ];
 
   # Function that creates a list of cargo symlinks for the home-manager.
-  createCargoBinSymlinks = mkOutOfStoreSymlink: bins: builtins.foldl'
+  createCargoBinSymlinks = bins: builtins.foldl'
     (acc: bin: {
-      ".cargo/bin/${bin}".source = mkOutOfStoreSymlink "/etc/profiles/per-user/${cfg.username}/bin/${bin}";
+      ".cargo/bin/${bin}".source = config.lib.file.mkOutOfStoreSymlink "/etc/profiles/per-user/${config.home.username}/bin/${bin}";
     } // acc)
     { } # accumulator
     bins;
@@ -39,23 +39,14 @@ in
 {
   config = {
 
-    home-manager.users."${cfg.username}" =
-      {
-        # Refers to the home-manager config, not the NixOS config
-        config
-      , ...
-      }:
-      {
-        home.file = createCargoBinSymlinks config.lib.file.mkOutOfStoreSymlink cargoSymlinkBins
-          // {
-          ".cargo/env".source = dummyCargoEnvFile;
-        };
+    home.file = createCargoBinSymlinks cargoSymlinkBins // {
+      ".cargo/env".source = dummyCargoEnvFile;
+    };
 
-        # Add tools installed via cargo to the end of $PATH.
-        # This gives those binaries the lowest precedence in $PATH.
-        home.sessionPath = [
-          "/home/${cfg.username}/.cargo/bin"
-        ];
-      };
+    # Add tools installed via cargo to the end of $PATH.
+    # This gives those binaries the lowest precedence in $PATH.
+    home.sessionPath = [
+      "/home/${config.home.username}/.cargo/bin"
+    ];
   };
 })
