@@ -4,5 +4,8 @@ result
 # Don't ignore gitignore
 !.gitignore
 
+# Want .envrc for direnv support
+!.envrc
+
 # Other dotfiles
 .*
