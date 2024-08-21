@@ -6,7 +6,7 @@
 
   config = {
 
-    home.persistence."/persist/home" = {
+    home.persistence."/persist/home/${config.home.username}" = {
       allowOther = true;
       directories = [
         ".ssh"
