@@ -1,13 +1,4 @@
-{pkgs, lib, config, ...}: (cfg: let 
-  addGroupsToUsers = addedGroups: users: builtins.mapAttrs (user: settings: 
-    if (builtins.any (wiresharkUser: wiresharkUser == user)) then let 
-      extraGroupsAttr = {
-        extraGroups = settings.extraGroups ++ addedGroups;
-      };
-    in settings // extraGroupsAttr
-    else settings
-  ) config.users.users;
-in {
+{pkgs, lib, kylib, config, ...}: (cfg: {
 
   options = {
     users = lib.mkOption { default = []; };
@@ -19,6 +10,6 @@ in {
       package = pkgs.wireshark-qt;
     };
 
-    users.users = addGroupsToUsers ["wireshark"] config.users.users;
+    users.users = kylib.addGroupsToUsers [ "wireshark" ] cfg.users;
   };
 })

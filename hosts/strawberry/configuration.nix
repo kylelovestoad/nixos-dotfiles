@@ -186,4 +186,6 @@
   impermanence.enable = true;
   catppuccin-theme.enable = true;
   gaming.enable = true;
+  wireshark.enable = true;
+  wireshark.users = [ "kyle" ];
 }
