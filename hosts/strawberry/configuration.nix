@@ -60,16 +60,16 @@
 
   # Configure X11
   services = {
-    # Enable KDE Plasma 6
-    desktopManager.plasma6.enable = true;
 
-    displayManager.defaultSession = "plasmax11";
+    displayManager.defaultSession = "plasma";
 
     ratbagd.enable = true;
     
     xserver = {
       # Enable the X11 windowing system.
       enable = true;
+
+      desktopManager.plasma5.enable = true;
     
       # Enable sddm display manager (Login Screen)
       xkb = {
