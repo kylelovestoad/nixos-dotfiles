@@ -158,4 +158,6 @@
   # stylix-theming.enable = lib.mkForce true;
 
   cargo.enable = lib.mkForce true;
+
+  plasma.enable = lib.mkForce true;
 }

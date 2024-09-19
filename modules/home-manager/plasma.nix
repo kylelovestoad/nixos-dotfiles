@@ -1,4 +1,9 @@
-{pkgs, ...}: (cfg: {
+{pkgs, inputs, ...}: (cfg: {
+
+  imports = [
+    inputs.plasma-manager.homeManagerModules.plasma-manager
+  ];
+
   config = {
     programs.plasma = {
       enable = true;
