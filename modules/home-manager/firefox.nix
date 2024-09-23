@@ -1,5 +1,8 @@
 {kylib, config, lib, pkgs, inputs, ...}: (cfg: { 
   config = {
+
+    programs.librewolf.enable = true;
+
     programs.firefox = {
       enable = true;
       package = pkgs.firefox;
@@ -40,7 +43,6 @@
           stylus
           firefox-color
           darkreader
-          nighttab
 
           # userscripts
           violentmonkey
@@ -195,7 +197,7 @@
                 ];
               }
             ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            icon = nix-icon;
             definedAliases = ["@nf"];
           };
 
@@ -219,6 +221,23 @@
             definedAliases = ["@hm"];
           };
 
+          "Noogle" = {
+            urls = [
+              {
+                template = "https://noogle.dev/q";
+                params = [
+                  {
+                    name = "term";
+                    value = "{searchTerms}";
+                  }
+                ];
+              }
+            ];
+
+            icon = nix-icon;
+            definedAliases = ["@ng"];
+          };
+
           "Catppuccin Ports" = {
             urls = [
               {
@@ -231,7 +250,16 @@
                 ];
               }
             ];
-            icon = "${pkgs.nixos-icons}/share/icons/hicolor/scalable/apps/nix-snowflake.svg";
+            icon = let 
+              catppuccin-repo = pkgs.fetchFromGitHub {
+                owner = "catppuccin";
+                repo = "catppuccin";
+                rev = "3646af0def6d78de2a24a05962a8c43821703f6f";
+                hash = "sha256-mB7rBo7L+auBqs9aSYPfpxDJ3Qwki6AT7WiJEj8cjWg=";
+              };
+            in
+              "${catppuccin-repo}/assets/logos/exports/1544x1544_circle.png";
+
             definedAliases = ["@c"];
           };
 
