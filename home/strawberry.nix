@@ -83,16 +83,7 @@
   programs = {
     direnv.enable = true;
     git.enable = true;
-    home-manager.enable = true;
-    # TODO fix obs studio
-    obs-studio = {
-      enable = true;
-      plugins = with pkgs.obs-studio-plugins; [
-        wlrobs
-        obs-backgroundremoval
-        obs-pipewire-audio-capture
-      ];
-    };  
+    home-manager.enable = true;  
 
     freetube.enable = true;
   };
@@ -158,6 +149,8 @@
   # stylix-theming.enable = lib.mkForce true;
 
   cargo.enable = lib.mkForce true;
+  
+  obs.enable = lib.mkForce true;
 
   # plasma.enable = lib.mkForce true;
 }
