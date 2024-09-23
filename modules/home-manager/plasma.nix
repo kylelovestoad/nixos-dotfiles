@@ -1,10 +1,20 @@
-{pkgs, inputs, ...}: (cfg: {
+{pkgs, inputs, config, ...}: (cfg: {
 
   imports = [
     inputs.plasma-manager.homeManagerModules.plasma-manager
   ];
 
   config = {
+
+    home.packages = with pkgs; [
+      kdePackages.kmail
+      kdePackages.kmail-account-wizard
+      krita
+      kate
+      kdenlive
+      kdialog
+    ];
+
     programs.plasma = {
       enable = true;
       shortcuts = {

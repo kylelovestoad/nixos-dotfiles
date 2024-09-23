@@ -17,7 +17,7 @@
     };
 
     services.displayManager.sddm.catppuccin = {
-      enable = false;
+      enable = true;
       inherit (cfg) flavor;
     };
 

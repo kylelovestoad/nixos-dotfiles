@@ -41,7 +41,7 @@ in {
         catppuccin.catppuccin-vsc-icons
       ];
 
-      # We add these settings for better compatability with catppuccin
+      # Add these settings for better compatability with catppuccin
       userSettings = let 
         # HACK If this name were to ever change formatting there would most certainly be a problem
         flavorName = if cfg.flavor == "frappe" then "frappé" else cfg.flavor;
@@ -54,6 +54,19 @@ in {
       };
     };
 
+    # Needs to be enabled manually
+    programs.obs-studio.catppuccin = lib.mkIf config.programs.obs-studio.enable {
+      enable = true;
+      inherit (cfg) flavor;
+    };
+
+    # Needs to be enabled manually
+    programs.freetube.catppuccin = lib.mkIf config.programs.freetube.enable {
+      enable = true;
+      inherit (cfg) flavor accent;
+    };
+
+
     # vesktop
     # update quickCss.css because it applies immediately
     home.file.".config/vesktop/settings/quickCss.css".text = lib.mkIf config.discord.enable ''
@@ -61,34 +74,37 @@ in {
       @import url("https://catppuccin.github.io/discord/dist/catppuccin-${cfg.flavor}-${cfg.accent}.theme.css");
     '';
 
-    home.packages = [ 
+    home.packages = [
+      # (pkgs.catppuccin-gtk.override {
+      #   variant = cfg.flavor;
+      #   accents = [ cfg.accent ];
+      # })
+    ] ++ (if config.plasma.enable then [ 
       # We just install the catppuccin kde package since it isn't supported by catppuccin nix module
       (pkgs.catppuccin-kde.override {
         flavour = [ cfg.flavor ];
         accents = [ cfg.accent ];
       }) 
-    ];
+    ] else []);
 
-    catppuccin = {
-      enable = true;
-      inherit (cfg) flavor accent;
-      pointerCursor.enable = true;
-    };
-
-    # Deprecated, but still usable for now ;-;
-    # One possible replacement could be stylix, it works for gtk
     gtk = {
       enable = true;
-
       catppuccin = {
         enable = true;
         inherit (cfg) flavor accent;
-
+        gnomeShellTheme = true;
         icon = {
           enable = true;
           inherit (cfg) flavor accent;
         };
       };
+    };
+
+    # enables catppuccin for all applications that support it and are installed
+    catppuccin = {
+      enable = true;
+      inherit (cfg) flavor accent;
+      pointerCursor.enable = true;
     };
   };
 })

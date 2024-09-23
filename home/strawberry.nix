@@ -29,8 +29,6 @@
     aseprite
     eyedropper
     godot_4 # TODO Game dev module?
-    kate
-    kdenlive
     
     libreoffice
 
@@ -53,8 +51,7 @@
     piper
     prismlauncher # Make this part of a future minecraft module
     nix-direnv
-    kdialog
-    mangohud
+    
     github-desktop
     # Fixes github desktop?
     xdg-utils
@@ -66,11 +63,6 @@
     glxinfo
     vulkan-tools
     wayland-utils
-
-    kdePackages.kmail
-    kdePackages.kmail-account-wizard
-
-    krita
 
     mouse_m908
     
@@ -101,7 +93,15 @@
         obs-pipewire-audio-capture
       ];
     };  
+
+    freetube.enable = true;
   };
+
+  # dconf.settings = {
+  #  "/org/gnome/desktop/interface" = {
+  #     monospace-font-name = "Inter";
+  #   };
+  # };
 
   # Home Manager is pretty good at managing dotfiles. The primary way to manage
   # plain files is through 'home.file'.
@@ -159,5 +159,5 @@
 
   cargo.enable = lib.mkForce true;
 
-  plasma.enable = lib.mkForce true;
+  # plasma.enable = lib.mkForce true;
 }

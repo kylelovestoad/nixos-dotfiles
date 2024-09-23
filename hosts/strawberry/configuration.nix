@@ -60,18 +60,14 @@
 
   # Configure X11
   services = {
-
-    displayManager.defaultSession = "plasma";
-
     ratbagd.enable = true;
     
     xserver = {
       # Enable the X11 windowing system.
       enable = true;
 
-      desktopManager.plasma5.enable = true;
-    
-      # Enable sddm display manager (Login Screen)
+      desktopManager.gnome.enable = true;
+  
       xkb = {
         variant = "";
         layout = "us";
@@ -85,7 +81,11 @@
 
   # Enable CUPS to print documents.
   services.printing.enable = true;
-  services.displayManager.sddm.enable = true;
+
+  services.displayManager.sddm = {
+    enable = true;
+    package = pkgs.kdePackages.sddm;
+  };
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
