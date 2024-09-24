@@ -36,6 +36,11 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    NixVirt = {
+      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
+      inputs.nixpkgs.follows = "nixpkgs";
+    };
+
     # For deleting OS on boot except specified dirs
     impermanence = {
       url = "github:nix-community/impermanence";
