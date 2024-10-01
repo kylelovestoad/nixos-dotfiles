@@ -1,4 +1,4 @@
-{kylib, config, lib, ...}: (cfg: {
+{...}: (cfg: {
   config = {
     programs.mpv = { 
       enable = true;

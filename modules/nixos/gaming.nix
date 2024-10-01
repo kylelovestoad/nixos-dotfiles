@@ -1,4 +1,4 @@
-{lib, kylib, config, pkgs, ...}: (cfg: {
+{lib, config, pkgs, ...}: (cfg: {
   config = lib.mkIf cfg.enable {
 
     programs.steam = {

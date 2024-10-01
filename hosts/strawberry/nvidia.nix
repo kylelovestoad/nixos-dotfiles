@@ -1,10 +1,10 @@
-{pkgs, config, libs, ... }:{
+{config, ... }:{
 
 	
 	# Enable OpenGL
-  hardware.graphics = {
+  hardware.opengl = {
     enable = true;
-    enable32Bit = true;
+    driSupport32Bit = true;
   };
 
   # boot.extraModulePackages = [ config.boot.kernelPackages.nvidia_x11 ];

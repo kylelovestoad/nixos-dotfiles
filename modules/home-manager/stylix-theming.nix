@@ -1,4 +1,4 @@
-{kylib, inputs, config, pkgs, lib, ...}: (cfg: {
+{inputs, config, pkgs, lib, ...}: (cfg: {
 
   imports = [
     inputs.stylix.homeManagerModules.stylix

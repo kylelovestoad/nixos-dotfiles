@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, lib, ... }:
+{ pkgs, pkgs-unstable, ... }:
 
 {
   imports =
@@ -61,12 +61,11 @@
   # Configure X11
   services = {
     ratbagd.enable = true;
+    resolved.enable = true;
     
     xserver = {
       # Enable the X11 windowing system.
       enable = true;
-
-      desktopManager.gnome.enable = true;
   
       xkb = {
         variant = "";
@@ -80,7 +79,10 @@
   services.fwupd.enable = true; # For viewing kde firmware security
 
   # Enable CUPS to print documents.
-  services.printing.enable = true;
+  services.printing = { 
+    enable = true;
+    browsing = false;
+  };
 
   services.displayManager.sddm = {
     enable = true;
@@ -147,8 +149,8 @@
     olympus # Custom package
   ];
 
-  services.udev.packages = with pkgs; [ 
-    mouse_m908
+  services.udev.packages = [ 
+    pkgs-unstable.mouse_m908
   ];
 
 
@@ -183,9 +185,12 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Modules
+  plasma.enable = true;
   impermanence.enable = true;
   catppuccin-theme.enable = true;
   gaming.enable = true;
   wireshark.enable = true;
   wireshark.users = [ "kyle" ];
+  virtualising.enable = true;
+  virtualising.users = [ "kyle" ];
 }

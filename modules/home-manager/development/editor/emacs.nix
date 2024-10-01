@@ -1,4 +1,4 @@
-{pkgs, kylib, lib, config, inputs, nurNoPkgs, ...}: (cfg: {
+{lib, inputs, nurNoPkgs, ...}: (cfg: {
 
   imports = [
     nurNoPkgs.repos.rycee.hmModules.emacs-init

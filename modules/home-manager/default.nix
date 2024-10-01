@@ -1,5 +1,5 @@
 # Contains all home manager modules which can be toggled on and off
-{lib, kylib, config, ...}: let
+{lib, config, kylib, ...}: let
   excluded = [ 
     ./default.nix 
   ];

@@ -1,4 +1,4 @@
-{pkgs, kylib, lib, config, ... }: (cfg: {
+{pkgs, ...}: (cfg: {
 
   config = {
     home.packages = with pkgs; [

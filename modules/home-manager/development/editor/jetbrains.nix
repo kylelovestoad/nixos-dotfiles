@@ -1,4 +1,4 @@
-{pkgs, kylib, lib, config, ... }: (cfg: {
+{pkgs, lib, config, ... }: (cfg: {
 
   options = {
     impermanence = lib.mkEnableOption "impermanence for projects/configs";

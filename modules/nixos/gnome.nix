@@ -1,7 +1,5 @@
 {lib, config, ...}: (cfg: {
   config = {
-    services = {
-      desktopManager.gnome.enable = true;
-    };
+    services.xserver.desktopManager.gnome.enable = true;
   };
 })

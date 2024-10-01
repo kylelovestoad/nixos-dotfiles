@@ -1,4 +1,4 @@
-{ config, pkgs, lib, ... }: {
+{pkgs, pkgs-unstable, lib, ... }: {
 
   imports = [];
 
@@ -64,7 +64,7 @@
     vulkan-tools
     wayland-utils
 
-    mouse_m908
+    pkgs-unstable.mouse_m908
     
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -149,7 +149,7 @@
   # stylix-theming.enable = lib.mkForce true;
 
   cargo.enable = lib.mkForce true;
-  
+  plasma.enable = lib.mkForce true;
   obs.enable = lib.mkForce true;
 
   # plasma.enable = lib.mkForce true;

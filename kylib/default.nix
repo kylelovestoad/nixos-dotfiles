@@ -1,36 +1,8 @@
-{lib, inputs, nur, pkgs, nurNoPkgs, ...}: let
-  kylib = (import ./default.nix) {inherit inputs lib nur pkgs nurNoPkgs;};
-  outputs = inputs.self.outputs;
-in rec {
+{lib, ...}: rec {
+
   ######################################
   # LIBRARY FOR BASIC HELPER FUNCTIONS #
   ######################################
-
-  # Create a nix system by providing a configuration.nix to start from
-  mkSystem = config:
-    inputs.nixpkgs.lib.nixosSystem {
-      specialArgs = {
-        inherit inputs kylib;
-      };
-      modules = [
-        config
-        outputs.modules.nixos.default
-      ];
-    };
-
-  # Create a nix home for home-manager to manage by providing a system type and config file to start from
-  mkHome = {system, config}: 
-    inputs.home-manager.lib.homeManagerConfiguration {
-      inherit pkgs;
-      extraSpecialArgs = {
-        inherit inputs kylib nurNoPkgs;
-      };
-      # Main home-manager configuration file
-      modules = [
-        config
-        outputs.modules.home-manager.default
-      ];
-    };
 
   # Capitalizes the first character of the string given
   capitalize = str: lib.concatStrings [
@@ -73,7 +45,7 @@ in rec {
     
   listToAttrsWithValue = list: value: builtins.listToAttrs (builtins.map (name: { inherit name value; }) list);
 
-  addGroupsToUsers = addedGroups: users: kylib.listToAttrsWithValue users { extraGroups = addedGroups; };
+  addGroupsToUsers = addedGroups: users: listToAttrsWithValue users { extraGroups = addedGroups; };
 
   ### Module functions ###
 
@@ -84,6 +56,7 @@ in rec {
     # This gets the path to the user defined config
     cfg = moduleArgs.config.${name};
 
+    
     module = (builtins.import path) moduleArgs cfg;
 
     # Don't mess with existing options
@@ -108,11 +81,12 @@ in rec {
     (file: let
       name = fileNameOf file;
       applyAttrs = applyFunc name; 
+    # moduleArgs parameter is unused as they are passed to the mkModule functions when modules are evaluated
+    # since the unfinished functions are added to imports, this works 
     in mkModule {
       inherit (applyAttrs) defaultOptions configPredicate;
       inherit name;
       path = file;
     })
     filteredFiles;
-
 }

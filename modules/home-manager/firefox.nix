@@ -1,4 +1,4 @@
-{kylib, config, lib, pkgs, inputs, ...}: (cfg: { 
+{config, lib, pkgs, inputs, ...}: (cfg: { 
   config = {
 
     programs.librewolf.enable = true;
