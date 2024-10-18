@@ -110,16 +110,7 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true;
-
-  nixpkgs = {
-    config = {
-      allowUnfree = true;
-      packageOverrides = with pkgs; pkgs: {
-        olympus = callPackage ../../packages/olympus/olympus.nix { };
-      };
-    };
-  }; 
+  # services.xserver.libinput.enable = true; 
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kyle = {
@@ -129,8 +120,7 @@
     # packages = with pkgs; [];
   };
 
-  # Allow unfree packages
-  # nixpkgs.config.allowUnfree = system.config.allowUnfree;
+  nixpkgs.config.allowUnfree = true;
 
   #env variables (pam)
   environment.sessionVariables = {};
@@ -146,7 +136,6 @@
     pciutils
     alsa-oss # TODO fixes issues with minecraft make dedicated minecraft/prismlauncher config
     lm_sensors
-    olympus # Custom package
   ];
 
   services.udev.packages = [ 
@@ -185,7 +174,9 @@
   nix.settings.experimental-features = [ "nix-command" "flakes" ];
 
   # Modules
-  plasma.enable = true;
+  # plasma.enable = true;
+  gnome.enable = true;
+  emacs.enable = true;
   impermanence.enable = true;
   catppuccin-theme.enable = true;
   gaming.enable = true;
