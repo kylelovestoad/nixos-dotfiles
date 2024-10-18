@@ -10,5 +10,6 @@ in
     luaOlder = luajitPackages.luaOlder;
   };
 
-  mouse_m908 = pkgs.callPackage ./mouse_m908/mouse_m908.nix { };
+  twinejs = pkgs.callPackage ./twinejs/twinejs.nix { };
+
 }

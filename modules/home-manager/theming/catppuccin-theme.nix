@@ -5,6 +5,8 @@
   }));
   
   loadCatppuccinTheme = name: catppuccinJson.${name};
+
+  catppuccinTheme = loadCatppuccinTheme cfg.flavor;
 in {
 
   imports = [
@@ -18,9 +20,7 @@ in {
 
   config = {
 
-    lib = {
-      inherit catppuccinJson loadCatppuccinTheme;
-    };
+    lib.catppuccin = catppuccinTheme;
 
     nixpkgs.overlays = lib.mkIf config.vscode.enable [inputs.catppuccin-vsc.overlays.default];
 
