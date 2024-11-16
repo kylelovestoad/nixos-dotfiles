@@ -1,9 +1,10 @@
 {lib, config, pkgs, ...}: (cfg: {
   config = {
 
-    home.packages = with pkgs.gnomeExtensions; [
-      tray-icons-reloaded
+    home.packages = with pkgs; [
+      gnomeExtensions.tray-icons-reloaded
       liberation_ttf
+      gnome.cheese
     ];
 
     dconf = {
