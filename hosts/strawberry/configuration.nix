@@ -5,11 +5,14 @@
 { pkgs, pkgs-unstable, ... }:
 
 {
-  imports =
-    [ # Include the results of the hardware scan.
-      ./hardware-configuration.nix
-      ./nvidia.nix
-    ];
+  imports = [
+    # Include the results of the hardware scan.
+    ./hardware-configuration.nix
+    ./nvidia.nix
+  ];
+
+  systemd.network.wait-online.enable = false;
+  boot.initrd.systemd.network.wait-online.enable = false;
 
   # Bootloader
   boot.loader = {
@@ -22,6 +25,23 @@
       efiSupport = true;
       device = "nodev";
       useOSProber = true;
+    };
+  };
+
+  documentation.enable = true;
+  documentation.man.enable = true;
+  documentation.dev.enable = true;
+
+  users.extraGroups.vboxusers.members = [ "kyle" ];
+
+  virtualisation.virtualbox = {
+    host = {
+      enable = true;
+      enableExtensionPack = true;
+    };
+
+    guest = {
+      enable = true;
     };
   };
 
@@ -57,16 +77,15 @@
   security.pam.services.login.enableGnomeKeyring = true;
   services.gnome.gnome-keyring.enable = true;
 
-
   # Configure X11
   services = {
     ratbagd.enable = true;
     resolved.enable = true;
-    
+
     xserver = {
       # Enable the X11 windowing system.
       enable = true;
-  
+
       xkb = {
         variant = "";
         layout = "us";
@@ -79,7 +98,7 @@
   services.fwupd.enable = true; # For viewing kde firmware security
 
   # Enable CUPS to print documents.
-  services.printing = { 
+  services.printing = {
     enable = true;
     browsing = false;
   };
@@ -91,7 +110,7 @@
 
   # Enable sound with pipewire.
   hardware.pulseaudio.enable = false;
-  
+
   hardware.bluetooth.enable = true; # enables support for Bluetooth
   hardware.bluetooth.powerOnBoot = true; # powers up the default Bluetooth controller on boot
 
@@ -116,19 +135,22 @@
   users.users.kyle = {
     isNormalUser = true;
     description = "kyle";
-    extraGroups = [ "networkmanager" "wheel" ];
+    extraGroups = [
+      "networkmanager"
+      "wheel"
+    ];
     # packages = with pkgs; [];
   };
 
   nixpkgs.config.allowUnfree = true;
 
   #env variables (pam)
-  environment.sessionVariables = {};
-  
+  environment.sessionVariables = { };
+
   # List packages installed in system profile. To search, run:
   # $ nix search wget
   environment.systemPackages = with pkgs; [
-  #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
+    #  vim # Do not forget to add an editor to edit configuration.nix! The Nano editor is also installed by default.
     wget
     home-manager
     git
@@ -138,10 +160,7 @@
     lm_sensors
   ];
 
-  services.udev.packages = [ 
-    pkgs-unstable.mouse_m908
-  ];
-
+  services.udev.packages = [ pkgs-unstable.mouse_m908 ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -150,7 +169,6 @@
   #   enable = true;
   #   enableSSHSupport = true;
   # };
-
 
   # List services that you want to enable:
 
@@ -171,11 +189,16 @@
   # (e.g. man configuration.nix or on https://nixos.org/nixos/options.html).
   system.stateVersion = "23.11"; # Did you read the comment?
 
-  nix.settings.experimental-features = [ "nix-command" "flakes" ];
+  nix.settings.experimental-features = [
+    "nix-command"
+    "flakes"
+  ];
+
+  programs.nix-ld.enable = true;
 
   # Modules
-  # plasma.enable = true;
-  gnome.enable = true;
+  plasma.enable = true;
+  # gnome.enable = true;
   emacs.enable = true;
   impermanence.enable = true;
   catppuccin-theme.enable = true;

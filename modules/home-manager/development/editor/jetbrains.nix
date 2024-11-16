@@ -1,4 +1,4 @@
-{pkgs, lib, config, ... }: (cfg: {
+{pkgs-unstable, lib, config, ... }: (cfg: {
 
   options = {
     impermanence = lib.mkEnableOption "impermanence for projects/configs";
@@ -7,7 +7,7 @@
   config = {
 
     # Load our jetbrains tools and IDEs
-    home.packages = with pkgs; let 
+    home.packages = with pkgs-unstable; let 
       globals = [
         "nixidea"
       ];
@@ -15,12 +15,13 @@
       jetbrains-toolbox
       jetbrains.gateway
       # Plugins and ides
-      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.clion ([] ++ globals))
-      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.goland ([] ++ globals)) 
-      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.idea-ultimate ([] ++ globals)) 
-      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.pycharm-professional ([] ++ globals)) 
-      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.rust-rover ([] ++ globals))
-      (pkgs.jetbrains.plugins.addPlugins pkgs.jetbrains.webstorm ([] ++ globals))
+      (pkgs-unstable.jetbrains.plugins.addPlugins pkgs-unstable.jetbrains.clion ([] ++ globals))
+      (pkgs-unstable.jetbrains.plugins.addPlugins pkgs-unstable.jetbrains.goland ([] ++ globals)) 
+      (pkgs-unstable.jetbrains.plugins.addPlugins pkgs-unstable.jetbrains.idea-ultimate ([] ++ globals)) 
+      (pkgs-unstable.jetbrains.plugins.addPlugins pkgs-unstable.jetbrains.pycharm-professional ([] ++ globals)) 
+      (pkgs-unstable.jetbrains.plugins.addPlugins pkgs-unstable.jetbrains.rider ([] ++ globals)) 
+      (pkgs-unstable.jetbrains.plugins.addPlugins pkgs-unstable.jetbrains.rust-rover ([] ++ globals))
+      (pkgs-unstable.jetbrains.plugins.addPlugins pkgs-unstable.jetbrains.webstorm ([] ++ globals))
     ];
       #
     # Let default project folders and config directories persist
@@ -34,6 +35,7 @@
         "GolandProjects"
         "IdeaProjects"
         "PycharmProjects"
+        # "RiderProjects"
         "RustroverProjects"
         "WebstormProjects"
       ];

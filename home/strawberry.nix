@@ -1,6 +1,12 @@
-{pkgs, pkgs-unstable, lib, ... }: {
+{
+  pkgs,
+  pkgs-unstable,
+  lib,
+  ...
+}:
+{
 
-  imports = [];
+  imports = [ ];
 
   # Home Manager needs a bit of information about you and the paths it should
   # manage.
@@ -19,9 +25,7 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      packageOverrides = with pkgs; pkgs: {
-        olympus = callPackage ../packages/olympus/olympus.nix { };      
-      };
+      packageOverrides = with pkgs; pkgs: { olympus = callPackage ../packages/olympus/olympus.nix { }; };
     };
   };
 
@@ -32,10 +36,12 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     aseprite
+    avalonia-ilspy
     eyedropper
     godot_4 # TODO Game dev module?
-    
+
     libreoffice
+    imhex
 
     ncdu
     nil
@@ -45,7 +51,7 @@
     fastfetch
     nerdfonts
     parsec-bin
-  #  thunderbird
+    #  thunderbird
     signal-desktop
     mpv
 
@@ -56,7 +62,7 @@
     piper
     prismlauncher # Make this part of a future minecraft module
     nix-direnv
-    
+
     github-desktop
     # Fixes github desktop?
     xdg-utils
@@ -72,8 +78,18 @@
     pkgs-unstable.mouse_m908
 
     olympus
-    inky
-    
+
+    teams-for-linux
+
+    nixfmt-rfc-style
+    linux-manual
+    man-pages
+    man-pages-posix
+
+    remmina
+
+    imhex
+
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
     # # parentheses. Maybe you want to install Nerd Fonts with a limited number of
@@ -91,7 +107,7 @@
   programs = {
     direnv.enable = true;
     git.enable = true;
-    home-manager.enable = true;  
+    home-manager.enable = true;
 
     freetube.enable = true;
   };
@@ -157,8 +173,8 @@
   # stylix-theming.enable = lib.mkForce true;
 
   cargo.enable = lib.mkForce true;
-  plasma.enable = lib.mkForce true;
   obs.enable = lib.mkForce true;
 
-  # plasma.enable = lib.mkForce true;
+  plasma.enable = lib.mkForce true;
+  # gnome.enable = lib.mkForce true;
 }

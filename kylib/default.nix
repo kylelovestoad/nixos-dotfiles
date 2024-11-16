@@ -74,7 +74,7 @@
   applyModules = path: excluded: applyFunc: let 
     files = filesInRecursive path;
     filteredFiles = builtins.filter (file: 
-      builtins.any (exclusion: file != exclusion) excluded) 
+      builtins.any (exclusion: file != exclusion && lib.hasSuffix ".nix" file) excluded) 
       files;
   in
     builtins.map 

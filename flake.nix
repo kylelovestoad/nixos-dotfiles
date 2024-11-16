@@ -73,9 +73,9 @@
       pkgs = null; 
     };
 
-    lib = nixpkgs.lib // home-manager.lib;
+    lib = nixpkgs.lib // home-manager.lib ;
     kylib = import ./kylib { inherit lib; };
-  
+
     # Create a nix system by providing a configuration.nix to start from
     mkSystem = config:
       lib.nixosSystem {

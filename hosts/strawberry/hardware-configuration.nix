@@ -16,37 +16,37 @@
   fileSystems."/" =
     { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
       fsType = "btrfs";
-      options = [ "subvol=@" ];
+      options = [ "subvol=@" "noatime" "nodiratime" "discard" ];
     };
 
   fileSystems."/home" =
     { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
       fsType = "btrfs";
-      options = [ "subvol=@home" ];
+      options = [ "subvol=@home" "noatime" "nodiratime" "discard" ];
     };
 
   fileSystems."/persist" =
     { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
       fsType = "btrfs";
-      options = [ "subvol=@persist" ];
+      options = [ "subvol=@persist" "noatime" "nodiratime" "discard" ];
     };
 
   fileSystems."/var/log" =
     { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
       fsType = "btrfs";
-      options = [ "subvol=@log" ];
+      options = [ "subvol=@log" "noatime" "nodiratime" "discard" ];
     };
 
   fileSystems."/nix" =
     { device = "/dev/disk/by-uuid/3e2ba28b-dc94-4770-88c6-95a92b8fe386";
       fsType = "btrfs";
-      options = [ "subvol=@nix" ];
+      options = [ "subvol=@nix" "noatime" "nodiratime" "discard" ];
     };
 
   fileSystems."/boot" =
     { device = "/dev/disk/by-uuid/C6CE-14F0";
       fsType = "vfat";
-      options = [ "fmask=0022" "dmask=0022" ];
+      options = [ "fmask=0022" "dmask=0022" "noatime" "nodiratime" "discard" ];
     };
 
   swapDevices = [ ];

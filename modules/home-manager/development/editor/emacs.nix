@@ -1,17 +1,41 @@
-{lib, inputs, nurNoPkgs, pkgs, ...}: (cfg: {
-
-  imports = [
-    nurNoPkgs.repos.rycee.hmModules.emacs-init
-  ];
+{lib, inputs, pkgs, pkgs-unstable, config, ...}: (cfg: {
 
   config = {
-    nixpkgs.overlays = [ (import inputs.emacs-overlay) ];
-
-    # programs.emacs.init = {
-    #   enable = true;
-    # };
-
+    nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
     
+    home.packages = with pkgs; [
+      ## Emacs itself
+      binutils            # native-comp needs 'as', provided by this
+
+      ## Doom dependencies
+      git
+      ripgrep
+      gnutls           # for TLS connectivity
+
+      # :term vterm
+      cmake
+      libvterm
+      libtool
+
+      # markdown
+      pandoc
+
+      ## Optional dependencies
+      fd                  # faster projectile indexing
+      imagemagick         # for image-dired
+      (lib.mkIf (config.programs.gpg.enable)
+        pinentry-emacs)   # in-emacs gnupg prompts
+      zstd                # for undo-fu-session/undo-tree compression`
+      # :checkers spell
+      (aspellWithDicts (ds: with ds; [ en en-computers en-science ]))
+      # :tools editorconfig
+      editorconfig-core-c # per-project style config
+      # :app everywhere
+      xorg.xwininfo
+      xdotool
+      xclip
+    ];
+
     programs.emacs = {
       enable = true;
       package = pkgs.emacs;  # replace with pkgs.emacs-gtk, or a version provided by the community overlay if desired.
