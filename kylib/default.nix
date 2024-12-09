@@ -16,6 +16,7 @@
   pathToDotString' = list: index: let 
     length = builtins.length list;
   in 
+  
   # First we start by creating our first element in the path. This one will not have a prepended dot
   if index == 0 then "${builtins.elemAt list index}" + pathToDotString' list (index + 1)
   # Then for every element that is not the last, add it with a dot prepended which forms the pattern "first.next.next.next" 
@@ -46,6 +47,8 @@
   listToAttrsWithValue = list: value: builtins.listToAttrs (builtins.map (name: { inherit name value; }) list);
 
   addGroupsToUsers = addedGroups: users: listToAttrsWithValue users { extraGroups = addedGroups; };
+
+  addPropertiesToUsers = properties: users: listToAttrsWithValue users properties;
 
   ### Module functions ###
 

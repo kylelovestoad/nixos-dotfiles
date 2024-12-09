@@ -105,7 +105,7 @@
 
   services.displayManager.sddm = {
     enable = true;
-    package = pkgs.kdePackages.sddm;
+    # package = pkgs.kdePackages.sddm;
   };
 
   # Enable sound with pipewire.
@@ -194,10 +194,14 @@
     "flakes"
   ];
 
-  programs.nix-ld.enable = true;
+  programs = {
+    ssh.startAgent = true;
+    nix-ld.enable = true;
+  };
 
   # Modules
-  plasma.enable = true;
+  # plasma5.enable = true;
+  plasma6.enable = true;
   # gnome.enable = true;
   emacs.enable = true;
   impermanence.enable = true;
@@ -207,4 +211,6 @@
   wireshark.users = [ "kyle" ];
   virtualising.enable = true;
   virtualising.users = [ "kyle" ];
+  fish.enable = true;
+  fish.users = [ "kyle" ];
 }

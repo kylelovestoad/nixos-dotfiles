@@ -88,6 +88,8 @@
 
     remmina
 
+    pkgs-unstable.freetube
+
     imhex
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
@@ -105,11 +107,10 @@
   ];
 
   programs = {
+    ssh.addKeysToAgent = "yes";
     direnv.enable = true;
     git.enable = true;
     home-manager.enable = true;
-
-    freetube.enable = true;
   };
 
   # dconf.settings = {
@@ -177,4 +178,6 @@
 
   plasma.enable = lib.mkForce true;
   # gnome.enable = lib.mkForce true;
+
+  fish.enable = lib.mkForce true;
 }
