@@ -4,12 +4,12 @@
   inputs = {
 
     # Define our choice of nixpkgs and home-manager repos
-    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.05";
+    nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
 
     home-manager = {
-      url = "github:nix-community/home-manager/release-24.05";
+      url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
     };
 
@@ -113,6 +113,11 @@
         "kyle@strawberry" = mkHome {
           inherit system; 
           config = ./home/strawberry.nix;
+        };
+
+        "kdrichards@plum" = mkHome {
+          inherit system;
+          config = ./home/plum.nix;
         };
       };
 
