@@ -28,5 +28,5 @@
     cargo
   ];
 
-  fish.enable = lib.mkForce true;
+  # fish.enable = lib.mkForce true;
 }
