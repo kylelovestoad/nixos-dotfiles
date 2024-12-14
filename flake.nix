@@ -93,7 +93,7 @@
       lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit inputs kylib;
+          inherit inputs pkgs-unstable nurNoPkgs kylib;
         };
         # Main home-manager configuration file
         modules = [
