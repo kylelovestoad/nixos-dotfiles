@@ -12,19 +12,19 @@
 
   home.stateVersion = "23.11";
 
-  nixpkgs.config.allowUnfree = true;
+  # nixpkgs.config.allowUnfree = true;
 
-  home.packages = with pkgs; [
-    nix-direnv
-    fastfetch
-    nerdfonts
-    figlet
+  # home.packages = with pkgs; [
+  #   nix-direnv
+  #   fastfetch
+  #   nerdfonts
+  #   figlet
 
-    cargo-deny
-    cargo-edit
-    cargo-watch
-    cargo
-  ];
+  #   cargo-deny
+  #   cargo-edit
+  #   cargo-watch
+  #   cargo
+  # ];
 
-  fish.enable = lib.mkForce true;
+  # fish.enable = lib.mkForce true;
 }
