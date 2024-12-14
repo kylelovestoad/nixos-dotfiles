@@ -5,9 +5,7 @@
 }:
 {
 
-  imports = [ 
-    ../modules/home-manager/development/fish.nix
-  ];
+  imports = [ ];
 
   home.username = "kdrichards";
   home.homeDirectory = "/home/kdrichards";
