@@ -47,7 +47,7 @@ in
       nix-user-chroot ${nix_dir} bash -lc 'figlet -f slant kylelovestoad'
 
       nix-user-chroot ${nix_dir} bash -lc 'fish'
-    ''
+    '';
   };
 
   fish.enable = lib.mkForce true;
