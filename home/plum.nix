@@ -5,7 +5,9 @@
 }:
 {
 
-  imports = [ ];
+  imports = [ 
+    ../modules/home-manager/development/fish.nix
+  ];
 
   home.username = "kdrichards";
   home.homeDirectory = "/home/kdrichards";
@@ -28,5 +30,5 @@
     cargo
   ];
 
-  # fish.enable = lib.mkForce true;
+  fish.enable = lib.mkForce true;
 }
