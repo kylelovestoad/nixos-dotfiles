@@ -1,10 +1,6 @@
-{lib, kylib, pkgs, config, inputs, ...}: let 
-  nixvirt = inputs.nixvirt;
-in (cfg: {
+{lib, kylib, pkgs, config, inputs, ...}: (cfg: {
 
-  imports = [
-    nixvirt.nixosModules.default
-  ];
+  imports = [];
 
   options = {
     users = lib.mkOption { default = []; };

@@ -5,7 +5,5 @@ let
 in
 {
   olympus = pkgs.callPackage ./olympus/olympus.nix { };
-
-  twinejs = pkgs.callPackage ./twinejs/twinejs.nix { };
-
+  acer-predator = pkgs.callPackage ./acer-predator-turbo-and-rgb-keyboard-linux-module/package.nix { kernel = pkgs.linux; };
 }

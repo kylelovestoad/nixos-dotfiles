@@ -16,17 +16,17 @@
       inherit (cfg) flavor accent;
     };
 
-    services.displayManager.sddm.catppuccin = {
+    catppuccin.sddm = {
       enable = true;
       inherit (cfg) flavor;
     };
 
-    boot.loader.grub.catppuccin = {
+    catppuccin.grub = {
       enable = true;
       inherit (cfg) flavor;
     };
 
-    console.catppuccin = {
+    catppuccin.tty = {
       enable = true;
       inherit (cfg) flavor;
     };

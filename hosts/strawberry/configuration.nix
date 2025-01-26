@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -142,8 +142,6 @@
     # packages = with pkgs; [];
   };
 
-  nixpkgs.config.allowUnfree = true;
-
   #env variables (pam)
   environment.sessionVariables = { };
 
@@ -160,7 +158,26 @@
     lm_sensors
   ];
 
-  services.udev.packages = [ pkgs-unstable.mouse_m908 ];
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      packageOverrides = with pkgs; pkgs: { 
+        olympus = callPackage ../packages/olympus/olympus.nix { }; 
+        facer = callPackage ../../packages/acer-predator-turbo-and-rgb-keyboard-linux-module/package.nix { kernel = pkgs.linux; };
+      };
+    };
+  };
+
+  boot.extraModulePackages = [
+    pkgs.facer
+  ];
+  
+  services.udev.packages = with pkgs; [ 
+    mouse_m908 
+    android-udev-rules
+  ];
+
+
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -180,6 +197,7 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
+
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions

@@ -36,7 +36,6 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     aseprite
-    avalonia-ilspy
     eyedropper
     godot_4 # TODO Game dev module?
 
@@ -75,8 +74,9 @@
     vulkan-tools
     wayland-utils
 
-    pkgs-unstable.mouse_m908
+    mouse_m908
 
+    obsidian
     olympus
 
     teams-for-linux
@@ -91,6 +91,17 @@
     pkgs-unstable.freetube
 
     imhex
+
+    spotify
+
+    # Fixes android phone not mounting
+    kdePackages.kio-extras
+
+    android-tools
+
+    love
+
+    vlc
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
