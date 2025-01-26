@@ -36,6 +36,8 @@
       inputs.home-manager.follows = "home-manager";
     };
 
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+
     nix-jetbrains-plugins.url = "github:theCapypara/nix-jetbrains-plugins";
 
     # For deleting OS on boot except specified dirs
@@ -90,7 +92,7 @@
       lib.homeManagerConfiguration {
         inherit pkgs;
         extraSpecialArgs = {
-          inherit inputs pkgs-unstable nurNoPkgs kylib;
+          inherit inputs pkgs-unstable nurNoPkgs kylib ;
         };
         # Main home-manager configuration file
         modules = [
