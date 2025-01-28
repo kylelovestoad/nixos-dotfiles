@@ -34,17 +34,6 @@
 
   users.extraGroups.vboxusers.members = [ "kyle" ];
 
-  virtualisation.virtualbox = {
-    host = {
-      enable = true;
-      enableExtensionPack = true;
-    };
-
-    guest = {
-      enable = true;
-    };
-  };
-
   networking.hostName = "strawberry"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
 
@@ -129,7 +118,7 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true; 
+  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kyle = {
@@ -161,23 +150,18 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      packageOverrides = with pkgs; pkgs: { 
-        olympus = callPackage ../packages/olympus/olympus.nix { }; 
-        facer = callPackage ../../packages/acer-predator-turbo-and-rgb-keyboard-linux-module/package.nix { kernel = pkgs.linux; };
-      };
+      packageOverrides =
+        with pkgs;
+        pkgs: {
+          olympus = callPackage ../packages/olympus/olympus.nix { };
+        };
     };
   };
 
-  boot.extraModulePackages = [
-    pkgs.facer
-  ];
-  
-  services.udev.packages = with pkgs; [ 
-    mouse_m908 
+  services.udev.packages = with pkgs; [
+    mouse_m908
     android-udev-rules
   ];
-
-
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -197,7 +181,6 @@
   # networking.firewall.allowedUDPPorts = [ ... ];
   # Or disable the firewall altogether.
   # networking.firewall.enable = false;
-
 
   # This value determines the NixOS release from which the default
   # settings for stateful data, like file locations and database versions
@@ -219,9 +202,9 @@
 
   # Modules
   # plasma5.enable = true;
-  # plasma6.enable = true;
+  plasma6.enable = true;
   # gnome.enable = true;
-  cosmic.enable = true;
+  # cosmic.enable = true;
   emacs.enable = true;
   impermanence.enable = true;
   catppuccin-theme.enable = true;
@@ -232,4 +215,5 @@
   virtualising.users = [ "kyle" ];
   fish.enable = true;
   fish.users = [ "kyle" ];
+  ollama.enable = true;
 }
