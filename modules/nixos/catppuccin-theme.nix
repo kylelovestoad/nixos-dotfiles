@@ -17,7 +17,7 @@
     };
 
     catppuccin.sddm = {
-      enable = true;
+      enable = config.services.displayManager.sddm.enable && config.plasma6.enable;
       inherit (cfg) flavor;
     };
 

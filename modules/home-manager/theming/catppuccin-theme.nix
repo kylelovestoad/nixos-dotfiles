@@ -89,6 +89,8 @@ in {
 
     gtk.enable = true;
 
+    # deprecated :(
+    # need to find alternative way...
     catppuccin.gtk = {
       enable = true;
       inherit (cfg) flavor accent;

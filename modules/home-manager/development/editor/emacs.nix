@@ -1,7 +1,11 @@
 {lib, inputs, pkgs, pkgs-unstable, config, ...}: (cfg: {
 
   config = {
-    nixpkgs.overlays = [ inputs.emacs-overlay.overlay ];
+    nixpkgs.overlays = [ 
+      inputs.emacs-overlay.overlays.default
+      inputs.emacs-overlay.overlays.emacs
+      inputs.emacs-overlay.overlays.package
+    ];
     
     home.packages = with pkgs; [
       ## Emacs itself
@@ -34,11 +38,13 @@
       xorg.xwininfo
       xdotool
       xclip
+
+      symbola
     ];
 
     programs.emacs = {
-      enable = true;
-      package = pkgs.emacs;  # replace with pkgs.emacs-gtk, or a version provided by the community overlay if desired.
+      enable = false;
+      package = pkgs.emacs-git;  # replace with pkgs.emacs-gtk, or a version provided by the community overlay if desired.
       extraConfig = ''
         (setq standard-indent 4)
       '';

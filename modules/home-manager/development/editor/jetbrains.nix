@@ -2,6 +2,13 @@
 
   options = {
     impermanence = lib.mkEnableOption "impermanence for projects/configs";
+    clion = lib.mkEnableOption "clion";
+    idea = lib.mkEnableOption "idea";
+    goland = lib.mkEnableOption "goland";
+    pycharm = lib.mkEnableOption "pycharm";
+    rider = lib.mkEnableOption "rider";
+    rustrover = lib.mkEnableOption "rover";
+    webstorm = lib.mkEnableOption "webstorm";
   };
 
   config = {
@@ -16,17 +23,16 @@
         "com.github.catppuccin.jetbrains_icons"
       ] else []);
     in [
-      jetbrains.gateway
+      # jetbrains.gateway
 
       # Plugins and ides
-      (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "clion" ([] ++ globals))
-      (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "idea-ultimate" ([] ++ globals))
-      (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "goland" ([] ++ globals))
-      (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "pycharm-professional" ([] ++ globals))
-      (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "rider" ([] ++ globals))
-      (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "rust-rover" ([] ++ globals))
-      (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "webstorm" ([] ++ globals))
-      (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "writerside" [])
+      (lib.mkIf cfg.clion (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "clion" ([] ++ globals)))
+      (lib.mkIf cfg.idea (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "idea-ultimate" ([] ++ globals)))
+      (lib.mkIf cfg.goland (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "goland" ([] ++ globals)))
+      (lib.mkIf cfg.pycharm (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "pycharm-professional" ([] ++ globals)))
+      (lib.mkIf cfg.rider (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "rider" ([] ++ globals)))
+      (lib.mkIf cfg.rustrover (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "rust-rover" ([] ++ globals)))
+      (lib.mkIf cfg.webstorm (plugins-lib.buildIdeWithPlugins pkgs.jetbrains "webstorm" ([] ++ globals)))
     ];
       #
     # Let default project folders and config directories persist

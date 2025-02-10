@@ -22,6 +22,8 @@
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
+  nix.gc.automatic = true;
+
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -48,7 +50,9 @@
     nix-direnv
     nix-prefetch
     fastfetch
-    nerdfonts
+
+    (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+    
     parsec-bin
     #  thunderbird
     signal-desktop
@@ -167,6 +171,14 @@
   };
 
   jetbrains.enable = lib.mkForce true;
+  jetbrains.clion = lib.mkForce true;
+  jetbrains.idea = lib.mkForce true;
+  # jetbrains.goland = lib.mkForce true;
+  jetbrains.pycharm = lib.mkForce true;
+  jetbrains.rider = lib.mkForce true;
+  jetbrains.rustrover = lib.mkForce true;
+  # jetbrains.webstorm = lib.mkForce true;
+
   impermanence.enable = lib.mkForce true;
 
   vscode.enable = lib.mkForce true;

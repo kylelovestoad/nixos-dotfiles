@@ -18,10 +18,7 @@
 
     catppuccin-vsc.url = "https://flakehub.com/f/catppuccin/vscode/*.tar.gz"; 
 
-    # UNUSED For now, this might have a use later
-    stylix.url = "github:danth/stylix";
-
-    emacs-overlay.url = "github:nix-community/emacs-overlay/da2f552d133497abd434006e0cae996c0a282394";
+    emacs-overlay.url = "github:nix-community/emacs-overlay/master";
 
     nur.url = "github:nix-community/NUR";
 

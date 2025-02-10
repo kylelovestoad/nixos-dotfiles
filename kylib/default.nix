@@ -16,13 +16,12 @@
   pathToDotString' = list: index: let 
     length = builtins.length list;
   in 
-  
-  # First we start by creating our first element in the path. This one will not have a prepended dot
-  if index == 0 then "${builtins.elemAt list index}" + pathToDotString' list (index + 1)
-  # Then for every element that is not the last, add it with a dot prepended which forms the pattern "first.next.next.next" 
-  else if index + 1 != length then ".${builtins.elemAt list index}" + pathToDotString' list (index + 1)
-  # For the last element, we don't call the function again to prevent any more recursions (This would cause an error)
-  else ".${builtins.elemAt list index}";
+    # First we start by creating our first element in the path. This one will not have a prepended dot
+    if index == 0 then "${builtins.elemAt list index}" + pathToDotString' list (index + 1)
+    # Then for every element that is not the last, add it with a dot prepended which forms the pattern "first.next.next.next" 
+    else if index + 1 != length then ".${builtins.elemAt list index}" + pathToDotString' list (index + 1)
+    # For the last element, we don't call the function again to prevent any more recursions (This would cause an error)
+    else ".${builtins.elemAt list index}";
 
   # Just calls pathToDotString' starting at index 0
   # Converts a list to a dotpath such that for example ["a" "b" "c"] becomes "a.b.c"
