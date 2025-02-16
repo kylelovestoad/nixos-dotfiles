@@ -52,7 +52,7 @@
     fastfetch
 
     (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-    
+
     parsec-bin
     #  thunderbird
     signal-desktop
@@ -166,6 +166,10 @@
   #  /etc/profiles/per-user/kyle/etc/profile.d/hm-session-vars.sh
   #
 
+  services.gpg-agent.enable = true;
+
+  programs.gpg.enable = true;
+
   home.sessionVariables = {
     EDITOR = "emacs";
   };
@@ -203,4 +207,5 @@
   # gnome.enable = lib.mkForce true;
 
   fish.enable = lib.mkForce true;
+  bat.enable = lib.mkForce true;
 }
