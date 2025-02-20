@@ -205,7 +205,6 @@
   plasma6.enable = true;
   # gnome.enable = true;
   # cosmic.enable = true;
-  emacs.enable = true;
   impermanence.enable = true;
   catppuccin-theme.enable = true;
   gaming.enable = true;
