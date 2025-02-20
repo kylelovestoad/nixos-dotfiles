@@ -16,17 +16,17 @@
       inherit (cfg) flavor accent;
     };
 
-    services.displayManager.sddm.catppuccin = {
+    catppuccin.sddm = {
+      enable = config.services.displayManager.sddm.enable && config.plasma6.enable;
+      inherit (cfg) flavor;
+    };
+
+    catppuccin.grub = {
       enable = true;
       inherit (cfg) flavor;
     };
 
-    boot.loader.grub.catppuccin = {
-      enable = true;
-      inherit (cfg) flavor;
-    };
-
-    console.catppuccin = {
+    catppuccin.tty = {
       enable = true;
       inherit (cfg) flavor;
     };

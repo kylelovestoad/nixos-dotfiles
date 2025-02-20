@@ -7,7 +7,6 @@
     nixpkgs.url = "github:nixos/nixpkgs/nixos-24.11";
     nixpkgs-unstable.url = "github:nixos/nixpkgs/nixos-unstable";
 
-
     home-manager = {
       url = "github:nix-community/home-manager/release-24.11";
       inputs.nixpkgs.follows = "nixpkgs";
@@ -16,12 +15,9 @@
     # For catpuccin theming
     catppuccin.url = "github:catppuccin/nix";
 
-    catppuccin-vsc.url = "https://flakehub.com/f/catppuccin/vscode/*.tar.gz"; 
+    catppuccin-vsc.url = "https://flakehub.com/f/catppuccin/vscode/*.tar.gz";
 
-    # UNUSED For now, this might have a use later
-    stylix.url = "github:danth/stylix";
-
-    emacs-overlay.url = "github:nix-community/emacs-overlay/da2f552d133497abd434006e0cae996c0a282394";
+    emacs-overlay.url = "github:nix-community/emacs-overlay/master";
 
     nur.url = "github:nix-community/NUR";
 
@@ -36,72 +32,84 @@
       inputs.home-manager.follows = "home-manager";
     };
 
-    nixvirt = {
-      url = "https://flakehub.com/f/AshleyYakeley/NixVirt/*.tar.gz";
-      inputs.nixpkgs.follows = "nixpkgs";
-    };
+    nixos-cosmic.url = "github:lilyinstarlight/nixos-cosmic";
+
+    nix-jetbrains-plugins.url = "github:theCapypara/nix-jetbrains-plugins";
 
     # For deleting OS on boot except specified dirs
     impermanence = {
       url = "github:nix-community/impermanence/63f4d0443e32b0dd7189001ee1894066765d18a5";
     };
+
+    nix-software-center.url = "github:snowfallorg/nix-software-center";
   };
 
-  outputs = {
-    self, 
-    nixpkgs, 
-    nixpkgs-unstable, 
-    home-manager,
-    nur, 
-    ...
-  }@inputs:
-  let
+  outputs =
+    {
+      self,
+      nixpkgs,
+      nixpkgs-unstable,
+      home-manager,
+      nur,
+      ...
+    }@inputs:
+    let
 
-    inherit (self) outputs;
-    system = "x86_64-linux";
-    # Fetch packages from given system
-    pkgsFor = pkgs: system: import pkgs {
-      inherit system;
-      config.allowUnfree = true;
-    };
-
-    pkgs = pkgsFor nixpkgs system;
-    pkgs-unstable = pkgsFor nixpkgs-unstable system;
-
-    nurNoPkgs = import nur { 
-      nurpkgs = pkgs; 
-      pkgs = null; 
-    };
-
-    lib = nixpkgs.lib // home-manager.lib ;
-    kylib = import ./kylib { inherit lib; };
-
-    # Create a nix system by providing a configuration.nix to start from
-    mkSystem = config:
-      lib.nixosSystem {
-        specialArgs = {
-          inherit inputs pkgs-unstable kylib;
+      inherit (self) outputs;
+      system = "x86_64-linux";
+      # Fetch packages from given system
+      pkgsFor =
+        pkgs: system:
+        import pkgs {
+          inherit system;
+          config.allowUnfree = true;
         };
-        modules = [
-          config
-          outputs.modules.nixos.default
-        ];
+
+      pkgs = pkgsFor nixpkgs system;
+      pkgs-unstable = pkgsFor nixpkgs-unstable system;
+
+      nurNoPkgs = import nur {
+        nurpkgs = pkgs;
+        pkgs = null;
       };
 
-    # Create a nix home for home-manager to manage by providing a system type and config file to start from
-    mkHome = {system, config}: 
-      lib.homeManagerConfiguration {
-        inherit pkgs;
-        extraSpecialArgs = {
-          inherit inputs pkgs-unstable nurNoPkgs kylib;
+      lib = nixpkgs.lib // home-manager.lib;
+      kylib = import ./kylib { inherit lib; };
+
+      # Create a nix system by providing a configuration.nix to start from
+      mkSystem =
+        config:
+        lib.nixosSystem {
+          specialArgs = {
+            inherit inputs pkgs-unstable kylib;
+          };
+          modules = [
+            config
+            outputs.modules.nixos.default
+          ];
         };
-        # Main home-manager configuration file
-        modules = [
-          config
-          outputs.modules.home-manager.default
-        ];
-      };
-  in {
+
+      # Create a nix home for home-manager to manage by providing a system type and config file to start from
+      mkHome =
+        { system, config }:
+        lib.homeManagerConfiguration {
+          inherit pkgs;
+          extraSpecialArgs = {
+            inherit
+              inputs
+              pkgs-unstable
+              nurNoPkgs
+              kylib
+              ;
+          };
+          # Main home-manager configuration file
+          modules = [
+            config
+            outputs.modules.home-manager.default
+          ];
+        };
+    in
+    {
       inherit lib;
       # Define systems here!
       nixosConfigurations = {
@@ -111,7 +119,7 @@
       # Define home configs here!
       homeConfigurations = {
         "kyle@strawberry" = mkHome {
-          inherit system; 
+          inherit system;
           config = ./home/strawberry.nix;
         };
 

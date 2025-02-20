@@ -55,13 +55,13 @@ in {
     };
 
     # Needs to be enabled manually
-    programs.obs-studio.catppuccin = lib.mkIf config.programs.obs-studio.enable {
+    catppuccin.obs = lib.mkIf config.programs.obs-studio.enable {
       enable = true;
       inherit (cfg) flavor;
     };
 
     # Needs to be enabled manually
-    programs.freetube.catppuccin = lib.mkIf config.programs.freetube.enable {
+    catppuccin.freetube = lib.mkIf config.programs.freetube.enable {
       enable = true;
       inherit (cfg) flavor accent;
     };
@@ -84,19 +84,21 @@ in {
       (pkgs.catppuccin-kde.override {
         flavour = [ cfg.flavor ];
         accents = [ cfg.accent ];
+        winDecStyles = [ "classic" ];
       }) 
     ] else []);
 
-    gtk = {
+    gtk.enable = true;
+
+    # deprecated :(
+    # need to find alternative way...
+    catppuccin.gtk = {
       enable = true;
-      catppuccin = {
+      inherit (cfg) flavor accent;
+      gnomeShellTheme = true;
+      icon = {
         enable = true;
         inherit (cfg) flavor accent;
-        gnomeShellTheme = true;
-        icon = {
-          enable = true;
-          inherit (cfg) flavor accent;
-        };
       };
     };
 
@@ -104,7 +106,7 @@ in {
     catppuccin = {
       enable = true;
       inherit (cfg) flavor accent;
-      pointerCursor.enable = true;
+      cursors.enable = true;
     };
   };
 })

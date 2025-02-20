@@ -1,10 +1,6 @@
-{lib, kylib, pkgs, config, inputs, ...}: let 
-  nixvirt = inputs.nixvirt;
-in (cfg: {
+{lib, kylib, pkgs, config, inputs, ...}: (cfg: {
 
-  imports = [
-    nixvirt.nixosModules.default
-  ];
+  imports = [];
 
   options = {
     users = lib.mkOption { default = []; };
@@ -12,6 +8,9 @@ in (cfg: {
 
   config = {
     programs.virt-manager.enable = true;
+
+    # Fixes virtualbox issues where VM won't start due to KVM being enabled (?)
+    boot.kernelParams = [ "kvm.enable_virt_at_load=0" ];
 
     virtualisation = { 
       libvirtd = {
@@ -31,6 +30,19 @@ in (cfg: {
           };
         };
       };
+
+      virtualbox = {
+        host = {
+          enable = true;
+          enableExtensionPack = true;
+        };
+
+        guest = {
+          enable = true;
+        };
+      };
+
+      docker.enable = true;
     };
 
     users.users = kylib.addGroupsToUsers [ "libvirtd" ] cfg.users;

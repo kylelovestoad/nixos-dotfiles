@@ -8,6 +8,8 @@
       enable = true;
     };
 
+    documentation.man.generateCaches = false;
+
     users.users = kylib.addPropertiesToUsers {
       useDefaultShell = true;
       shell = pkgs.fish;

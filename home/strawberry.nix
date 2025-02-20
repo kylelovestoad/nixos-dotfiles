@@ -2,6 +2,7 @@
   pkgs,
   pkgs-unstable,
   lib,
+  inputs,
   ...
 }:
 {
@@ -22,6 +23,8 @@
   # release notes.
   home.stateVersion = "23.11"; # Please read the comment before changing.
 
+  nix.gc.automatic = true;
+
   nixpkgs = {
     config = {
       allowUnfree = true;
@@ -36,7 +39,6 @@
     # # "Hello, world!" when run.
     # pkgs.hello
     aseprite
-    avalonia-ilspy
     eyedropper
     godot_4 # TODO Game dev module?
 
@@ -49,7 +51,9 @@
     nix-direnv
     nix-prefetch
     fastfetch
-    nerdfonts
+
+    (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
+
     parsec-bin
     #  thunderbird
     signal-desktop
@@ -75,8 +79,9 @@
     vulkan-tools
     wayland-utils
 
-    pkgs-unstable.mouse_m908
+    mouse_m908
 
+    obsidian
     olympus
 
     teams-for-linux
@@ -91,6 +96,19 @@
     pkgs-unstable.freetube
 
     imhex
+
+    spotify
+
+    # Fixes android phone not mounting
+    kdePackages.kio-extras
+
+    android-tools
+
+    love
+
+    vlc
+
+    inputs.nix-software-center.packages.${system}.nix-software-center
 
     # # It is sometimes useful to fine-tune packages, for example, by applying
     # # overrides. You can do that directly here, just don't forget the
@@ -151,11 +169,23 @@
   #  /etc/profiles/per-user/kyle/etc/profile.d/hm-session-vars.sh
   #
 
+  services.gpg-agent.enable = true;
+
+  programs.gpg.enable = true;
+
   home.sessionVariables = {
-    EDITOR = "emacs";
+    # ENVVARS
   };
 
   jetbrains.enable = lib.mkForce true;
+  jetbrains.clion = lib.mkForce true;
+  jetbrains.idea = lib.mkForce true;
+  # jetbrains.goland = lib.mkForce true;
+  jetbrains.pycharm = lib.mkForce true;
+  jetbrains.rider = lib.mkForce true;
+  jetbrains.rustrover = lib.mkForce true;
+  # jetbrains.webstorm = lib.mkForce true;
+
   impermanence.enable = lib.mkForce true;
 
   vscode.enable = lib.mkForce true;
@@ -180,4 +210,5 @@
   # gnome.enable = lib.mkForce true;
 
   fish.enable = lib.mkForce true;
+  bat.enable = lib.mkForce true;
 }

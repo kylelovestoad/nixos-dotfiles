@@ -2,7 +2,7 @@
 # your system.  Help is available in the configuration.nix(5) man page
 # and in the NixOS manual (accessible by running ‘nixos-help’).
 
-{ pkgs, pkgs-unstable, ... }:
+{ pkgs, ... }:
 
 {
   imports = [
@@ -33,17 +33,6 @@
   documentation.dev.enable = true;
 
   users.extraGroups.vboxusers.members = [ "kyle" ];
-
-  virtualisation.virtualbox = {
-    host = {
-      enable = true;
-      enableExtensionPack = true;
-    };
-
-    guest = {
-      enable = true;
-    };
-  };
 
   networking.hostName = "strawberry"; # Define your hostname.
   # networking.wireless.enable = true;  # Enables wireless support via wpa_supplicant.
@@ -129,7 +118,7 @@
   };
 
   # Enable touchpad support (enabled default in most desktopManager).
-  # services.xserver.libinput.enable = true; 
+  # services.xserver.libinput.enable = true;
 
   # Define a user account. Don't forget to set a password with ‘passwd’.
   users.users.kyle = {
@@ -141,8 +130,6 @@
     ];
     # packages = with pkgs; [];
   };
-
-  nixpkgs.config.allowUnfree = true;
 
   #env variables (pam)
   environment.sessionVariables = { };
@@ -160,7 +147,21 @@
     lm_sensors
   ];
 
-  services.udev.packages = [ pkgs-unstable.mouse_m908 ];
+  nixpkgs = {
+    config = {
+      allowUnfree = true;
+      packageOverrides =
+        with pkgs;
+        pkgs: {
+          olympus = callPackage ../packages/olympus/olympus.nix { };
+        };
+    };
+  };
+
+  services.udev.packages = with pkgs; [
+    mouse_m908
+    android-udev-rules
+  ];
 
   # Some programs need SUID wrappers, can be configured further or are
   # started in user sessions.
@@ -203,6 +204,7 @@
   # plasma5.enable = true;
   plasma6.enable = true;
   # gnome.enable = true;
+  # cosmic.enable = true;
   emacs.enable = true;
   impermanence.enable = true;
   catppuccin-theme.enable = true;
@@ -213,4 +215,5 @@
   virtualising.users = [ "kyle" ];
   fish.enable = true;
   fish.users = [ "kyle" ];
+  ollama.enable = true;
 }
