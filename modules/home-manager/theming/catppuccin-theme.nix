@@ -84,6 +84,7 @@ in {
       (pkgs.catppuccin-kde.override {
         flavour = [ cfg.flavor ];
         accents = [ cfg.accent ];
+        winDecStyles = [ "classic" ];
       }) 
     ] else []);
 
