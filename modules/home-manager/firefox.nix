@@ -1,11 +1,8 @@
 {config, lib, pkgs, inputs, ...}: (cfg: { 
-  config = {
-
-    programs.librewolf.enable = true;
-
-    programs.firefox = {
+  config = let 
+    firefoxConfig = pkg: {
       enable = true;
-      package = pkgs.firefox;
+      package = pkg;
 
       /* ---- POLICIES ---- */
       # Check about:policies#documentation for options.
@@ -34,24 +31,32 @@
 
         search.force = true;
 
-        extensions = with inputs.firefox-addons.packages.${pkgs.system}; [
+        extensions = {
+          packages = with inputs.firefox-addons.packages.${pkgs.system}; [
           
-          # adblocking heals the soul
-          ublock-origin
+            # adblocking heals the soul
+            ublock-origin
 
-          # theming
-          stylus
-          firefox-color
-          darkreader
+            # theming
+            stylus
+            firefox-color
+            darkreader
 
-          # userscripts
-          violentmonkey
-          
-          # youtube
-          dearrow
-          sponsorblock
-          youtube-shorts-block
-        ];
+            # userscripts
+            violentmonkey
+            
+            # youtube
+            dearrow
+            sponsorblock
+            youtube-shorts-block
+          ];
+
+          # settings = {
+          #   "Stylus" = {
+          #     dbInChromeStorage = true; # required for Stylus
+          #   };
+          # };
+        };
 
         bookmarks = [
           {
@@ -301,5 +306,9 @@
         };
       };
     };
+  in {
+    programs.firefox = firefoxConfig pkgs.firefox;
+    programs.librewolf = firefoxConfig pkgs.librewolf;        
+    programs.floorp = firefoxConfig pkgs.floorp;        
   };
 })

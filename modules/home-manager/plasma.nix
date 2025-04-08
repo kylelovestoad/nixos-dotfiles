@@ -9,10 +9,10 @@
     home.packages = with pkgs; [
       kdePackages.kmail
       kdePackages.kmail-account-wizard
+      kdePackages.kate
+      kdePackages.kdenlive
+      kdePackages.kdialog
       krita
-      kate
-      kdenlive
-      kdialog
     ];
 
   #   programs.plasma = {

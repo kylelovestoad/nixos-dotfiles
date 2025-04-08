@@ -52,8 +52,6 @@
     nix-prefetch
     fastfetch
 
-    (pkgs.nerdfonts.override { fonts = [ "NerdFontsSymbolsOnly" ]; })
-
     parsec-bin
     #  thunderbird
     signal-desktop
@@ -81,6 +79,8 @@
 
     mouse_m908
 
+    neovim
+
     obsidian
     olympus
 
@@ -90,6 +90,8 @@
     linux-manual
     man-pages
     man-pages-posix
+
+    arduino-ide
 
     remmina
 
@@ -107,6 +109,8 @@
     love
 
     vlc
+
+    liberation_ttf
 
     inputs.nix-software-center.packages.${system}.nix-software-center
 

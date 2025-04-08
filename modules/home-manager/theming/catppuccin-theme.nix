@@ -25,32 +25,35 @@ in {
     nixpkgs.overlays = lib.mkIf config.vscode.enable [inputs.catppuccin-vsc.overlays.default];
 
     programs.vscode = lib.mkIf config.vscode.enable {
-      extensions = with pkgs.vscode-extensions; [
-        (catppuccin.catppuccin-vsc.override {
-          # Get the accent specified in the catppuccin module
-          accent = cfg.accent;
-          boldKeywords = true;
-          italicComments = true;
-          italicKeywords = true;
-          extraBordersEnabled = true;
-          workbenchMode = "default";
-          bracketMode = "rainbow";
-          colorOverrides = {};
-          customUIColors = {};
-        })
-        catppuccin.catppuccin-vsc-icons
-      ];
+      profiles.default = {
+        extensions = with pkgs.vscode-extensions; [
+          (catppuccin.catppuccin-vsc.override {
+            # Get the accent specified in the catppuccin module
+            accent = cfg.accent;
+            boldKeywords = true;
+            italicComments = true;
+            italicKeywords = true;
+            extraBordersEnabled = true;
+            workbenchMode = "default";
+            bracketMode = "rainbow";
+            colorOverrides = {};
+            customUIColors = {};
+          })
+          catppuccin.catppuccin-vsc-icons
+        ];
+        
 
-      # Add these settings for better compatability with catppuccin
-      userSettings = let 
-        # HACK If this name were to ever change formatting there would most certainly be a problem
-        flavorName = if cfg.flavor == "frappe" then "frappé" else cfg.flavor;
-      in {
-        # Flavor needs to be capitalized since that is how the names work in this instance
-        "workbench.colorTheme" = "Catppuccin ${kylib.capitalize flavorName}";
-        "workbench.iconTheme" = "catppuccin-${flavorName}";
-        # Catppuccin uses a custom (and much nicer) title bar
-        "window.titleBarStyle" = "custom";
+        # Add these settings for better compatability with catppuccin
+        userSettings = let 
+          # HACK If this name were to ever change formatting there would most certainly be a problem
+          flavorName = if cfg.flavor == "frappe" then "frappé" else cfg.flavor;
+        in {
+          # Flavor needs to be capitalized since that is how the names work in this instance
+          "workbench.colorTheme" = "Catppuccin ${kylib.capitalize flavorName}";
+          "workbench.iconTheme" = "catppuccin-${flavorName}";
+          # Catppuccin uses a custom (and much nicer) title bar
+          "window.titleBarStyle" = "custom";
+        };
       };
     };
 

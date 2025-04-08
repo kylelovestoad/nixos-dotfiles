@@ -53,13 +53,27 @@
       xclip
 
       symbola
+      hasklig
+      fira-code
+      nerd-fonts.symbols-only
+
+      # mu4e
+      mu
+      isync
+
     ];
 
-    services.emacs = {
-      client.enable = true;
+    programs.emacs = {
       enable = true;
-      package = pkgs.emacs-git; # replace with emacs-gtk, or a version provided by the community overlay if desired.
+      package = pkgs.emacs;
+    };
+
+    services.emacs = {
+      enable = true;
+      client.enable = true;
+      package = pkgs.emacs;
       defaultEditor = true;
+      startWithUserSession = "graphical";
     };
   };
 })
