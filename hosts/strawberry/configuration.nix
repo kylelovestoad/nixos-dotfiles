@@ -205,7 +205,7 @@
   plasma6.enable = true;
   # gnome.enable = true;
   # cosmic.enable = true;
-  impermanence.enable = true;
+  # impermanence.enable = true;
   catppuccin-theme.enable = true;
   gaming.enable = true;
   wireshark.enable = true;

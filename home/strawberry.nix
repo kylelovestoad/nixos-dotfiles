@@ -28,7 +28,7 @@
   nixpkgs = {
     config = {
       allowUnfree = true;
-      packageOverrides = with pkgs; pkgs: { olympus = callPackage ../packages/olympus/olympus.nix { }; };
+      # packageOverrides = with pkgs; pkgs: { olympus = callPackage ../packages/olympus/olympus.nix { }; };
     };
   };
 
@@ -82,7 +82,7 @@
     mouse_m908
 
     obsidian
-    olympus
+    # olympus
 
     teams-for-linux
 
@@ -105,8 +105,6 @@
     android-tools
 
     love
-
-    vlc
 
     inputs.nix-software-center.packages.${system}.nix-software-center
 
@@ -186,7 +184,7 @@
   jetbrains.rustrover = lib.mkForce true;
   # jetbrains.webstorm = lib.mkForce true;
 
-  impermanence.enable = lib.mkForce true;
+  # impermanence.enable = lib.mkForce true;
 
   vscode.enable = lib.mkForce true;
   vscode.extensions = lib.mkForce true;
